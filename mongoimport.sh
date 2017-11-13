@@ -1,0 +1,1 @@
+mongoimport --db nov5_db --collection nov5_collection --drop --file tstl.json
