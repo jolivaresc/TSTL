@@ -1,3 +1,4 @@
 credentials.py
 .ipynb_checkpoints
 *.json
+*.pyc
