@@ -65,8 +65,8 @@ output_layer = {"W2":tf.Variable(tf.random_normal([NODES_H1,NODES_OUPUT],stddev=
 # %%
 
 # Se calcula la matriz de la capa de entrada a la capa oculta 
-# h(x) = W(x) + bias
 hidden_output = tf.add(tf.matmul(es, layer1["W1"]), layer1["b1"])
+# h(x) = W(x) + bias
 # función de activación ReLU
 hidden_output = tf.nn.relu(hidden_output)
 
