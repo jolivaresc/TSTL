@@ -1,0 +1,11 @@
+http://stackabuse.com/tensorflow-neural-network-tutorial/
+https://www.youtube.com/watch?v=PicxU81owCs
+https://www.analyticsvidhya.com/blog/2016/10/an-introduction-to-implementing-neural-networks-using-tensorflow/
+https://www.kaggle.com/kakauandme/tensorflow-deep-nn
+https://www.youtube.com/watch?v=yX8KuPZCAMo
+https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/neural_network.ipynb
+https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/autoencoder.ipynb
+http://adventuresinmachinelearning.com/python-tensorflow-tutorial/
+http://stackabuse.com/tensorflow-neural-network-tutorial/
+https://www.analyticsvidhya.com/blog/2016/10/an-introduction-to-implementing-neural-networks-using-tensorflow/
+https://medium.com/@curiousily/tensorflow-for-hackers-part-ii-building-simple-neural-network-2d6779d2f91b
