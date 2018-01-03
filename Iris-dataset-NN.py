@@ -10,7 +10,7 @@ import tensorflow as tf
 import urllib.request as request  
 import matplotlib.pyplot as plt
 
-get_ipython().magic('matplotlib inline')
+#get_ipython().magic('matplotlib inline')
 
 # Download dataset
 IRIS_TRAIN_URL = "http://download.tensorflow.org/data/iris_training.csv"  
@@ -28,7 +28,6 @@ Xtest = test.drop("species", axis=1)
 ytrain = pd.get_dummies(train.species)  
 ytest = pd.get_dummies(test.species)  
 
-
 # In[10]:
 
 # Create and train a tensorflow model of a neural network
@@ -40,7 +39,7 @@ def create_train_model(hidden_nodes, num_iters):
     # Placeholders for input and output data
     X = tf.placeholder(shape=(120, 4), dtype=tf.float64, name='X')
     y = tf.placeholder(shape=(120, 3), dtype=tf.float64, name='y')
-
+    print(Xtrain.shape,X.shape)
     # Variables for two group of weights between the three layers of the network
     W1 = tf.Variable(np.random.rand(4, hidden_nodes), dtype=tf.float64)
     W2 = tf.Variable(np.random.rand(hidden_nodes, 3), dtype=tf.float64)
@@ -94,6 +93,9 @@ plt.xlabel('Iteration', fontsize=12)
 plt.ylabel('Loss', fontsize=12)  
 plt.legend(fontsize=12)  
 plt.grid()
+plt.savefig("loss")
+plt.show()
+
 
 
 # In[19]:
@@ -114,6 +116,7 @@ for hidden_nodes in num_hidden_nodes:
     init = tf.global_variables_initializer()
     with tf.Session() as sess:
         sess.run(init)
+        writer = tf.summary.FileWriter("./logs/Iris",sess.graph)
         y_est_np = sess.run(y_est, feed_dict={X: Xtest, y: ytest})
 
     # Calculate the prediction accuracy

@@ -83,11 +83,11 @@ learning_rate = 0.1
 epochs = 10
 batch_size = 100
 
-NODES_INPUT = 10
-NODES_H1 = 15
-NODES_H2 = 7
-NODES_OUPUT = 10
-NUM_OBS = 40
+NODES_INPUT = 50
+NODES_H1 = 20
+NODES_H2 = 20
+NODES_OUPUT = 50
+NUM_OBS = 100
 
 
 es = np.random.uniform(0,15,size=[NUM_OBS,NODES_INPUT]).astype(np.float32)
