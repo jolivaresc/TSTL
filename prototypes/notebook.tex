@@ -1,0 +1,1675 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Prototype}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{}http://www.ritchieng.com/machine\PYZhy{}learning/deep\PYZhy{}learning/tensorflow/deep\PYZhy{}neural\PYZhy{}nets/}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{pd}\PY{o}{.}\PY{n}{set\PYZus{}option}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{display.max\PYZus{}colwidth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{pd}\PY{o}{.}\PY{n}{set\PYZus{}option}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{precision}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{18}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{es} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{../vectors/es.node2vec.embeddings}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{delimiter} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{skiprows} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{header} \PY{o}{=} \PY{k+kc}{None}\PY{p}{)}
+        \PY{n}{na} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{../vectors/na.node2vec.embeddings}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{delimiter} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{skiprows} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{header} \PY{o}{=} \PY{k+kc}{None}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{es}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:}           0                     1                     2                     3  \textbackslash{}
+        0  igual    -0.021394000000000000 -0.223086000000000007  0.081375000000000003   
+        1  hermano  -0.275133000000000016 -0.290683999999999998 -0.035325000000000002   
+        2  martajan -0.390027000000000013 -0.181653000000000009 -0.266087999999999991   
+        3  fuero     0.038670999999999997 -0.126187999999999995 -0.128566999999999987   
+        4  ehecatl  -0.262041999999999997 -0.341544000000000014  0.020990999999999999   
+        
+                              4                     5                     6  \textbackslash{}
+        0 -0.440008000000000010  0.414202999999999988 -0.377524000000000026   
+        1 -0.172819000000000000 -0.171268000000000004  0.194177999999999989   
+        2  0.134891000000000011 -0.105632999999999991 -0.124488000000000015   
+        3 -0.107231000000000007  0.091522000000000006 -0.151676000000000005   
+        4 -0.098941000000000001  0.006511000000000000 -0.406260999999999983   
+        
+                              7                     8                     9  \textbackslash{}
+        0 -0.405760999999999983 -0.080980999999999984 -0.143192000000000014   
+        1 -0.260794999999999999 -0.131469000000000003 -0.560057000000000027   
+        2 -0.857403000000000026 -0.210448999999999969  0.100710999999999995   
+        3 -0.137239000000000000 -0.118835999999999983 -0.078329999999999983   
+        4 -0.011587000000000000 -0.046593999999999997  0.200022000000000005   
+        
+                   {\ldots}                            119                   120  \textbackslash{}
+        0          {\ldots}          -0.185254000000000002  0.175382000000000010   
+        1          {\ldots}          -0.772757000000000027  0.263089999999999991   
+        2          {\ldots}          -0.305485000000000007 -0.438153999999999988   
+        3          {\ldots}          -0.221096999999999988  0.062376000000000001   
+        4          {\ldots}          -0.087499999999999981 -0.129405999999999993   
+        
+                            121                   122                   123  \textbackslash{}
+        0  0.326658000000000004  0.094920000000000004 -0.696819999999999995   
+        1  0.152055999999999997 -0.348088999999999982  0.317742000000000024   
+        2  0.633051999999999948 -0.086624000000000007  0.049135999999999999   
+        3  0.249082000000000026  0.034577999999999998 -0.069553000000000004   
+        4 -0.203127000000000002 -0.141165000000000013 -0.115330000000000002   
+        
+                            124                   125                   126  \textbackslash{}
+        0  0.002694000000000000 -0.451108999999999982 -0.471277999999999975   
+        1  0.093362000000000001 -0.539200000000000013 -0.091987000000000013   
+        2 -0.166021000000000002 -0.458888999999999991  0.214303999999999994   
+        3  0.115556000000000006 -0.058006000000000002  0.075348999999999999   
+        4 -0.204074000000000005 -0.148682000000000009 -0.107581999999999997   
+        
+                            127                   128  
+        0  0.041342999999999998 -0.385863000000000012  
+        1  0.245604999999999990  0.074918999999999999  
+        2 -0.089515999999999998 -0.083751000000000006  
+        3 -0.039742000000000000  0.043875999999999998  
+        4 -0.051375999999999998  0.160946000000000006  
+        
+        [5 rows x 129 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{na}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:}           0                     1                     2                     3  \textbackslash{}
+        0  tihuitz  -0.348621000000000014 -0.017441000000000002 -0.155883999999999995   
+        1  quixtia   0.163007999999999986 -0.278059999999999974 -0.453527000000000013   
+        2  quixtiz  -0.689479999999999982 -0.714752999999999972 -0.100995000000000001   
+        3  triarcas -0.239407000000000009  0.284032999999999980  0.120584999999999998   
+        4  peuh     -0.181800999999999990 -0.273990999999999985 -0.298422999999999994   
+        
+                              4                     5                     6  \textbackslash{}
+        0 -0.418601000000000001  0.666802000000000006 -0.385216000000000003   
+        1 -0.064904000000000003  0.025853999999999999 -0.084598000000000007   
+        2 -0.094793000000000002  1.021972000000000103  0.090782000000000002   
+        3 -0.452631999999999979 -0.201202999999999993 -0.211770999999999987   
+        4  0.112453999999999998 -0.174767000000000006  0.226840999999999987   
+        
+                              7                     8                     9  \textbackslash{}
+        0 -0.507603000000000026  0.115668999999999994 -0.210249999999999992   
+        1 -0.170526000000000011 -0.208350000000000007 -0.172448999999999991   
+        2 -0.129735999999999990  0.228915000000000007  0.007809000000000000   
+        3 -0.927865999999999969 -0.209665999999999991  0.436325000000000018   
+        4 -0.200030000000000013 -0.225804000000000005 -0.098054000000000002   
+        
+                   {\ldots}                            119                   120  \textbackslash{}
+        0          {\ldots}          -0.577107000000000037 -0.059977999999999997   
+        1          {\ldots}          -0.529113999999999973  0.010237000000000001   
+        2          {\ldots}          -0.114314000000000013 -0.053691999999999997   
+        3          {\ldots}          -1.114122000000000057 -0.185642000000000001   
+        4          {\ldots}          -0.059520000000000003 -0.505542000000000047   
+        
+                            121                   122                   123  \textbackslash{}
+        0  0.339285000000000003  0.037353999999999998 -0.344376000000000015   
+        1  0.433474000000000026  0.337760000000000005 -0.287584000000000006   
+        2 -0.343855000000000022 -0.012789999999999999  0.168138000000000010   
+        3 -0.066564999999999999  0.003861000000000000  0.115815000000000015   
+        4  0.070814000000000002  0.318340999999999985 -0.279799999999999993   
+        
+                            124                   125                   126  \textbackslash{}
+        0  0.141060999999999992  0.233917999999999987 -0.402866000000000002   
+        1  0.015219999999999999 -0.413629000000000024 -0.150796000000000013   
+        2  0.322913999999999979  0.185893000000000003  0.157933999999999991   
+        3 -0.495630999999999988  0.358493000000000006  0.265313000000000021   
+        4  0.314554000000000000 -0.474447999999999981  0.066695000000000004   
+        
+                            127                   128  
+        0 -0.363315999999999972  0.590776999999999997  
+        1 -0.156616000000000005 -0.005837000000000000  
+        2 -0.369580999999999993  0.330840999999999996  
+        3 -0.835150999999999977 -0.235812999999999995  
+        4 -0.559996000000000049 -0.110311999999999993  
+        
+        [5 rows x 129 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{es}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{1904}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:}                         0                     1                     2  \textbackslash{}
+        0     igual               -0.021394000000000000 -0.223086000000000007   
+        1     hermano             -0.275133000000000016 -0.290683999999999998   
+        2     martajan            -0.390027000000000013 -0.181653000000000009   
+        3     fuero                0.038670999999999997 -0.126187999999999995   
+        4     ehecatl             -0.262041999999999997 -0.341544000000000014   
+        5     chino               -0.529568000000000039 -0.111971000000000001   
+        6     eléctrico           -0.123494000000000007 -0.152437999999999990   
+        7     llano               -0.087869000000000003  0.026637000000000001   
+        8     destruir            -0.576245000000000007 -0.107519000000000003   
+        9     adquirir            -0.293049999999999977 -0.499398000000000009   
+        10    absoluto            -0.256798000000000026 -0.209604000000000013   
+        11    caldo               -0.383282999999999985 -0.309707999999999983   
+        12    ordenar             -0.201346999999999998 -0.530870999999999982   
+        13    calidad             -0.248221999999999970 -0.064047000000000007   
+        14    camellón            -0.542772000000000032 -0.322682000000000024   
+        15    boleto              -0.085091000000000000  0.479951000000000016   
+        16    romper              -0.524322999999999984  0.006440000000000000   
+        17    prontamente         -0.921684999999999977 -0.608030999999999988   
+        18    apaciguar           -0.254859000000000002 -0.319844000000000017   
+        19    fin                 -0.353038000000000018 -0.687614999999999976   
+        20    arroz               -1.309031000000000056 -0.301729999999999998   
+        21    veracruz             0.007707000000000000 -0.559347999999999956   
+        22    correcto            -0.305086999999999997 -0.660332000000000030   
+        23    cofre               -0.313192000000000026  0.177267000000000008   
+        24    llegar              -0.307323000000000013  0.145335999999999993   
+        25    montículo           -0.183573999999999987  0.294912999999999981   
+        26    llaméya             -0.338832999999999995 -0.082560999999999982   
+        27    perjudicarlos       -0.611481999999999970 -0.625790999999999986   
+        28    cisterna            -0.146503999999999995  0.093884999999999996   
+        29    sacrificante        -0.474075000000000024 -0.254612999999999978   
+        {\ldots}            {\ldots}                          {\ldots}                   {\ldots}   
+        1874  sartén              -0.210878000000000010 -0.038517999999999997   
+        1875  huitzilihuitzin     -0.003258000000000000 -0.140792000000000000   
+        1876  apetito             -0.133389000000000008 -0.149148000000000003   
+        1877  fecha               -0.750226999999999977 -0.521240000000000037   
+        1878  J:??/??/??:??.??:?? -0.210555999999999993  0.207617999999999997   
+        1879  espina              -0.745485999999999982  0.363715000000000011   
+        1880  embajador            0.054670000000000003 -0.047475000000000003   
+        1881  oscuro               0.003228000000000000 -0.072958999999999982   
+        1882  desperezar          -0.111834999999999990 -0.115493000000000012   
+        1883  creador             -0.066968000000000000  0.160013999999999990   
+        1884  xólotl              -0.218887999999999999 -0.044747000000000002   
+        1885  diseminar            0.030974000000000002 -0.276490000000000014   
+        1886  apariencia          -0.103928000000000006 -0.164189000000000002   
+        1887  anamar              -0.238861999999999991  0.059949000000000002   
+        1888  abrigar             -0.824533999999999989 -0.100522000000000000   
+        1889  hágame              -0.636237999999999970  0.041431999999999997   
+        1890  tiempo              -0.573211000000000026  0.133774000000000004   
+        1891  tan\_pronto\_como     -0.129610000000000003 -0.019871000000000000   
+        1892  resultado           -0.284096000000000015 -0.076562000000000005   
+        1893  funesto             -0.621690999999999994 -0.237681000000000003   
+        1894  pasear               0.084332000000000004 -0.536831999999999976   
+        1895  abrelo              -0.329527000000000014 -0.258147999999999989   
+        1896  falsedad            -0.140326000000000006 -0.154677000000000009   
+        1897  huérfano            -0.308956999999999982 -0.755291999999999852   
+        1898  tronar              -0.112018000000000006 -0.338729000000000002   
+        1899  cargarlos            0.172403000000000001 -0.133572999999999997   
+        1900  pues                -0.020702999999999999  0.014701000000000001   
+        1901  ralo                -0.273374999999999979  0.007936999999999998   
+        1902  ese                 -0.011045999999999999 -0.162304000000000004   
+        1903  sánchez             -0.118249999999999994 -0.575452999999999992   
+        
+                                 3                     4                     5  \textbackslash{}
+        0     0.081375000000000003 -0.440008000000000010  0.414202999999999988   
+        1    -0.035325000000000002 -0.172819000000000000 -0.171268000000000004   
+        2    -0.266087999999999991  0.134891000000000011 -0.105632999999999991   
+        3    -0.128566999999999987 -0.107231000000000007  0.091522000000000006   
+        4     0.020990999999999999 -0.098941000000000001  0.006511000000000000   
+        5    -0.094549999999999995  0.036922000000000003  0.125575999999999993   
+        6    -0.082258999999999999 -0.091831999999999997 -0.083044000000000007   
+        7    -0.537563000000000013 -0.112708999999999990 -0.042495999999999999   
+        8    -0.423850999999999978  0.180685000000000012 -0.549687000000000037   
+        9     0.195378999999999997 -0.509905999999999970 -0.179965999999999987   
+        10    0.199699999999999989 -0.826048000000000004 -0.438883000000000023   
+        11   -0.508303999999999978 -0.871995999999999993 -0.546655000000000002   
+        12   -0.172183000000000003 -0.198141000000000012  0.328311000000000019   
+        13    0.016379999999999999 -0.115214000000000011 -0.111147999999999997   
+        14   -0.390983000000000025  0.428061000000000025  0.000610000000000000   
+        15   -0.334847999999999979 -0.197373999999999994  0.202711999999999976   
+        16    0.136924999999999991 -0.185993999999999993 -0.036941000000000002   
+        17   -0.577956000000000025 -0.589420000000000055  0.506647999999999987   
+        18   -0.473704000000000014 -0.032876000000000002  0.068806999999999993   
+        19   -0.189749000000000001 -0.577605999999999953  0.473376999999999992   
+        20   -0.190748000000000001 -1.378535999999999984 -0.257332000000000005   
+        21   -0.259444999999999981  0.059499999999999997  0.379622000000000015   
+        22   -0.097199999999999995 -0.123319000000000012 -0.008413000000000000   
+        23   -0.587453000000000003  0.718091999999999953 -0.169172999999999990   
+        24   -0.316292999999999991 -0.302723999999999993  0.238161000000000012   
+        25   -0.131762999999999991  0.102363999999999997  0.249312000000000006   
+        26    0.308865000000000001 -0.033242000000000001 -0.121219999999999994   
+        27   -0.407362999999999975 -0.056583000000000001 -0.059535999999999999   
+        28   -0.957362000000000046 -0.115214000000000011  0.536583000000000032   
+        29   -0.092785999999999993 -0.209882999999999986  0.210737000000000008   
+        {\ldots}                    {\ldots}                   {\ldots}                   {\ldots}   
+        1874 -0.305800000000000016 -0.001411000000000000  0.183986000000000011   
+        1875 -0.228965999999999975 -0.555825000000000014  0.041347000000000002   
+        1876  0.052837000000000002 -0.229221000000000008 -0.005862000000000000   
+        1877 -0.158016999999999991 -0.560599999999999987 -0.037412000000000001   
+        1878 -0.164503000000000010 -0.267884999999999984  0.383606999999999976   
+        1879 -0.337247000000000019 -0.509634999999999949 -0.126501000000000002   
+        1880 -0.252738999999999991 -0.300597000000000003  0.323255000000000015   
+        1881 -0.113892999999999994 -0.181318000000000007 -0.009620000000000000   
+        1882  0.113554999999999989 -0.262732999999999994  0.125462999999999991   
+        1883 -0.075290999999999983 -0.192640000000000006  0.151800999999999991   
+        1884 -0.433923999999999976 -0.469754000000000005  0.131277000000000005   
+        1885 -0.182151000000000007 -0.252792999999999990 -0.024655000000000000   
+        1886 -0.139806999999999987 -0.158887000000000000 -0.116572000000000009   
+        1887  0.086848999999999982 -0.085012000000000004  0.004459000000000000   
+        1888 -0.012669000000000000  0.017236999999999999 -0.287098999999999993   
+        1889 -0.182105999999999990  0.227615000000000012 -0.285492000000000024   
+        1890 -0.228445000000000009  0.085329000000000002 -0.023737999999999999   
+        1891 -0.121630999999999989 -0.449606999999999979 -0.238538000000000000   
+        1892 -0.174896999999999997 -0.164175999999999989 -0.126160999999999995   
+        1893  0.461575000000000013 -0.334710999999999981 -0.196255000000000013   
+        1894 -0.079158999999999993 -0.049380000000000000  0.539406999999999970   
+        1895 -0.129108000000000001 -0.084084999999999993  0.028664999999999996   
+        1896 -0.120413999999999993 -0.076443999999999998  0.039064000000000002   
+        1897 -0.255850000000000022  0.163535000000000014 -0.339758999999999978   
+        1898 -0.540111000000000008  0.011995000000000000 -0.027638999999999997   
+        1899 -0.059395000000000003 -0.189631999999999995  0.092175000000000007   
+        1900 -0.163329000000000002  0.035261000000000001  0.039047999999999999   
+        1901 -0.089050000000000004 -0.167031000000000013  0.059170000000000007   
+        1902 -0.321398999999999990 -0.402173999999999976 -0.091999999999999998   
+        1903  0.068751999999999994 -0.474119999999999986 -0.075155000000000000   
+        
+                                 6                     7                     8  \textbackslash{}
+        0    -0.377524000000000026 -0.405760999999999983 -0.080980999999999984   
+        1     0.194177999999999989 -0.260794999999999999 -0.131469000000000003   
+        2    -0.124488000000000015 -0.857403000000000026 -0.210448999999999969   
+        3    -0.151676000000000005 -0.137239000000000000 -0.118835999999999983   
+        4    -0.406260999999999983 -0.011587000000000000 -0.046593999999999997   
+        5    -0.709991999999999956 -0.291412999999999978 -0.034007999999999997   
+        6    -0.099325999999999998 -0.215975000000000000 -0.073441000000000006   
+        7    -0.281488999999999989 -1.104732000000000047 -0.903530999999999973   
+        8     0.131194000000000005 -0.021718000000000001  0.179732000000000003   
+        9    -0.056483999999999999 -0.235515999999999975  0.059089999999999997   
+        10    0.005616000000000000 -0.194774000000000003 -0.007509000000000000   
+        11   -0.183517000000000013 -0.424275000000000013 -0.070531999999999997   
+        12   -0.065124000000000001 -0.664760000000000018  0.267251999999999990   
+        13   -0.199721000000000010 -0.280013000000000012 -0.089751999999999998   
+        14   -0.168253000000000014 -0.391002999999999989  0.069027000000000019   
+        15   -0.143709000000000003 -0.295675000000000021 -0.207634000000000013   
+        16   -0.353258000000000016 -0.691551000000000027 -0.167995000000000005   
+        17    0.312632999999999994 -1.208917000000000019  0.404500999999999999   
+        18   -0.559695000000000054  0.030525000000000000 -0.048230000000000002   
+        19   -0.171444999999999986 -0.232591999999999993 -0.032550999999999997   
+        20   -0.241648000000000002 -0.915472999999999981 -0.154290000000000010   
+        21   -0.596839000000000008  0.247365000000000002 -0.039580999999999998   
+        22   -0.093158000000000005 -0.390131000000000006  0.331988999999999979   
+        23   -0.633944999999999981 -0.787568999999999853 -0.044484000000000003   
+        24    0.126844000000000012 -0.287078999999999973 -0.236391999999999991   
+        25   -0.670614000000000043 -0.626201000000000008 -0.257361999999999980   
+        26   -0.096383999999999997 -0.458913000000000015 -0.204076000000000007   
+        27   -0.332307000000000019  0.243717999999999990 -0.056319000000000001   
+        28   -0.635274000000000005 -0.214719999999999994 -0.360194000000000014   
+        29   -0.221826999999999996 -0.216218999999999995 -0.155338000000000004   
+        {\ldots}                    {\ldots}                   {\ldots}                   {\ldots}   
+        1874 -0.270731999999999973 -0.018844000000000000  0.043668999999999999   
+        1875 -0.195104000000000000 -0.028939999999999997 -0.032628999999999998   
+        1876 -0.346974000000000005 -0.434110000000000051 -0.382728000000000013   
+        1877 -0.802844000000000002 -0.380388999999999977 -0.253199000000000007   
+        1878 -0.683455999999999952 -0.377732000000000012  0.440108999999999972   
+        1879 -0.425831999999999988 -0.647102999999999984  0.877493999999999996   
+        1880 -0.182028999999999996  0.012945999999999999 -0.004941000000000000   
+        1881 -0.129809000000000008 -0.232774000000000009 -0.030263999999999999   
+        1882  0.322745000000000004 -0.490956000000000059 -0.334654000000000007   
+        1883 -0.034254000000000000 -0.312887000000000026  0.032902000000000001   
+        1884 -0.367808000000000024 -0.184018999999999988 -0.172855000000000009   
+        1885 -0.086647000000000002 -0.028583999999999998  0.132543999999999995   
+        1886 -0.072778999999999983 -0.296501999999999988 -0.168083000000000010   
+        1887 -0.332293000000000005 -0.163901999999999992 -0.173093999999999998   
+        1888  0.278888999999999998 -0.386444999999999983 -0.639612999999999987   
+        1889  0.320813000000000015  0.075703000000000006 -0.327494999999999981   
+        1890 -0.264734000000000025 -0.521814000000000000 -0.246856999999999993   
+        1891 -0.020388000000000000 -0.063849000000000003  0.045969999999999997   
+        1892 -0.199566999999999994 -0.035276000000000002 -0.062016000000000002   
+        1893 -1.104768999999999890 -0.032552999999999999 -0.533424000000000009   
+        1894 -0.394372000000000000 -0.078853999999999994 -0.193076999999999999   
+        1895 -0.151951000000000003 -0.411308000000000007 -0.208030999999999994   
+        1896 -0.077341999999999994 -0.184722999999999998 -0.057144000000000007   
+        1897 -0.088586999999999999 -0.097008999999999998 -0.016102000000000002   
+        1898 -0.321197999999999984 -0.032666000000000001 -0.294947999999999988   
+        1899  0.006009000000000000 -0.214956000000000008 -0.553587000000000051   
+        1900 -0.183778999999999998 -0.583006000000000024  0.040829999999999998   
+        1901 -0.036630000000000003 -0.411689999999999945 -0.380628000000000022   
+        1902 -0.084116999999999983 -0.202871999999999997 -0.182048999999999989   
+        1903  0.213834999999999997  0.102973999999999996 -0.239666999999999991   
+        
+                                 9          {\ldots}                            119  \textbackslash{}
+        0    -0.143192000000000014          {\ldots}          -0.185254000000000002   
+        1    -0.560057000000000027          {\ldots}          -0.772757000000000027   
+        2     0.100710999999999995          {\ldots}          -0.305485000000000007   
+        3    -0.078329999999999983          {\ldots}          -0.221096999999999988   
+        4     0.200022000000000005          {\ldots}          -0.087499999999999981   
+        5    -0.072028999999999996          {\ldots}          -0.520708999999999977   
+        6     0.068349999999999994          {\ldots}          -0.177067000000000002   
+        7    -0.101552999999999990          {\ldots}          -0.520375000000000032   
+        8    -0.556632000000000016          {\ldots}          -0.212640999999999997   
+        9     0.023817999999999999          {\ldots}           0.185896000000000006   
+        10    0.135864000000000013          {\ldots}          -0.347828999999999999   
+        11   -0.223386000000000001          {\ldots}          -0.172998000000000013   
+        12    0.251852999999999994          {\ldots}          -0.379209000000000018   
+        13    0.031140999999999999          {\ldots}          -0.185998999999999998   
+        14   -0.370244000000000018          {\ldots}          -0.099767999999999996   
+        15    0.278112999999999999          {\ldots}           0.137642999999999988   
+        16   -0.401683999999999986          {\ldots}           0.027165999999999999   
+        17    0.542385000000000006          {\ldots}           0.033973999999999997   
+        18    0.302893999999999997          {\ldots}          -0.203458000000000000   
+        19   -0.023736000000000000          {\ldots}          -0.302792999999999979   
+        20    0.757970000000000033          {\ldots}          -0.390425999999999995   
+        21    0.260197999999999985          {\ldots}          -0.037170000000000002   
+        22    0.150983000000000006          {\ldots}          -0.016685999999999999   
+        23    0.340631999999999990          {\ldots}          -0.224072999999999994   
+        24   -0.183894000000000002          {\ldots}           0.063100000000000003   
+        25   -0.149418999999999996          {\ldots}          -0.231524000000000008   
+        26   -0.219857000000000025          {\ldots}          -0.295269000000000004   
+        27   -0.108433999999999989          {\ldots}          -0.610729999999999995   
+        28    0.543462000000000001          {\ldots}          -0.015240000000000000   
+        29   -0.135347999999999996          {\ldots}           0.374344999999999983   
+        {\ldots}                    {\ldots}          {\ldots}                            {\ldots}   
+        1874  0.205295000000000005          {\ldots}          -0.241110999999999992   
+        1875  0.471617000000000008          {\ldots}           0.181350000000000011   
+        1876 -0.421669999999999989          {\ldots}           0.180060999999999999   
+        1877 -0.373317999999999983          {\ldots}          -0.735025000000000039   
+        1878  0.788768000000000025          {\ldots}          -1.677033000000000218   
+        1879  0.160767999999999994          {\ldots}          -0.758821999999999997   
+        1880  0.126295999999999992          {\ldots}          -0.261593000000000020   
+        1881  0.127337000000000006          {\ldots}          -0.216350999999999988   
+        1882  0.810701000000000005          {\ldots}           0.080120999999999998   
+        1883  0.096556000000000003          {\ldots}           0.042290000000000001   
+        1884  0.172163000000000010          {\ldots}          -0.004929000000000000   
+        1885 -0.127742999999999995          {\ldots}          -0.332411999999999985   
+        1886 -0.032093999999999998          {\ldots}          -0.160428999999999988   
+        1887 -0.236450999999999995          {\ldots}          -0.603397999999999990   
+        1888 -0.281571000000000016          {\ldots}          -0.647483000000000031   
+        1889  0.827937000000000034          {\ldots}           0.593280000000000030   
+        1890 -0.147181000000000006          {\ldots}          -0.100506999999999999   
+        1891  0.072844999999999993          {\ldots}           0.096068000000000001   
+        1892  0.025326000000000001          {\ldots}          -0.172226999999999991   
+        1893  0.980806999999999984          {\ldots}          -0.865949999999999998   
+        1894  0.121363000000000013          {\ldots}          -1.000798000000000076   
+        1895 -0.051034999999999997          {\ldots}          -0.231647999999999993   
+        1896  0.058511000000000001          {\ldots}          -0.135552000000000006   
+        1897 -0.184194999999999998          {\ldots}           0.329203000000000023   
+        1898 -0.034582000000000002          {\ldots}          -0.427312999999999998   
+        1899 -0.343411999999999995          {\ldots}          -0.876425000000000010   
+        1900  0.005166000000000000          {\ldots}          -0.022294000000000001   
+        1901  0.108217999999999995          {\ldots}          -0.199566999999999994   
+        1902 -0.210520000000000013          {\ldots}          -0.188269999999999993   
+        1903  1.100970999999999922          {\ldots}          -0.233581000000000011   
+        
+                               120                   121                   122  \textbackslash{}
+        0     0.175382000000000010  0.326658000000000004  0.094920000000000004   
+        1     0.263089999999999991  0.152055999999999997 -0.348088999999999982   
+        2    -0.438153999999999988  0.633051999999999948 -0.086624000000000007   
+        3     0.062376000000000001  0.249082000000000026  0.034577999999999998   
+        4    -0.129405999999999993 -0.203127000000000002 -0.141165000000000013   
+        5     0.044817999999999997  0.542819999999999969  0.053678999999999998   
+        6    -0.029506000000000001  0.026117000000000001  0.019119000000000001   
+        7     0.017795999999999999 -0.190424000000000010 -0.029235000000000001   
+        8    -0.283499999999999974  0.071489999999999998  0.119095999999999994   
+        9     0.450909000000000004  0.258500999999999981 -0.031133999999999998   
+        10    0.126703000000000010 -0.303854000000000013 -0.338882000000000017   
+        11    0.167263000000000023  0.294468000000000008  0.363870000000000027   
+        12    0.156124000000000013  0.237135000000000012 -0.028643999999999999   
+        13   -0.090271000000000004  0.251130000000000020 -0.107342999999999994   
+        14   -0.277029999999999998  0.027435000000000001  0.019295000000000000   
+        15    0.556123999999999952  0.289787999999999990 -0.597072000000000047   
+        16    0.054516000000000002  0.246061000000000002 -0.060044000000000007   
+        17   -0.233673999999999993  0.186003000000000002 -0.081816000000000000   
+        18    0.021648000000000001  0.085907999999999998 -0.131534000000000012   
+        19   -0.017156000000000001  0.137230999999999992 -0.545428000000000024   
+        20    0.052861999999999999  0.989786999999999972  0.272600000000000009   
+        21    0.016268000000000001 -0.463963999999999988 -0.073799000000000003   
+        22    0.356852000000000003  0.010146000000000001 -0.127101999999999993   
+        23   -0.020646000000000001 -0.133138000000000006  0.140620999999999996   
+        24    0.179503999999999997  0.096236000000000002 -0.005128000000000000   
+        25   -0.099584000000000006  0.120482000000000006 -0.033116000000000000   
+        26   -0.142880000000000007  0.413646000000000014 -0.346866000000000008   
+        27    0.102637999999999993 -0.025263000000000001  0.368825999999999987   
+        28   -0.823505000000000043  1.144303000000000070  0.303093999999999975   
+        29   -0.040570000000000002  0.342843000000000009  0.039129999999999998   
+        {\ldots}                    {\ldots}                   {\ldots}                   {\ldots}   
+        1874 -0.069956000000000004  0.579116999999999993 -0.138986999999999999   
+        1875 -0.137198999999999988 -0.125862000000000002  0.189585000000000004   
+        1876 -0.201490000000000002  0.225812000000000013 -0.396083999999999992   
+        1877  0.338048000000000015  0.173322000000000004 -0.350799000000000027   
+        1878 -0.662089999999999956  0.061095999999999998 -0.016213999999999999   
+        1879 -0.533869999999999956  0.426398999999999972  0.209266000000000008   
+        1880 -0.035651000000000002 -0.130071999999999993  0.206924999999999998   
+        1881 -0.128235999999999989  0.099571000000000007 -0.078589999999999993   
+        1882 -0.063894000000000006  0.481275999999999982 -0.225492999999999971   
+        1883  0.104364000000000012  0.070116999999999999 -0.111453999999999998   
+        1884 -0.389218000000000008  0.375454999999999983 -0.042696999999999999   
+        1885 -0.010714000000000000  0.060387000000000003  0.066178000000000001   
+        1886  0.064194000000000001  0.212625000000000008 -0.038030000000000001   
+        1887 -0.288882000000000028 -0.056787999999999998 -0.048118000000000001   
+        1888 -0.487080000000000013  0.682881999999999989 -0.961327999999999960   
+        1889  0.210309999999999997  0.642873999999999945  0.222227000000000008   
+        1890 -0.178698999999999997 -0.007995999999999998 -0.082622000000000001   
+        1891 -0.083872000000000002 -0.092024999999999996 -0.034526000000000001   
+        1892 -0.011479000000000001  0.067582000000000003  0.152787000000000006   
+        1893 -0.071986999999999995 -0.372049000000000019 -0.141327000000000008   
+        1894 -0.279824999999999990  0.121114000000000013 -0.154787000000000008   
+        1895  0.166105000000000003  0.146688000000000013 -0.314381999999999995   
+        1896  0.025194000000000001  0.048355000000000002 -0.051306999999999998   
+        1897  0.068173999999999998  0.448147999999999991 -0.049696999999999998   
+        1898 -0.274422999999999973  0.062771999999999994  0.514002999999999988   
+        1899 -0.463978999999999975  0.311875999999999987 -0.046636999999999998   
+        1900  0.190364000000000005  0.041916000000000002  0.021502000000000000   
+        1901 -0.042015999999999998 -0.100145999999999999  0.127165000000000000   
+        1902  0.315103999999999995  0.233244000000000007 -0.129893000000000008   
+        1903  0.281490000000000018  0.794972000000000012  0.329952000000000023   
+        
+                               123                   124                   125  \textbackslash{}
+        0    -0.696819999999999995  0.002694000000000000 -0.451108999999999982   
+        1     0.317742000000000024  0.093362000000000001 -0.539200000000000013   
+        2     0.049135999999999999 -0.166021000000000002 -0.458888999999999991   
+        3    -0.069553000000000004  0.115556000000000006 -0.058006000000000002   
+        4    -0.115330000000000002 -0.204074000000000005 -0.148682000000000009   
+        5    -0.076988000000000001 -0.250410000000000021 -0.055951000000000001   
+        6    -0.147986000000000006  0.003578000000000000 -0.079431000000000002   
+        7    -0.025470000000000000  0.244461000000000012 -0.379242999999999997   
+        8    -0.409880000000000022 -0.039678999999999999 -0.034603000000000002   
+        9    -0.010387000000000000 -0.266371000000000024  0.078368999999999994   
+        10   -0.130873999999999990  0.199175999999999992 -0.063117999999999994   
+        11   -0.091785000000000005  0.452666999999999986 -0.634691000000000005   
+        12   -0.496545999999999987  0.180452000000000001 -0.067113000000000006   
+        13   -0.269127999999999978  0.265226999999999991 -0.068514000000000019   
+        14   -0.221678999999999987  0.361167000000000016  0.530163000000000051   
+        15   -0.278202000000000005 -0.047619000000000002 -0.081820000000000004   
+        16   -0.137106000000000006  0.132632000000000000 -0.341918999999999973   
+        17   -0.529240999999999961  0.268847999999999976  0.329178999999999999   
+        18   -0.048676999999999998  0.227776000000000006 -0.199055000000000010   
+        19    0.324680999999999997  0.282878999999999992  0.574254999999999960   
+        20    0.034185000000000000  0.968350000000000044 -0.986753000000000213   
+        21   -0.242664999999999992  0.361580000000000013 -0.468060999999999949   
+        22   -0.334869000000000028  0.120979000000000003  0.102374999999999994   
+        23   -0.238336999999999993 -0.656206999999999985  0.264915000000000012   
+        24   -0.439010000000000011  0.115033999999999997  0.057075000000000001   
+        25    0.195596999999999993  0.214466999999999991 -0.009351999999999999   
+        26   -0.006461000000000000 -0.009285000000000002 -0.053770999999999999   
+        27   -0.018038999999999999  0.063076999999999994  0.189119000000000009   
+        28   -0.230226999999999987  0.046213999999999998 -0.483872999999999942   
+        29   -0.818161999999999834  0.251292999999999989 -0.252676999999999985   
+        {\ldots}                    {\ldots}                   {\ldots}                   {\ldots}   
+        1874 -0.318657000000000024 -0.144417999999999991 -0.406223999999999974   
+        1875 -0.251954999999999985 -0.194086000000000009 -0.198153999999999997   
+        1876  0.247555999999999998 -0.280310000000000004  0.091454999999999995   
+        1877 -0.160643000000000008  0.585834999999999995  0.522662999999999989   
+        1878  0.129864000000000007 -0.056089000000000000  0.050890999999999999   
+        1879 -0.500502000000000002  0.040129999999999999 -0.091105000000000005   
+        1880 -0.093046000000000004  0.147645999999999999 -0.272849999999999981   
+        1881 -0.236176000000000025  0.028472999999999998 -0.222287000000000012   
+        1882 -0.063311000000000006  0.416752000000000011  0.220884000000000025   
+        1883 -0.370254000000000028  0.046146000000000000 -0.128967999999999999   
+        1884 -0.234672999999999993 -0.087024000000000004 -0.083391000000000007   
+        1885 -0.305047999999999986  0.200113000000000013 -0.096518000000000007   
+        1886 -0.106656999999999988  0.074805999999999984 -0.080556000000000003   
+        1887 -0.101644000000000012  0.124934999999999991 -0.154228000000000004   
+        1888  0.144655000000000006  0.280030999999999974 -0.273048999999999986   
+        1889 -0.104115000000000013 -0.201796000000000003 -0.291681999999999997   
+        1890 -0.110533999999999993  0.108173000000000005 -0.259776999999999980   
+        1891 -0.430383000000000016  0.146056999999999992 -0.044406000000000001   
+        1892 -0.109510999999999983  0.047619000000000002 -0.128749000000000002   
+        1893  0.167614999999999986 -0.667483000000000049  0.262846999999999997   
+        1894 -0.529976000000000003  0.216292000000000012  0.438977999999999979   
+        1895 -0.057539000000000000  0.177861999999999992  0.118059999999999984   
+        1896 -0.233475999999999989  0.064589999999999995  0.026268000000000000   
+        1897  0.263680000000000025  0.014973999999999999 -0.324272999999999978   
+        1898  0.159337000000000006  0.295806000000000013  0.594256000000000006   
+        1899 -0.168162000000000006 -0.227764999999999995 -0.184116000000000002   
+        1900 -0.354159999999999975 -0.175445999999999991 -0.426225000000000021   
+        1901 -0.109465999999999994  0.075888999999999998 -0.280164000000000024   
+        1902 -0.192073999999999995  0.021514999999999999 -0.537074000000000051   
+        1903 -0.162281000000000009 -0.489283000000000023 -0.405832000000000026   
+        
+                               126                   127                   128  
+        0    -0.471277999999999975  0.041342999999999998 -0.385863000000000012  
+        1    -0.091987000000000013  0.245604999999999990  0.074918999999999999  
+        2     0.214303999999999994 -0.089515999999999998 -0.083751000000000006  
+        3     0.075348999999999999 -0.039742000000000000  0.043875999999999998  
+        4    -0.107581999999999997 -0.051375999999999998  0.160946000000000006  
+        5     0.065985000000000002 -0.215602999999999989 -0.370620999999999978  
+        6     0.082618999999999998 -0.107453999999999994  0.014473000000000000  
+        7     0.312981000000000009 -0.396152000000000004  0.442271999999999998  
+        8    -0.173974999999999991  0.037685000000000003 -0.324967999999999979  
+        9     0.769762999999999975  0.349764999999999993 -0.287582000000000004  
+        10   -0.037887999999999998 -0.207392999999999994 -0.031151999999999999  
+        11    0.294847999999999999 -0.105107999999999993 -0.394774000000000014  
+        12   -0.720995999999999748 -0.389496999999999982  0.368676999999999977  
+        13    0.002984000000000000 -0.222772999999999999  0.055148000000000003  
+        14   -0.315661999999999998  0.010097000000000000 -0.061616999999999998  
+        15    0.528487000000000040 -0.560567999999999955 -0.030545999999999997  
+        16   -0.044568999999999998 -0.214927000000000007 -0.350119999999999987  
+        17   -0.461339000000000055  0.034200000000000001 -0.129048999999999997  
+        18   -0.207538999999999974  0.030603999999999999  0.084890999999999994  
+        19    0.049447999999999999  0.138510999999999995 -0.351364999999999983  
+        20   -0.343434999999999990  0.100675000000000001 -0.544278000000000040  
+        21    0.243467999999999990 -0.863855000000000040 -0.011448000000000000  
+        22    0.189795999999999992 -0.256122000000000016  0.337963000000000013  
+        23   -0.154709000000000013  0.557286999999999977 -0.221318999999999988  
+        24    0.155242999999999992 -0.122263000000000011 -0.097171999999999994  
+        25    0.126731000000000010 -0.063913999999999999  0.287648999999999988  
+        26    0.209525999999999990  0.040259000000000003  0.192409999999999998  
+        27    0.144072000000000006 -0.013469999999999999  0.538147999999999960  
+        28   -0.295777000000000012  0.527816999999999981  0.018881999999999999  
+        29   -0.215904000000000013 -0.130320999999999992 -0.127755000000000007  
+        {\ldots}                    {\ldots}                   {\ldots}                   {\ldots}  
+        1874  0.086060999999999999 -0.122718999999999995 -0.179850000000000010  
+        1875 -0.028379000000000001 -0.537966000000000055 -0.426918000000000020  
+        1876 -0.310844999999999982 -0.111154999999999990  0.274299999999999988  
+        1877  0.266388000000000014  0.155632999999999994  0.234494000000000008  
+        1878 -0.054357000000000003 -0.597458000000000045 -0.880387999999999837  
+        1879  0.398125000000000007  0.064921999999999994 -0.423916999999999988  
+        1880 -0.100537000000000001 -0.241652000000000006 -0.124581999999999998  
+        1881 -0.106538999999999995 -0.166725000000000012 -0.167087000000000013  
+        1882 -0.039052000000000003 -0.113727999999999996 -0.159202000000000010  
+        1883  0.075150999999999982 -0.111667000000000002  0.052135000000000001  
+        1884  0.033660000000000002 -0.236914999999999987  0.150285000000000002  
+        1885 -0.000190000000000000 -0.070585999999999996 -0.091574000000000003  
+        1886  0.037533999999999998 -0.124168000000000001  0.058194999999999997  
+        1887  0.004889000000000000 -0.025038999999999999 -0.186302999999999996  
+        1888  0.045592000000000001 -0.347866999999999982  0.115362999999999993  
+        1889  0.346887000000000001 -0.115803999999999990 -0.072633000000000003  
+        1890  0.153378999999999988  0.309674000000000005  0.147686000000000012  
+        1891  0.007049000000000000 -0.012253999999999999 -0.205792000000000003  
+        1892  0.130092000000000013  0.017076999999999998  0.033314000000000003  
+        1893 -0.108439999999999995 -0.387261000000000022 -0.747492000000000045  
+        1894 -0.058985999999999997 -0.039627000000000002 -0.138653999999999999  
+        1895  0.199947999999999987 -0.048487000000000002  0.288212000000000024  
+        1896 -0.014581999999999999 -0.009948000000000000  0.004150000000000000  
+        1897 -0.168336999999999987 -0.270969999999999989 -0.113678000000000001  
+        1898  0.100536000000000000 -0.434827999999999992  0.195171000000000011  
+        1899  0.424020000000000008 -0.563091000000000008  0.000564000000000000  
+        1900  0.012227000000000000 -0.084654999999999994  0.175941999999999987  
+        1901 -0.081682000000000005  0.044817999999999997 -0.082266000000000006  
+        1902 -0.057894000000000001 -0.225554000000000004 -0.185702000000000006  
+        1903  0.391678000000000026 -0.418874000000000024  0.179629000000000011  
+        
+        [1904 rows x 129 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{na}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{1904}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:}                    0                     1                     2  \textbackslash{}
+        0     tihuitz        -0.348621000000000014 -0.017441000000000002   
+        1     quixtia         0.163007999999999986 -0.278059999999999974   
+        2     quixtiz        -0.689479999999999982 -0.714752999999999972   
+        3     triarcas       -0.239407000000000009  0.284032999999999980   
+        4     peuh           -0.181800999999999990 -0.273990999999999985   
+        5     chichina       -0.244954000000000005 -0.372981999999999980   
+        6     arroz          -1.309031000000000056 -0.301729999999999998   
+        7     ictique        -0.483607000000000009 -0.346845999999999988   
+        8     ixca           -0.493053999999999992  0.220873000000000014   
+        9     tlatzotzonque   0.365999999999999992  0.411270000000000024   
+        10    tecu           -0.125825999999999993  0.047821000000000002   
+        11    cuechahua      -1.109178999999999915 -0.088160000000000002   
+        12    tech           -0.209255000000000024 -0.273102999999999985   
+        13    teca           -0.048698999999999999 -0.422968999999999984   
+        14    oquin           0.142982999999999999 -0.513425000000000020   
+        15    oquim          -0.128396000000000010 -0.260344999999999993   
+        16    mopilia         0.063686000000000006 -0.141940000000000011   
+        17    pinol          -0.410027999999999948 -0.310699999999999976   
+        18    molcaxitl      -1.245476000000000028 -0.267440999999999984   
+        19    letra          -0.593764999999999987 -0.422551999999999983   
+        20    iztaleh        -0.618824000000000041 -0.512469999999999981   
+        21    acol           -0.072053000000000006 -0.535850000000000048   
+        22    neltocaz       -0.236018000000000006 -0.187311000000000005   
+        23    tami           -0.789127000000000023 -0.823160000000000003   
+        24    moilochti      -0.156057000000000001 -0.453560999999999992   
+        25    macehual       -0.053017000000000002 -0.542421999999999960   
+        26    tlaloch        -0.221525000000000000  0.606597999999999971   
+        27    ihtoti          0.007537000000000000  0.333403999999999978   
+        28    mimiloa        -0.237440000000000012 -0.379135999999999973   
+        29    machi          -0.276820999999999984  0.029927999999999996   
+        {\ldots}     {\ldots}                            {\ldots}                   {\ldots}   
+        1874  itzopelica     -0.313703999999999983  0.137048000000000003   
+        1875  rre             0.026813000000000000 -0.057445000000000003   
+        1876  tlahui         -0.414005999999999985 -0.410216999999999998   
+        1877  iesu            0.066039000000000000 -0.395712000000000008   
+        1878  mitl           -0.523378000000000010 -0.320776999999999979   
+        1879  pohui           0.068441000000000002  0.057225999999999999   
+        1880  pohua          -0.699775000000000036 -0.325394000000000017   
+        1881  bonapar        -1.007022000000000084  0.046504999999999998   
+        1882  tac            -0.359252999999999989  0.086428000000000005   
+        1883  tal            -0.301541999999999977 -0.266546000000000005   
+        1884  ipetla          0.089723999999999998  0.290615000000000012   
+        1885  mocuep         -0.085886000000000004 -0.097036999999999998   
+        1886  tlalhuia        0.086346000000000006 -0.906008000000000036   
+        1887  tommo          -0.459166000000000019 -0.140768000000000004   
+        1888  mopechteccac   -0.192417000000000005 -0.962742000000000209   
+        1889  siquier        -0.991511999999999949  0.065751000000000004   
+        1890  diploma        -0.252720000000000000 -0.154856999999999995   
+        1891  tazohcamati    -0.247535000000000005  0.130449000000000009   
+        1892  bautista       -0.096083000000000002  0.038677999999999997   
+        1893  nozo           -0.134923999999999988 -0.221320999999999990   
+        1894  cpal            0.018696999999999998 -0.234300000000000008   
+        1895  cpac           -0.270882999999999985 -0.014569000000000000   
+        1896  mitz           -0.154549999999999993 -0.350096000000000018   
+        1897  11o            -0.607044999999999946  0.019681000000000001   
+        1898  mito           -0.086007000000000000 -0.506018999999999997   
+        1899  miti           -0.242456000000000005 -0.406623999999999985   
+        1900  mita           -0.570872000000000046 -0.038941999999999997   
+        1901  tiliaya        -0.590813999999999950 -0.158256000000000008   
+        1902  señor          -0.096123000000000000 -0.360335000000000016   
+        1903  tepahpaquiltia -0.106956999999999997 -0.112950999999999996   
+        
+                                 3                     4                     5  \textbackslash{}
+        0    -0.155883999999999995 -0.418601000000000001  0.666802000000000006   
+        1    -0.453527000000000013 -0.064904000000000003  0.025853999999999999   
+        2    -0.100995000000000001 -0.094793000000000002  1.021972000000000103   
+        3     0.120584999999999998 -0.452631999999999979 -0.201202999999999993   
+        4    -0.298422999999999994  0.112453999999999998 -0.174767000000000006   
+        5    -0.574442000000000008  0.030450000000000001 -0.014422999999999998   
+        6    -0.190748000000000001 -1.378535999999999984 -0.257332000000000005   
+        7    -0.582860000000000045 -0.157400000000000012 -0.703736000000000028   
+        8     0.401839000000000002 -0.056989999999999999  0.087360999999999994   
+        9    -0.675858999999999988  0.035129000000000001  0.453247000000000011   
+        10   -0.541683000000000026 -0.367748000000000019  0.232639000000000012   
+        11    0.174025000000000013 -1.012717000000000089  0.086448999999999998   
+        12   -0.016694000000000001 -0.104038000000000005  0.051875999999999999   
+        13    0.225186999999999998 -0.053158999999999998 -0.205211000000000005   
+        14   -0.053328000000000000 -0.236137000000000014 -0.097825999999999996   
+        15   -0.232194000000000011 -0.165159000000000000 -0.307767999999999986   
+        16    0.167372999999999994 -0.435562000000000005 -0.091638999999999998   
+        17    0.466907999999999990 -0.737785000000000024 -0.087259000000000003   
+        18   -0.070928000000000019 -0.275073999999999985 -0.078189999999999982   
+        19   -0.132746000000000003 -0.567246999999999946  0.422010000000000052   
+        20   -0.169414000000000009  0.821583999999999981  0.049188999999999997   
+        21   -0.402936000000000016 -0.061864000000000002  0.053131999999999999   
+        22   -0.132220000000000004  0.043276000000000002 -0.188378999999999991   
+        23    0.154631999999999992 -0.100286000000000000  0.148775999999999992   
+        24   -0.795792999999999751 -0.397318999999999978  0.256002000000000007   
+        25   -0.296192000000000011 -0.142001999999999989  0.356181000000000025   
+        26    0.034225999999999999 -0.591156000000000015  0.106992000000000004   
+        27   -0.346548000000000023 -0.811289999999999845 -0.082375000000000004   
+        28    0.090767000000000000 -0.215486000000000011 -0.288250999999999979   
+        29   -0.169866999999999990 -0.205945999999999990  0.035080000000000000   
+        {\ldots}                    {\ldots}                   {\ldots}                   {\ldots}   
+        1874 -0.555610000000000048  0.045589999999999999  0.107287999999999994   
+        1875 -0.507643999999999984 -0.041734000000000000 -0.454627999999999977   
+        1876 -0.385720000000000007 -0.062659999999999993  0.314452000000000009   
+        1877  0.152347000000000010 -0.040751000000000002  0.046830999999999998   
+        1878  0.149240000000000012 -0.664923999999999960 -0.082875000000000004   
+        1879  0.044767000000000001 -0.030275000000000000  0.529259999999999953   
+        1880  0.149003999999999998 -0.305771000000000015  0.533200000000000007   
+        1881 -0.042731999999999999  0.347945999999999978  0.179983000000000004   
+        1882 -0.040703000000000003  0.009358999999999999  0.752402000000000015   
+        1883 -0.340998999999999997  0.065249000000000001 -0.248007000000000005   
+        1884  0.451425999999999994 -0.265454999999999997 -0.233291999999999999   
+        1885 -0.091712000000000002 -0.227584000000000009 -0.052226000000000002   
+        1886  0.002366000000000000 -0.122199000000000002 -0.843071000000000015   
+        1887 -0.468708999999999987 -0.257000000000000006 -0.005297000000000000   
+        1888 -0.882846000000000020 -0.952620000000000022  0.826420000000000043   
+        1889  0.700706000000000051 -0.854303000000000035  0.393510000000000026   
+        1890  0.345266999999999991 -0.186820999999999987  0.293522000000000005   
+        1891  0.079842999999999983  0.104539000000000007  0.006993000000000000   
+        1892  0.458204000000000000 -0.539294999999999969 -0.022422000000000001   
+        1893 -0.112059000000000006 -0.336803000000000019  0.147180000000000005   
+        1894  0.204082000000000013 -0.674239999999999950  0.130360000000000004   
+        1895 -0.018976000000000000 -0.120547000000000001 -0.195848999999999995   
+        1896 -0.312771999999999994  0.004613000000000000 -0.138025000000000009   
+        1897 -0.162009999999999987  0.537687000000000026  0.299648999999999999   
+        1898 -0.025040000000000000 -0.119429999999999994 -0.201796000000000003   
+        1899 -0.448373000000000022  0.094906000000000004 -0.261116000000000015   
+        1900  0.290051000000000003 -0.181270999999999988  0.569405999999999968   
+        1901 -0.082428000000000001  0.205336999999999992  0.090624999999999997   
+        1902  0.112305000000000002 -0.132857000000000003 -0.028074999999999999   
+        1903 -0.016469000000000001 -0.104072999999999999  0.000267000000000000   
+        
+                                 6                     7                     8  \textbackslash{}
+        0    -0.385216000000000003 -0.507603000000000026  0.115668999999999994   
+        1    -0.084598000000000007 -0.170526000000000011 -0.208350000000000007   
+        2     0.090782000000000002 -0.129735999999999990  0.228915000000000007   
+        3    -0.211770999999999987 -0.927865999999999969 -0.209665999999999991   
+        4     0.226840999999999987 -0.200030000000000013 -0.225804000000000005   
+        5    -0.554024999999999990 -0.365472000000000019 -0.567765999999999993   
+        6    -0.241648000000000002 -0.915472999999999981 -0.154290000000000010   
+        7     0.025499000000000001 -0.826618999999999993  0.185927000000000009   
+        8    -0.430132000000000014 -0.526615000000000055 -0.388052999999999981   
+        9     0.003706000000000000  0.056442999999999993 -0.972342000000000040   
+        10    0.308508999999999978  0.015587999999999999 -0.197905999999999999   
+        11   -0.895321000000000033 -0.390795999999999977 -0.543026000000000009   
+        12   -0.123791000000000012 -0.371012000000000008  0.049023999999999998   
+        13    0.031722000000000000 -0.681054000000000048 -0.007576000000000000   
+        14   -0.181740000000000013 -0.165009999999999990 -0.253000000000000003   
+        15    0.114444000000000004 -0.137560999999999989  0.051691000000000001   
+        16    0.280727000000000004 -1.028512000000000093  0.170566999999999996   
+        17    0.092975000000000002 -0.730414000000000008 -0.831752999999999854   
+        18   -0.577637999999999985 -0.344783999999999979 -0.162403999999999993   
+        19   -0.726646000000000014 -0.269371000000000027  0.031386999999999998   
+        20   -0.773008999999999835  0.046932000000000001 -0.876195999999999753   
+        21   -0.563038000000000038 -0.113651000000000002  0.155026999999999998   
+        22   -0.493624000000000007 -0.414775000000000005 -0.612163000000000013   
+        23    0.400616000000000028 -1.037541999999999964 -0.199759999999999993   
+        24   -0.068589999999999998 -0.881681999999999855  0.251027999999999973   
+        25   -0.237326000000000009 -0.593899999999999983 -0.075592000000000006   
+        26   -0.695967000000000002 -0.439441999999999999 -0.652985999999999955   
+        27   -0.245318000000000008 -0.867608999999999853 -0.908792000000000044   
+        28   -0.021450000000000000 -0.575462000000000029 -0.773710000000000009   
+        29   -0.051753000000000000 -0.496952999999999978  0.081658999999999982   
+        {\ldots}                    {\ldots}                   {\ldots}                   {\ldots}   
+        1874 -0.372228000000000003 -0.168558999999999987 -0.033674999999999997   
+        1875  0.269247000000000014 -1.028175000000000061 -0.210219999999999990   
+        1876 -0.223460999999999993 -0.698219999999999952  0.100712999999999997   
+        1877 -0.168752999999999986 -0.172516000000000003 -0.186767999999999990   
+        1878 -0.315232000000000012  0.222792999999999991 -0.341668000000000027   
+        1879  0.263942999999999983  0.067962999999999996 -0.043549999999999998   
+        1880  0.017722999999999999 -0.206189000000000011 -0.072312000000000001   
+        1881 -0.768920999999999855 -0.496798999999999991 -0.093286999999999995   
+        1882 -0.270737000000000005 -0.511367000000000016 -0.541302999999999979   
+        1883  0.200078000000000006 -0.169727999999999990 -0.236136000000000013   
+        1884 -0.331046000000000007 -0.075033000000000002 -0.466453000000000007   
+        1885 -0.070912000000000003 -0.549401000000000028 -0.190699000000000007   
+        1886 -0.358717000000000008 -0.093923000000000006 -0.121978000000000003   
+        1887  0.093463000000000004 -0.603580000000000005  0.121912999999999994   
+        1888  0.365445999999999993 -0.453237999999999974 -0.653340999999999950   
+        1889 -0.380755999999999983 -0.284304999999999974 -0.482179999999999997   
+        1890 -0.590886000000000022 -0.786617000000000011 -0.924343000000000026   
+        1891 -0.068626000000000006 -0.007566000000000000 -0.398394999999999999   
+        1892 -0.679035000000000055 -0.175024000000000013  0.024514999999999999   
+        1893  0.110976000000000005 -0.495080000000000020  0.040210999999999997   
+        1894 -0.304505000000000026 -0.395550000000000013 -0.144552000000000014   
+        1895 -0.478239999999999943  0.245689999999999992  0.283600999999999992   
+        1896 -0.298850999999999978 -0.502487000000000017  0.019393000000000001   
+        1897 -0.694543000000000021 -0.660888000000000031 -0.204908000000000007   
+        1898 -0.259135999999999977 -0.142555999999999988 -0.094375000000000001   
+        1899 -0.127483000000000013 -0.181723999999999997  0.077157000000000003   
+        1900  0.188679000000000013 -0.644375999999999949 -0.091072000000000000   
+        1901 -0.260921999999999987 -0.291976999999999987 -0.346065999999999985   
+        1902 -0.081686999999999982 -0.174082999999999988  0.058300999999999999   
+        1903 -0.029971999999999999 -0.181743999999999989 -0.064496999999999999   
+        
+                                 9          {\ldots}                            119  \textbackslash{}
+        0    -0.210249999999999992          {\ldots}          -0.577107000000000037   
+        1    -0.172448999999999991          {\ldots}          -0.529113999999999973   
+        2     0.007809000000000000          {\ldots}          -0.114314000000000013   
+        3     0.436325000000000018          {\ldots}          -1.114122000000000057   
+        4    -0.098054000000000002          {\ldots}          -0.059520000000000003   
+        5     0.394762000000000002          {\ldots}          -0.031300000000000001   
+        6     0.757970000000000033          {\ldots}          -0.390425999999999995   
+        7    -0.679143000000000052          {\ldots}          -0.149844000000000005   
+        8    -0.296080000000000010          {\ldots}          -0.311387000000000025   
+        9     0.065504000000000007          {\ldots}          -1.514177000000000106   
+        10    0.229942000000000007          {\ldots}          -0.306541000000000008   
+        11   -0.390174999999999994          {\ldots}          -1.017648000000000108   
+        12   -0.156409999999999993          {\ldots}           0.033331000000000000   
+        13    0.022547000000000001          {\ldots}           0.366153999999999979   
+        14   -0.365319000000000005          {\ldots}          -0.176030999999999993   
+        15   -0.362225999999999992          {\ldots}          -0.228144000000000013   
+        16   -0.448579000000000006          {\ldots}          -0.095995999999999998   
+        17   -0.128223000000000004          {\ldots}           0.115894000000000011   
+        18   -0.054623999999999999          {\ldots}           0.249146000000000006   
+        19   -0.261738999999999999          {\ldots}          -0.199005999999999988   
+        20    0.828272000000000008          {\ldots}          -0.186086000000000001   
+        21    0.260836000000000012          {\ldots}          -0.167301000000000005   
+        22   -0.209219999999999989          {\ldots}          -0.040877999999999998   
+        23    0.645660000000000012          {\ldots}          -0.002593000000000000   
+        24    0.328780000000000017          {\ldots}           0.071232000000000004   
+        25   -0.043319999999999997          {\ldots}           0.156411999999999995   
+        26    1.069220000000000059          {\ldots}          -1.016934999999999922   
+        27   -0.309649999999999981          {\ldots}          -0.639378000000000002   
+        28    0.331668999999999992          {\ldots}           0.027581000000000001   
+        29    0.231680000000000025          {\ldots}          -0.061422999999999998   
+        {\ldots}                    {\ldots}          {\ldots}                            {\ldots}   
+        1874 -0.060125999999999999          {\ldots}          -0.389678000000000024   
+        1875  0.799151999999999751          {\ldots}           0.037504999999999997   
+        1876 -0.234230999999999995          {\ldots}          -0.171057999999999988   
+        1877  0.296850999999999976          {\ldots}          -0.077766000000000002   
+        1878 -0.218648000000000009          {\ldots}           0.232711000000000001   
+        1879  0.106359999999999996          {\ldots}          -0.011745999999999999   
+        1880  0.121826000000000004          {\ldots}          -0.305642000000000025   
+        1881  0.401924999999999977          {\ldots}          -0.200451999999999991   
+        1882 -0.136005999999999988          {\ldots}          -0.363655999999999979   
+        1883  0.282490999999999992          {\ldots}          -0.385004000000000013   
+        1884  0.151406000000000013          {\ldots}          -0.255518999999999996   
+        1885 -0.258068000000000020          {\ldots}          -0.141501999999999989   
+        1886 -0.174970999999999988          {\ldots}           0.257460999999999995   
+        1887  0.619172999999999973          {\ldots}          -0.029434999999999999   
+        1888  0.142883000000000010          {\ldots}          -0.531811000000000034   
+        1889 -0.691911999999999972          {\ldots}          -0.575138000000000038   
+        1890  1.124206000000000039          {\ldots}          -0.745870999999999840   
+        1891  0.616021000000000041          {\ldots}           0.045505999999999998   
+        1892  0.571609999999999951          {\ldots}          -0.028682999999999997   
+        1893  0.088312000000000002          {\ldots}          -0.284762999999999988   
+        1894  0.294374999999999998          {\ldots}           0.116528000000000007   
+        1895  0.048292000000000002          {\ldots}          -0.686323000000000016   
+        1896 -0.058613999999999999          {\ldots}          -0.126301999999999998   
+        1897  1.368497999999999992          {\ldots}          -1.081539999999999946   
+        1898 -0.175045000000000006          {\ldots}          -0.249348999999999987   
+        1899  0.035714000000000010          {\ldots}           0.104118000000000002   
+        1900 -0.052721999999999998          {\ldots}          -0.986565000000000025   
+        1901 -0.104602000000000001          {\ldots}          -0.236711000000000005   
+        1902  0.265778000000000014          {\ldots}          -0.092004000000000002   
+        1903  0.041080999999999999          {\ldots}          -0.105329999999999993   
+        
+                               120                   121                   122  \textbackslash{}
+        0    -0.059977999999999997  0.339285000000000003  0.037353999999999998   
+        1     0.010237000000000001  0.433474000000000026  0.337760000000000005   
+        2    -0.053691999999999997 -0.343855000000000022 -0.012789999999999999   
+        3    -0.185642000000000001 -0.066564999999999999  0.003861000000000000   
+        4    -0.505542000000000047  0.070814000000000002  0.318340999999999985   
+        5    -0.333455000000000001  0.452050000000000007  0.121901999999999996   
+        6     0.052861999999999999  0.989786999999999972  0.272600000000000009   
+        7     0.141004999999999991  0.409175999999999984 -0.269342999999999999   
+        8    -0.183720999999999995 -0.602628999999999970  0.093708000000000000   
+        9    -0.336853000000000014  0.265137000000000012  0.071372000000000019   
+        10    0.077677999999999983 -0.041574000000000000 -0.051071999999999999   
+        11   -0.205706000000000000  0.486953000000000025 -0.353005000000000013   
+        12    0.223465999999999998 -0.025755000000000000 -0.102582999999999994   
+        13    0.340808000000000000  0.208782999999999996  0.086842000000000003   
+        14    0.222525000000000001  0.246560000000000001 -0.086327000000000001   
+        15    0.117847999999999994  0.168588999999999989 -0.109385999999999983   
+        16    0.408013999999999988  0.370086000000000026 -0.044235999999999998   
+        17   -0.937014000000000014  0.110863000000000017  0.338529000000000024   
+        18   -0.417132999999999976  0.580690999999999957  0.047140000000000001   
+        19   -0.220904999999999990  0.650379999999999958  0.419237000000000026   
+        20   -0.607234999999999969 -0.120785999999999991  0.079964999999999994   
+        21   -0.172500999999999988 -0.188234000000000012  0.494265000000000010   
+        22   -0.499508000000000008  0.552756000000000025 -0.043616000000000002   
+        23   -0.053749999999999999  0.206225999999999993 -0.318182999999999994   
+        24   -0.943841000000000041  0.663869000000000042  0.380973000000000006   
+        25    0.265413000000000010 -0.100306999999999993 -0.369850000000000012   
+        26   -0.753067000000000042  0.057535000000000003  0.133810000000000012   
+        27   -1.138810000000000100 -0.286293999999999993  0.219609000000000026   
+        28    0.105334999999999984  0.155077999999999994  0.090175000000000005   
+        29    0.282824999999999993  0.171083000000000013 -0.429804000000000019   
+        {\ldots}                    {\ldots}                   {\ldots}                   {\ldots}   
+        1874 -0.434053000000000022 -0.146235000000000004  0.092809000000000003   
+        1875 -0.251792999999999989  0.403455000000000008 -0.141814000000000023   
+        1876 -0.148348000000000008  0.347337999999999980  0.441666999999999976   
+        1877  0.260535000000000017  0.080220000000000000 -0.082798999999999998   
+        1878 -0.400502999999999998  0.170691000000000009  0.465604999999999991   
+        1879  0.357383000000000006  0.400741000000000014 -0.558572999999999986   
+        1880  0.047338999999999999 -0.395189999999999986 -0.702103000000000033   
+        1881 -0.193757000000000013  0.251439999999999997  0.057769000000000001   
+        1882  0.255578000000000027  0.170539999999999997  0.218026000000000025   
+        1883  0.125666000000000000 -0.098252999999999993 -0.056764000000000002   
+        1884 -0.335450999999999999 -0.347679999999999989 -0.053663000000000002   
+        1885 -0.531436000000000019  0.148829999999999990 -0.447705000000000020   
+        1886 -0.321535000000000015 -0.464517999999999986  0.058807999999999999   
+        1887  0.368802000000000019 -0.479391999999999985 -0.133088000000000012   
+        1888 -0.063038999999999998 -0.426823999999999981  0.095787999999999998   
+        1889 -0.704366999999999965  0.697582999999999953 -0.583585000000000020   
+        1890 -1.281179000000000068 -0.134001000000000009 -0.174339999999999995   
+        1891  0.431663999999999992 -0.031426999999999997  0.055955999999999999   
+        1892 -0.823975000000000013  0.422864999999999991 -0.102013999999999994   
+        1893  0.293171000000000015  0.302240000000000009 -0.319601000000000024   
+        1894  0.434887000000000024  0.107856999999999995 -0.509687000000000001   
+        1895  0.033010999999999999  0.034432999999999998  0.150757000000000002   
+        1896  0.101875999999999994  0.259048999999999974 -0.089622999999999994   
+        1897  0.174814999999999998 -0.134842999999999991  0.137290999999999996   
+        1898 -0.131408999999999998  0.407075000000000020  0.184678000000000009   
+        1899  0.164012999999999992 -0.133021000000000000  0.277749000000000024   
+        1900 -0.044901999999999997  0.284999999999999976  0.134340999999999988   
+        1901 -0.228114000000000011  0.088596999999999981 -0.156601999999999991   
+        1902  0.223312000000000010  0.222539999999999988 -0.241201000000000026   
+        1903 -0.028150000000000001  0.095712000000000005 -0.072206999999999993   
+        
+                               123                   124                   125  \textbackslash{}
+        0    -0.344376000000000015  0.141060999999999992  0.233917999999999987   
+        1    -0.287584000000000006  0.015219999999999999 -0.413629000000000024   
+        2     0.168138000000000010  0.322913999999999979  0.185893000000000003   
+        3     0.115815000000000015 -0.495630999999999988  0.358493000000000006   
+        4    -0.279799999999999993  0.314554000000000000 -0.474447999999999981   
+        5    -0.317830000000000001 -0.329361000000000015 -0.255267999999999995   
+        6     0.034185000000000000  0.968350000000000044 -0.986753000000000213   
+        7    -0.072024000000000019  0.193998000000000004  0.088643000000000000   
+        8     0.102689000000000016  0.112868000000000010 -0.659880000000000022   
+        9    -0.182233000000000006  0.732630000000000003 -0.000099000000000000   
+        10   -0.827936000000000005  0.079065999999999984 -0.014708000000000001   
+        11   -0.777784000000000031  0.644541000000000031 -0.094210000000000002   
+        12    0.089952000000000004 -0.113527000000000003 -0.042405999999999999   
+        13   -0.031884999999999997  0.270502000000000020 -0.054275999999999998   
+        14    0.058812000000000003  0.175559999999999994 -0.007695999999999999   
+        15   -0.041715000000000002  0.337463000000000013 -0.371740999999999988   
+        16    0.643171999999999966 -0.146861999999999993  0.250761999999999985   
+        17   -0.805796999999999985 -0.061287000000000001  0.151265000000000011   
+        18   -0.612585999999999964  0.432186999999999988 -0.753441000000000027   
+        19    0.269239999999999979  0.334405999999999981 -0.866519000000000039   
+        20   -0.289922999999999986 -0.714345000000000008 -0.515747999999999984   
+        21   -0.381149000000000016  0.399145000000000028  0.279986999999999986   
+        22   -0.218086000000000002  0.015685999999999999 -0.418547999999999976   
+        23    0.058226000000000000 -0.315607000000000026  0.034927000000000000   
+        24   -0.810745000000000049  0.514863999999999988  0.294453999999999994   
+        25   -0.035839999999999997  0.042241000000000001 -0.134607000000000004   
+        26   -0.035434000000000000 -0.008753999999999998 -0.433578999999999992   
+        27   -0.634060999999999986  0.320583000000000007  0.187609999999999999   
+        28   -0.565308999999999950 -0.147114999999999996  0.226802000000000004   
+        29   -0.107938000000000006  0.066288000000000000 -0.100004999999999997   
+        {\ldots}                    {\ldots}                   {\ldots}                   {\ldots}   
+        1874 -0.661368999999999985  0.445346999999999993  0.214984000000000008   
+        1875 -0.674811000000000050  0.011318000000000000  0.362642000000000020   
+        1876  0.030176000000000001  0.405465999999999993 -0.312213999999999992   
+        1877 -0.100010000000000002 -0.004892000000000000 -0.013952000000000001   
+        1878 -0.228214000000000000  0.112542000000000003  0.153893000000000002   
+        1879 -0.233238999999999974 -0.048002999999999997 -0.280830999999999997   
+        1880  0.023782999999999999 -0.028899000000000001 -0.319355000000000000   
+        1881  0.169655000000000000  0.134639000000000009  0.114047999999999997   
+        1882  0.374950999999999979  0.044135000000000001 -0.582318000000000002   
+        1883  0.084982000000000002 -0.317655000000000021 -0.074652999999999983   
+        1884 -0.534402000000000044  0.176136999999999988 -0.612045999999999979   
+        1885  0.432611999999999997 -0.003498000000000000  0.116649000000000003   
+        1886 -0.458508000000000027  0.569695999999999980  0.172368999999999994   
+        1887 -0.642321000000000031  0.548807000000000045  0.508124000000000020   
+        1888 -0.482076999999999978 -0.522147000000000028 -0.118991000000000013   
+        1889 -0.239525999999999989 -0.071679000000000007 -0.028532999999999999   
+        1890 -0.494051000000000018 -0.925029000000000212 -0.067410999999999999   
+        1891 -0.383085999999999982 -0.182492999999999989 -0.369520000000000015   
+        1892 -0.577949999999999964 -0.402353999999999989 -0.128335000000000005   
+        1893 -0.122736999999999985  0.135215000000000002 -0.364983000000000002   
+        1894 -0.488883999999999985 -0.394925999999999999 -0.518847999999999976   
+        1895  0.025413999999999999 -0.029848000000000003  0.151478000000000002   
+        1896  0.026870999999999999  0.445583999999999980  0.293242999999999976   
+        1897 -0.188472000000000001  0.326183999999999974  0.581292999999999949   
+        1898 -0.561335000000000028  0.004609000000000000  0.231885000000000008   
+        1899 -0.631383000000000028 -0.174852000000000007  0.258087999999999984   
+        1900  0.520820999999999978  0.395291999999999977 -0.157237999999999989   
+        1901 -0.129260999999999987  0.259483999999999992 -0.650123000000000006   
+        1902 -0.251892999999999978  0.067826999999999998 -0.266266000000000003   
+        1903 -0.015837000000000000 -0.011325999999999999 -0.102139999999999995   
+        
+                               126                   127                   128  
+        0    -0.402866000000000002 -0.363315999999999972  0.590776999999999997  
+        1    -0.150796000000000013 -0.156616000000000005 -0.005837000000000000  
+        2     0.157933999999999991 -0.369580999999999993  0.330840999999999996  
+        3     0.265313000000000021 -0.835150999999999977 -0.235812999999999995  
+        4     0.066695000000000004 -0.559996000000000049 -0.110311999999999993  
+        5     0.090837000000000001 -0.649243000000000015 -0.282355000000000023  
+        6    -0.343434999999999990  0.100675000000000001 -0.544278000000000040  
+        7    -0.103814000000000003 -0.159450000000000008 -0.117905999999999997  
+        8     0.211541000000000007  0.084331000000000003 -0.433541999999999983  
+        9     0.441958999999999991 -0.540830000000000033 -0.588755000000000028  
+        10    0.232584999999999986 -0.424626999999999977  0.149029999999999996  
+        11    0.208323000000000008  0.426682000000000006 -0.280559999999999976  
+        12   -0.143545000000000006 -0.217484000000000011  0.165896999999999989  
+        13   -0.077549999999999994 -0.167583000000000010 -0.303082000000000018  
+        14    0.085995000000000002 -0.308269999999999988 -0.179330999999999990  
+        15   -0.136775000000000008 -0.311744000000000021 -0.155005000000000004  
+        16    0.208184000000000008 -0.056765000000000003 -0.542406999999999972  
+        17    0.091290999999999997 -0.274637999999999993 -0.729234999999999745  
+        18    0.600971999999999951 -0.336085000000000023  0.406324999999999992  
+        19   -0.175845000000000001 -0.849878000000000022  0.002317000000000000  
+        20    0.646913999999999989 -0.903204000000000007 -0.280650999999999984  
+        21    0.094795000000000004 -0.184183000000000013  0.026951999999999997  
+        22   -0.054068999999999999 -0.243791000000000008 -0.302823000000000009  
+        23    0.625677999999999956 -0.141876000000000002 -0.116684999999999997  
+        24   -0.579973999999999990  0.287994000000000028 -0.325875999999999999  
+        25   -0.026321000000000001 -0.316215000000000024  0.413343999999999989  
+        26    0.167707999999999996 -0.116560999999999984 -0.672976000000000019  
+        27   -0.023074999999999998 -0.354393999999999987 -0.192487999999999992  
+        28    0.095206000000000013  0.089954000000000006  0.100626999999999994  
+        29    0.128225000000000006 -0.286745000000000028  0.101962999999999998  
+        {\ldots}                    {\ldots}                   {\ldots}                   {\ldots}  
+        1874  0.239225999999999994 -0.235471000000000014 -0.215582000000000024  
+        1875  0.244730000000000031 -0.580089999999999995 -0.225902999999999993  
+        1876  0.169988000000000000  0.144374000000000002  0.153424000000000005  
+        1877  0.335378999999999983 -0.264736000000000027 -0.210154000000000007  
+        1878  0.384531000000000012 -0.102592000000000003  0.263946000000000014  
+        1879 -0.039668000000000002 -0.292364000000000013 -0.244119000000000003  
+        1880  0.124304999999999999 -0.239769000000000010 -0.003724000000000000  
+        1881  0.825814000000000048  0.215349000000000013 -1.085002000000000022  
+        1882 -0.496433000000000013 -0.339598999999999984 -0.222344999999999987  
+        1883 -0.003484000000000000  0.131071999999999994  0.008201999999999999  
+        1884  0.049785000000000003 -0.339754999999999974  0.093176999999999996  
+        1885  0.029104999999999999  0.086819999999999994 -0.131932999999999995  
+        1886 -0.144379000000000007  0.034483000000000000  0.139106000000000007  
+        1887  0.032566999999999999  0.093046000000000004 -0.241580999999999990  
+        1888 -0.259220999999999979 -0.054882000000000007 -0.218778000000000028  
+        1889  0.208598000000000006 -0.127294999999999991 -0.162760999999999989  
+        1890  0.154872000000000010  0.486918999999999991 -0.057185000000000000  
+        1891  0.334702999999999973 -0.310292000000000012  0.210155000000000008  
+        1892 -0.329658999999999980 -0.551039999999999974 -0.623094999999999954  
+        1893  0.354856000000000005 -0.229615000000000014  0.028822000000000004  
+        1894  0.137735999999999997 -0.678404000000000007 -0.239315999999999973  
+        1895  0.462009999999999976 -0.062886999999999998 -0.152482000000000006  
+        1896  0.201642999999999989 -0.176946999999999993  0.096925999999999998  
+        1897 -0.695319000000000020 -0.289959000000000022 -0.672764999999999946  
+        1898  0.053331999999999997  0.200712000000000002 -0.148098000000000007  
+        1899  0.204762000000000000  0.063915000000000000  0.040679000000000000  
+        1900 -0.311649999999999983  0.452268999999999977 -0.155163000000000023  
+        1901  0.540853000000000028 -0.609075000000000033 -0.363879999999999981  
+        1902  0.439846999999999988 -0.114252999999999993  0.071804000000000007  
+        1903  0.005712000000000000 -0.110300999999999996 -0.000853000000000000  
+        
+        [1904 rows x 129 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{es\PYZus{}vectores} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{es}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{1900}\PY{p}{]}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{float32}\PY{p}{)}
+        \PY{n}{na\PYZus{}vectores} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{na}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{1900}\PY{p}{]}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{float32}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{es\PYZus{}vectores}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} array([[ -2.13939995e-02,  -2.23085999e-01,   8.13750029e-02, {\ldots},
+                 -4.71278012e-01,   4.13429998e-02,  -3.85863006e-01],
+               [ -2.75133014e-01,  -2.90684015e-01,  -3.53249982e-02, {\ldots},
+                 -9.19869989e-02,   2.45605007e-01,   7.49190003e-02],
+               [ -3.90026987e-01,  -1.81652993e-01,  -2.66088009e-01, {\ldots},
+                  2.14304000e-01,  -8.95159990e-02,  -8.37510005e-02],
+               {\ldots}, 
+               [ -3.08957011e-01,  -7.55291998e-01,  -2.55849987e-01, {\ldots},
+                 -1.68337002e-01,  -2.70969987e-01,  -1.13678001e-01],
+               [ -1.12017997e-01,  -3.38728994e-01,  -5.40111005e-01, {\ldots},
+                  1.00536004e-01,  -4.34828013e-01,   1.95170999e-01],
+               [  1.72402993e-01,  -1.33572996e-01,  -5.93950003e-02, {\ldots},
+                  4.24019992e-01,  -5.63090980e-01,   5.63999987e-04]], dtype=float32)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{na\PYZus{}vectores}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} array([[-0.34862101, -0.017441  , -0.155884  , {\ldots}, -0.40286601,
+                 -0.363316  ,  0.59077698],
+                [ 0.163008  , -0.27805999, -0.453527  , {\ldots}, -0.150796  ,
+                 -0.156616  , -0.005837  ],
+                [-0.68948001, -0.71475297, -0.100995  , {\ldots},  0.157934  ,
+                 -0.36958101,  0.330841  ],
+                {\ldots}, 
+                [-0.60704499,  0.019681  , -0.16201   , {\ldots}, -0.695319  ,
+                 -0.28995901, -0.67276502],
+                [-0.086007  , -0.506019  , -0.02504   , {\ldots},  0.053332  ,
+                  0.200712  , -0.14809801],
+                [-0.242456  , -0.40662399, -0.44837299, {\ldots},  0.204762  ,
+                  0.063915  ,  0.040679  ]], dtype=float32)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{es\PYZus{}palabras} \PY{o}{=} \PY{n}{es}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n}{na\PYZus{}palabras} \PY{o}{=} \PY{n}{na}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{shape es:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{es\PYZus{}vectores}\PY{o}{.}\PY{n}{shape}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{shape na:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{na\PYZus{}vectores}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+shape es: (1900, 128) 
+shape na: (1900, 128)
+
+    \end{Verbatim}
+
+    \section{Hyperparameters}\label{hyperparameters}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{} Hyperparameters}
+         \PY{n}{LEARNING\PYZus{}RATE} \PY{o}{=} \PY{l+m+mf}{0.1}
+         \PY{n}{EPOCHS} \PY{o}{=} \PY{l+m+mi}{10}
+         \PY{n}{BATCH\PYZus{}SIZE} \PY{o}{=} \PY{l+m+mi}{100}
+         
+         \PY{n}{NODES\PYZus{}INPUT} \PY{o}{=} \PY{n}{es\PYZus{}vectores}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{size}
+         \PY{n}{NODES\PYZus{}H1} \PY{o}{=} \PY{l+m+mi}{250}
+         \PY{n}{NODES\PYZus{}H2} \PY{o}{=} \PY{l+m+mi}{250}
+         \PY{n}{NODES\PYZus{}OUPUT} \PY{o}{=} \PY{n}{na\PYZus{}vectores}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{size}
+         \PY{n}{INSTANCES} \PY{o}{=} \PY{n}{es\PYZus{}vectores}\PY{o}{.}\PY{n+nf+fm}{\PYZus{}\PYZus{}len\PYZus{}\PYZus{}}\PY{p}{(}\PY{p}{)}
+         \PY{n}{NUM\PYZus{}STEPS} \PY{o}{=} \PY{l+m+mi}{5000}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{X} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{n}{shape}\PY{o}{=}\PY{p}{[}\PY{k+kc}{None}\PY{p}{,}\PY{n}{NODES\PYZus{}INPUT}\PY{p}{]}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{y} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{n}{shape}\PY{o}{=}\PY{p}{[}\PY{k+kc}{None}\PY{p}{,}\PY{n}{NODES\PYZus{}OUPUT}\PY{p}{]}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{X:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{X}\PY{o}{.}\PY{n}{shape}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{y:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+X: (?, 128) y: (?, 128)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{c+c1}{\PYZsh{} Capas ocultas (weights \PYZam{} bias)}
+         \PY{n}{hidden\PYZus{}layer1} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{W1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{NODES\PYZus{}INPUT}\PY{p}{,}\PY{n}{NODES\PYZus{}H1}\PY{p}{]}\PY{p}{,}\PY{n}{stddev}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{)}\PY{p}{,}\PY{n}{name} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{NODES\PYZus{}H1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{name} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{\PYZcb{}}
+         
+         \PY{n}{hidden\PYZus{}layer2} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{W2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{NODES\PYZus{}H1}\PY{p}{,}\PY{n}{NODES\PYZus{}H2}\PY{p}{]}\PY{p}{,}\PY{n}{stddev}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{)}\PY{p}{,}\PY{n}{name} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{NODES\PYZus{}H2}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{name} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{\PYZcb{}}
+         
+         \PY{c+c1}{\PYZsh{} Capa de salida}
+         \PY{n}{output\PYZus{}layer} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{W2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{NODES\PYZus{}H2}\PY{p}{,}\PY{n}{NODES\PYZus{}OUPUT}\PY{p}{]}\PY{p}{,}\PY{n}{stddev}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{)}\PY{p}{,}\PY{n}{name} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W\PYZus{}output}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                         \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{NODES\PYZus{}OUPUT}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{name} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZus{}output}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{hidden\PYZus{}layer1}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{W1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(128, 250)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{c+c1}{\PYZsh{} Calcular la salida de la 1er capa oculta}
+         \PY{c+c1}{\PYZsh{} h(x) = x*w + bias}
+         \PY{n}{hidden\PYZus{}layer1\PYZus{}output} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{es\PYZus{}vectores}\PY{p}{,} \PY{n}{hidden\PYZus{}layer1}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{W1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{hidden\PYZus{}layer1}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{hidden1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Función de activación usando ReLU}
+         \PY{n}{hidden\PYZus{}layer1\PYZus{}output} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{relu}\PY{p}{(}\PY{n}{hidden\PYZus{}layer1\PYZus{}output}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{actfhidden1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{c+c1}{\PYZsh{} Calcular la salida de la 2da capa oculta}
+         \PY{c+c1}{\PYZsh{} h(x) = x*w + bias}
+         \PY{n}{hidden\PYZus{}layer2\PYZus{}output} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{hidden\PYZus{}layer1\PYZus{}output}\PY{p}{,} \PY{n}{hidden\PYZus{}layer2}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{W2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{hidden\PYZus{}layer2}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{hidden2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Función de activación usando ReLU}
+         \PY{n}{hidden\PYZus{}layer2\PYZus{}output} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{relu}\PY{p}{(}\PY{n}{hidden\PYZus{}layer2\PYZus{}output}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{actfhidden2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{c+c1}{\PYZsh{} calcular la salida la NN}
+         \PY{n}{output} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{hidden\PYZus{}layer2\PYZus{}output}\PY{p}{,} \PY{n}{output\PYZus{}layer}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{W2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{n}{output\PYZus{}layer}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Función de activación usando softmax}
+         \PY{n}{nah\PYZus{}predicted} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{softmax}\PY{p}{(}\PY{n}{output}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{actfoutput}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{nah\PYZus{}predicted}\PY{o}{.}\PY{n}{shape}\PY{p}{,}\PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(1900, 128) (?, 128)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{c+c1}{\PYZsh{} Función de error (Mean Square Error)}
+         \PY{c+c1}{\PYZsh{}loss = tf.reduce\PYZus{}mean(tf.nn.softmax\PYZus{}cross\PYZus{}entropy\PYZus{}with\PYZus{}logits(labels = y, logits = nah\PYZus{}predicted))}
+         \PY{n}{loss} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{squared\PYZus{}difference}\PY{p}{(}\PY{n}{nah\PYZus{}predicted}\PY{p}{,}\PY{n}{y}\PY{p}{)}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{loss\PYZus{}f}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}loss = tf.reduce\PYZus{}sum((nah\PYZus{}predicted \PYZhy{} y) ** 2)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{c+c1}{\PYZsh{} optimiser, }
+         \PY{n}{optimiser} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{GradientDescentOptimizer}\PY{p}{(}\PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{n}{LEARNING\PYZus{}RATE}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GradientDescent}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{minimize}\PY{p}{(}\PY{n}{loss}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{loss}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{c+c1}{\PYZsh{}Session}
+         \PY{n}{sess} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{Session}\PY{p}{(}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Initialize variables}
+         \PY{n}{init} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{global\PYZus{}variables\PYZus{}initializer}\PY{p}{(}\PY{p}{)}
+         \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{init}\PY{p}{)}
+         \PY{k}{for} \PY{n}{step} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{NUM\PYZus{}STEPS}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+             \PY{n}{offset} \PY{o}{=} \PY{p}{(}\PY{n}{step} \PY{o}{*} \PY{n}{BATCH\PYZus{}SIZE}\PY{p}{)} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{es\PYZus{}vectores}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{BATCH\PYZus{}SIZE}\PY{p}{)}
+             \PY{n}{batch\PYZus{}data} \PY{o}{=} \PY{n}{es\PYZus{}vectores}\PY{p}{[}\PY{n}{offset}\PY{p}{:}\PY{p}{(}\PY{n}{offset} \PY{o}{+} \PY{n}{BATCH\PYZus{}SIZE}\PY{p}{)}\PY{p}{,} \PY{p}{:}\PY{p}{]}
+             \PY{n}{batch\PYZus{}target} \PY{o}{=} \PY{n}{na\PYZus{}vectores}\PY{p}{[}\PY{n}{offset}\PY{p}{:}\PY{p}{(}\PY{n}{offset} \PY{o}{+} \PY{n}{BATCH\PYZus{}SIZE}\PY{p}{)}\PY{p}{,} \PY{p}{:}\PY{p}{]}
+             \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{\PYZus{}loss} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{[}\PY{n}{optimiser}\PY{p}{,}\PY{n}{loss}\PY{p}{]}\PY{p}{,}\PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:}\PY{n}{batch\PYZus{}data}\PY{p}{,}\PY{n}{y}\PY{p}{:}\PY{n}{batch\PYZus{}target}\PY{p}{\PYZcb{}}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{\PYZus{}loss}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        InvalidArgumentError                      Traceback (most recent call last)
+
+        \textasciitilde{}/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/client/session.py in \_do\_call(self, fn, *args)
+       1322     try:
+    -> 1323       return fn(*args)
+       1324     except errors.OpError as e:
+
+
+        \textasciitilde{}/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/client/session.py in \_run\_fn(session, feed\_dict, fetch\_list, target\_list, options, run\_metadata)
+       1301                                    feed\_dict, fetch\_list, target\_list,
+    -> 1302                                    status, run\_metadata)
+       1303 
+
+
+        \textasciitilde{}/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/errors\_impl.py in \_\_exit\_\_(self, type\_arg, value\_arg, traceback\_arg)
+        472             compat.as\_text(c\_api.TF\_Message(self.status.status)),
+    --> 473             c\_api.TF\_GetCode(self.status.status))
+        474     \# Delete the underlying status object from memory otherwise it stays alive
+
+
+        InvalidArgumentError: Incompatible shapes: [1900,128] vs. [100,128]
+    	 [[Node: gradients/SquaredDifference\_2\_grad/BroadcastGradientArgs = BroadcastGradientArgs[T=DT\_INT32, \_device="/job:localhost/replica:0/task:0/device:CPU:0"](gradients/SquaredDifference\_2\_grad/Shape, gradients/SquaredDifference\_2\_grad/Shape\_1)]]
+
+        
+    During handling of the above exception, another exception occurred:
+
+
+        InvalidArgumentError                      Traceback (most recent call last)
+
+        <ipython-input-37-6212096bcc5f> in <module>()
+          8     batch\_data = es\_vectores[offset:(offset + BATCH\_SIZE), :]
+          9     batch\_target = na\_vectores[offset:(offset + BATCH\_SIZE), :]
+    ---> 10     \_, \_loss = sess.run([optimiser,loss],feed\_dict=\{X:batch\_data,y:batch\_target\})
+         11     print(\_loss)
+
+
+        \textasciitilde{}/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/client/session.py in run(self, fetches, feed\_dict, options, run\_metadata)
+        887     try:
+        888       result = self.\_run(None, fetches, feed\_dict, options\_ptr,
+    --> 889                          run\_metadata\_ptr)
+        890       if run\_metadata:
+        891         proto\_data = tf\_session.TF\_GetBuffer(run\_metadata\_ptr)
+
+
+        \textasciitilde{}/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/client/session.py in \_run(self, handle, fetches, feed\_dict, options, run\_metadata)
+       1118     if final\_fetches or final\_targets or (handle and feed\_dict\_tensor):
+       1119       results = self.\_do\_run(handle, final\_targets, final\_fetches,
+    -> 1120                              feed\_dict\_tensor, options, run\_metadata)
+       1121     else:
+       1122       results = []
+
+
+        \textasciitilde{}/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/client/session.py in \_do\_run(self, handle, target\_list, fetch\_list, feed\_dict, options, run\_metadata)
+       1315     if handle is None:
+       1316       return self.\_do\_call(\_run\_fn, self.\_session, feeds, fetches, targets,
+    -> 1317                            options, run\_metadata)
+       1318     else:
+       1319       return self.\_do\_call(\_prun\_fn, self.\_session, handle, feeds, fetches)
+
+
+        \textasciitilde{}/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/client/session.py in \_do\_call(self, fn, *args)
+       1334         except KeyError:
+       1335           pass
+    -> 1336       raise type(e)(node\_def, op, message)
+       1337 
+       1338   def \_extend\_graph(self):
+
+
+        InvalidArgumentError: Incompatible shapes: [1900,128] vs. [100,128]
+    	 [[Node: gradients/SquaredDifference\_2\_grad/BroadcastGradientArgs = BroadcastGradientArgs[T=DT\_INT32, \_device="/job:localhost/replica:0/task:0/device:CPU:0"](gradients/SquaredDifference\_2\_grad/Shape, gradients/SquaredDifference\_2\_grad/Shape\_1)]]
+    
+    Caused by op 'gradients/SquaredDifference\_2\_grad/BroadcastGradientArgs', defined at:
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/runpy.py", line 193, in \_run\_module\_as\_main
+        "\_\_main\_\_", mod\_spec)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/runpy.py", line 85, in \_run\_code
+        exec(code, run\_globals)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/ipykernel\_launcher.py", line 16, in <module>
+        app.launch\_new\_instance()
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/traitlets/config/application.py", line 658, in launch\_instance
+        app.start()
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/ipykernel/kernelapp.py", line 478, in start
+        self.io\_loop.start()
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/zmq/eventloop/ioloop.py", line 177, in start
+        super(ZMQIOLoop, self).start()
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tornado/ioloop.py", line 888, in start
+        handler\_func(fd\_obj, events)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tornado/stack\_context.py", line 277, in null\_wrapper
+        return fn(*args, **kwargs)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/zmq/eventloop/zmqstream.py", line 440, in \_handle\_events
+        self.\_handle\_recv()
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/zmq/eventloop/zmqstream.py", line 472, in \_handle\_recv
+        self.\_run\_callback(callback, msg)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/zmq/eventloop/zmqstream.py", line 414, in \_run\_callback
+        callback(*args, **kwargs)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tornado/stack\_context.py", line 277, in null\_wrapper
+        return fn(*args, **kwargs)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/ipykernel/kernelbase.py", line 281, in dispatcher
+        return self.dispatch\_shell(stream, msg)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/ipykernel/kernelbase.py", line 232, in dispatch\_shell
+        handler(stream, idents, msg)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/ipykernel/kernelbase.py", line 397, in execute\_request
+        user\_expressions, allow\_stdin)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/ipykernel/ipkernel.py", line 208, in do\_execute
+        res = shell.run\_cell(code, store\_history=store\_history, silent=silent)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/ipykernel/zmqshell.py", line 533, in run\_cell
+        return super(ZMQInteractiveShell, self).run\_cell(*args, **kwargs)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/IPython/core/interactiveshell.py", line 2728, in run\_cell
+        interactivity=interactivity, compiler=compiler, result=result)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/IPython/core/interactiveshell.py", line 2850, in run\_ast\_nodes
+        if self.run\_code(code, result):
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/IPython/core/interactiveshell.py", line 2910, in run\_code
+        exec(code\_obj, self.user\_global\_ns, self.user\_ns)
+      File "<ipython-input-33-8a8194c601df>", line 2, in <module>
+        optimiser = tf.train.GradientDescentOptimizer(learning\_rate = LEARNING\_RATE,name="GradientDescent").minimize(loss,name="loss")
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/training/optimizer.py", line 343, in minimize
+        grad\_loss=grad\_loss)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/training/optimizer.py", line 414, in compute\_gradients
+        colocate\_gradients\_with\_ops=colocate\_gradients\_with\_ops)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/ops/gradients\_impl.py", line 581, in gradients
+        grad\_scope, op, func\_call, lambda: grad\_fn(op, *out\_grads))
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/ops/gradients\_impl.py", line 353, in \_MaybeCompile
+        return grad\_fn()  \# Exit early
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/ops/gradients\_impl.py", line 581, in <lambda>
+        grad\_scope, op, func\_call, lambda: grad\_fn(op, *out\_grads))
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/ops/math\_grad.py", line 880, in \_SquaredDifferenceGrad
+        rx, ry = gen\_array\_ops.\_broadcast\_gradient\_args(sx, sy)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/ops/gen\_array\_ops.py", line 532, in \_broadcast\_gradient\_args
+        "BroadcastGradientArgs", s0=s0, s1=s1, name=name)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/op\_def\_library.py", line 787, in \_apply\_op\_helper
+        op\_def=op\_def)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/ops.py", line 2956, in create\_op
+        op\_def=op\_def)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/ops.py", line 1470, in \_\_init\_\_
+        self.\_traceback = self.\_graph.\_extract\_stack()  \# pylint: disable=protected-access
+    
+    {\ldots}which was originally created as op 'SquaredDifference\_2', defined at:
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/runpy.py", line 193, in \_run\_module\_as\_main
+        "\_\_main\_\_", mod\_spec)
+    [elided 18 identical lines from previous traceback]
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/IPython/core/interactiveshell.py", line 2910, in run\_code
+        exec(code\_obj, self.user\_global\_ns, self.user\_ns)
+      File "<ipython-input-32-2094916e52f7>", line 3, in <module>
+        loss = tf.reduce\_mean(tf.squared\_difference(nah\_predicted,y),name="loss\_f")
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/ops/gen\_math\_ops.py", line 4601, in squared\_difference
+        "SquaredDifference", x=x, y=y, name=name)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/op\_def\_library.py", line 787, in \_apply\_op\_helper
+        op\_def=op\_def)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/ops.py", line 2956, in create\_op
+        op\_def=op\_def)
+      File "/home/olivares/anaconda3/envs/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/ops.py", line 1470, in \_\_init\_\_
+        self.\_traceback = self.\_graph.\_extract\_stack()  \# pylint: disable=protected-access
+    
+    InvalidArgumentError (see above for traceback): Incompatible shapes: [1900,128] vs. [100,128]
+    	 [[Node: gradients/SquaredDifference\_2\_grad/BroadcastGradientArgs = BroadcastGradientArgs[T=DT\_INT32, \_device="/job:localhost/replica:0/task:0/device:CPU:0"](gradients/SquaredDifference\_2\_grad/Shape, gradients/SquaredDifference\_2\_grad/Shape\_1)]]
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{hidden\PYZus{}layer1}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{hidden\PYZus{}layer2}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
