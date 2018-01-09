@@ -12,12 +12,12 @@ NODES_INPUT = 50
 NODES_H1 = 40
 NODES_H2 = 20
 NODES_OUPUT = 50
-NUM_OBS = 1000
+INSTANCES = 1000
 
 # es - datos de entrada;
 # na - datos objetivos
-esp = np.random.uniform(0,15,size=[NUM_OBS,NODES_INPUT]).astype(np.float32)
-nah = np.random.uniform(0,3,size=[NUM_OBS,NODES_OUPUT]).astype(np.float32)
+esp = np.random.uniform(0,15,size=[INSTANCES,NODES_INPUT]).astype(np.float32)
+nah = np.random.uniform(0,3,size=[INSTANCES,NODES_OUPUT]).astype(np.float32)
 print(esp.shape,nah.shape)
 
 # entrada: X -> español
@@ -38,7 +38,7 @@ layer2 = {"W2":tf.Variable(tf.random_normal([NODES_H1,NODES_H2],stddev=0.01),nam
 output_layer = {"W2":tf.Variable(tf.random_normal([NODES_H2,NODES_OUPUT],stddev=0.01),name = 'W_output'),
                 "b2":tf.Variable(tf.random_normal([NODES_OUPUT]), name = 'b_output')}
 
-
+print(layer1["W1"].shape)
 # Calcular la salida de la 1er capa oculta
 # h(x) = x*w + bias
 hidden_layer1_output = tf.add(tf.matmul(esp, layer1["W1"]), layer1["b1"],name="hidden1")
@@ -71,7 +71,7 @@ with tf.Session() as sess:
     writer = tf.summary.FileWriter("./logs/NN",sess.graph)
     for _ in range(5000):
         _, c = sess.run([optimiser,loss],feed_dict={X: esp, y: nah})
-        print(c)
+    print(c)
     
 
 #tensorboard --logdir=logs
