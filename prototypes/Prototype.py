@@ -5,10 +5,12 @@
 
 
 #http://www.ritchieng.com/machine-learning/deep-learning/tensorflow/deep-neural-nets/
+#https: // jhui.github.io / 2017 / 03 / 12 / TensorBoard - visualize - your - learning/
+#https://thecodacus.com/tensorboard-tutorial-visualize-networks-graphically/#.WlVvmnWnG00
 import pandas as pd
-import numpy as np
+from numpy import array
+from numpy import float32
 import tensorflow as tf
-
 
 # In[2]:
 
@@ -45,8 +47,8 @@ na.head()
 # In[7]:
 
 
-es_vectores = np.array(es[:1900].loc[:, 1::]).astype(np.float32)
-na_vectores = np.array(na[:1900].loc[:, 1::]).astype(np.float32)
+es_vectores = array(es[:1900].loc[:, 1::]).astype(float32)
+na_vectores = array(na[:1900].loc[:, 1::]).astype(float32)
 
 
 # In[8]:
@@ -134,7 +136,9 @@ print(hidden_layer1)
 # h(x) = x*w + bias
 hidden_layer1_output = tf.add(tf.matmul(es_vectores, hidden_layer1["W1"]), hidden_layer1["b1"])
 # Función de activación usando ReLU
+tf.summary.histogram("pre_activations_h1", hidden_layer1_output)
 hidden_layer1_output = tf.nn.relu(hidden_layer1_output,name="h1Activation")
+tf.summary.histogram('activationsh1', hidden_layer1_output)
 
 
 # In[18]:
@@ -144,8 +148,9 @@ hidden_layer1_output = tf.nn.relu(hidden_layer1_output,name="h1Activation")
 # h(x) = x*w + bias
 hidden_layer2_output = tf.add(tf.matmul(hidden_layer1_output, hidden_layer2["W2"]), hidden_layer2["b2"])
 # Función de activación usando ReLU
-hidden_layer2_output = tf.nn.relu(hidden_layer2_output,name="h1Activation")
-
+tf.summary.histogram("pre_activations_h2", hidden_layer2_output)
+hidden_layer2_output = tf.nn.relu(hidden_layer2_output,name="h2Activation")
+tf.summary.histogram('activationsh2', hidden_layer2_output)
 
 # In[19]:
 
@@ -153,7 +158,9 @@ hidden_layer2_output = tf.nn.relu(hidden_layer2_output,name="h1Activation")
 # calcular la salida la NN
 output = tf.add(tf.matmul(hidden_layer2_output, output_layer["W_out"]),output_layer["b_out"])
 # Función de activación usando softmax
+tf.summary.histogram("pre_activations_output", output)
 nah_predicted = tf.nn.softmax(output,name="outActivation")
+tf.summary.histogram('activationsout', nah_predicted)
 print(nah_predicted.shape,y.shape)
 
 
@@ -161,17 +168,17 @@ print(nah_predicted.shape,y.shape)
 
 
 # Función de error (Mean Square Error)
-#loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels = y, logits = nah_predicted))
+#loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=y, logits=nah_predicted))
 loss = tf.reduce_mean(tf.squared_difference(nah_predicted,y),name="loss_f")
+#loss = tf.reduce_mean(tf.reduce_sum((nah_predicted - y) ** 2))
 tf.summary.scalar("cost",loss)
-#loss = tf.reduce_sum((nah_predicted - y) ** 2)
 
 
 # In[21]:
 
 
 # optimiser, 
-optimiser = tf.train.GradientDescentOptimizer(learning_rate = LEARNING_RATE,name="GradientDescent").minimize(loss,name="loss")
+optimiser = tf.train.AdagradOptimizer(learning_rate=LEARNING_RATE, name="AdagradOptimizer").minimize(loss, name="loss")
 
 
 # In[22]:
@@ -182,6 +189,8 @@ sess = tf.Session()
 # Initialize variables
 summaryMerged = tf.summary.merge_all()
 writer = tf.summary.FileWriter("./logs/NN",sess.graph)
+run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
+run_metadata = tf.RunMetadata()
 init = tf.global_variables_initializer()
 sess.run(init)
 
@@ -194,15 +203,21 @@ tmp_hidden_layer1,tmp_hidden_layer2 = sess.run(hidden_layer1),sess.run(hidden_la
 # In[ ]:
 
 
-for step in range(3000):
+for i in range(3000):
     '''
     offset = (step * BATCH_SIZE) % (es_vectores.shape[0] - BATCH_SIZE)
     batch_data = es_vectores[offset:(offset + BATCH_SIZE), :]
     batch_target = na_vectores[offset:(offset + BATCH_SIZE), :]
     '''
     _loss,_, sumOut = sess.run([loss,optimiser, summaryMerged], feed_dict={
-                        X: es_vectores, y: na_vectores})
-    writer.add_summary(_loss,step)
+                        X: es_vectores, y: na_vectores},
+                        options=run_options,
+                        run_metadata=run_metadata)
+    if (i % 100) == 0:
+        print(_loss)
+    writer.add_summary(sumOut, i)
+    writer.add_run_metadata(run_metadata, 'step%03d' % i)
+writer.close()
 
 
 # In[24]:
