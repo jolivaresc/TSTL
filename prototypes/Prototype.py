@@ -7,7 +7,8 @@
 #http://www.ritchieng.com/machine-learning/deep-learning/tensorflow/deep-neural-nets/
 #https: // jhui.github.io / 2017 / 03 / 12 / TensorBoard - visualize - your - learning/
 #https://thecodacus.com/tensorboard-tutorial-visualize-networks-graphically/#.WlVvmnWnG00
-import pandas as pd
+from pandas import set_option
+from pandas import read_csv
 from numpy import array
 from numpy import float32
 import tensorflow as tf
@@ -21,15 +22,15 @@ tf.set_random_seed(42)
 # In[3]:
 
 
-pd.set_option('display.max_colwidth', -1)
-pd.set_option('precision', 18)
+set_option('display.max_colwidth', -1)
+set_option('precision', 18)
 
 
 # In[4]:
 
 
-es = pd.read_csv("../vectors/es.node2vec.embeddings", delimiter = " ", skiprows = 1, header = None)
-na = pd.read_csv("../vectors/na.node2vec.embeddings", delimiter = " ", skiprows = 1, header = None)
+es = read_csv("../vectors/es.node2vec.embeddings", delimiter = " ", skiprows = 1, header = None)
+na = read_csv("../vectors/na.node2vec.embeddings", delimiter = " ", skiprows = 1, header = None)
 
 
 # In[5]:
