@@ -5,13 +5,13 @@
 
 
 #http://www.ritchieng.com/machine-learning/deep-learning/tensorflow/deep-neural-nets/
-#https: // jhui.github.io / 2017 / 03 / 12 / TensorBoard - visualize - your - learning/
+#http://ischlag.github.io/2016/06/04/how-to-use-tensorboard/
+#https://jhui.github.io/2017/03/12/TensorBoard-visualize-your-learning/
 #https://thecodacus.com/tensorboard-tutorial-visualize-networks-graphically/#.WlVvmnWnG00
-from pandas import set_option
-from pandas import read_csv
-from numpy import array
-from numpy import float32
+
 import tensorflow as tf
+from numpy import array, float32
+from pandas import read_csv, set_option
 
 # In[2]:
 
@@ -48,8 +48,8 @@ na.head()
 # In[7]:
 
 
-es_vectores = array(es[:1900].loc[:, 1::]).astype(float32)
-na_vectores = array(na[:1900].loc[:, 1::]).astype(float32)
+es_vectores = array(es[:1900].loc[:,1::]).astype(float32)
+na_vectores = array(na[:1900].loc[:,1::]).astype(float32)
 
 
 # In[8]:
@@ -79,7 +79,7 @@ print("shape es:",es_vectores.shape,"\nshape na:",na_vectores.shape)
 
 # # Hyperparameters
 
-# In[13]:
+# In[12]:
 
 
 # Hyperparameters
@@ -88,14 +88,14 @@ EPOCHS = 10
 BATCH_SIZE = 100
 
 NODES_INPUT = es_vectores[0].size
-NODES_H1 = 128
-NODES_H2 = 128
+NODES_H1 = 100
+NODES_H2 = 100
 NODES_OUPUT = na_vectores[0].size
 INSTANCES = es_vectores.__len__()
 NUM_STEPS = 5000
 
 
-# In[14]:
+# In[13]:
 
 
 X = tf.placeholder(shape=[None,NODES_INPUT], dtype=tf.float32,name='input_es')
@@ -103,7 +103,7 @@ y = tf.placeholder(shape=[None,NODES_OUPUT], dtype=tf.float32,name='target_na')
 print("X:",X.shape,"y:",y.shape)
 
 
-# In[15]:
+# In[14]:
 
 
 # Capas ocultas (weights & bias)
@@ -114,7 +114,7 @@ hidden_layer2 = {"W2":tf.Variable(tf.truncated_normal([NODES_H1,NODES_H2],stddev
                  "b2":tf.constant(0.1,shape=[NODES_H2], name = 'b2')}
 
 # Capa de salida
-output_layer = {"W_out":tf.Variable(tf.truncated_normal([NODES_H1,NODES_OUPUT],stddev=0.01),
+output_layer = {"W_out":tf.Variable(tf.truncated_normal([NODES_H2,NODES_OUPUT],stddev=0.01),
                 name = 'W_output'),
                 "b_out":tf.constant(0.1,shape=[NODES_OUPUT], name = 'b_output')}
 
@@ -124,13 +124,13 @@ tf.summary.histogram("weight_2", hidden_layer2["W2"])
 tf.summary.histogram("weight_out", output_layer["W_out"])
 
 
-# In[16]:
+# In[15]:
 
 
 print(hidden_layer1)
 
 
-# In[17]:
+# In[16]:
 
 
 # Calcular la salida de la 1er capa oculta
@@ -142,7 +142,7 @@ hidden_layer1_output = tf.nn.relu(hidden_layer1_output,name="h1Activation")
 tf.summary.histogram('activationsh1', hidden_layer1_output)
 
 
-# In[18]:
+# In[17]:
 
 
 # Calcular la salida de la 2da capa oculta
@@ -153,7 +153,8 @@ tf.summary.histogram("pre_activations_h2", hidden_layer2_output)
 hidden_layer2_output = tf.nn.relu(hidden_layer2_output,name="h2Activation")
 tf.summary.histogram('activationsh2', hidden_layer2_output)
 
-# In[19]:
+
+# In[18]:
 
 
 # calcular la salida la NN
@@ -165,7 +166,7 @@ tf.summary.histogram('activationsout', nah_predicted)
 print(nah_predicted.shape,y.shape)
 
 
-# In[20]:
+# In[19]:
 
 
 # Función de error (Mean Square Error)
@@ -175,14 +176,15 @@ loss = tf.reduce_mean(tf.squared_difference(nah_predicted,y),name="loss_f")
 tf.summary.scalar("cost",loss)
 
 
-# In[21]:
+# In[20]:
 
 
 # optimiser, 
-optimiser = tf.train.AdagradOptimizer(learning_rate=LEARNING_RATE, name="AdagradOptimizer").minimize(loss, name="loss")
+optimiser = tf.train.AdagradOptimizer(learning_rate=LEARNING_RATE,
+                                      name="AdagradOptimizer").minimize(loss, name="loss")
 
 
-# In[22]:
+# In[21]:
 
 
 #Session
@@ -195,16 +197,17 @@ run_metadata = tf.RunMetadata()
 init = tf.global_variables_initializer()
 sess.run(init)
 
-# In[23]:
+
+# In[22]:
 
 
 tmp_hidden_layer1,tmp_hidden_layer2 = sess.run(hidden_layer1),sess.run(hidden_layer2)
 
 
-# In[ ]:
+# In[23]:
 
 
-for i in range(3000):
+for i in range(30000):
     '''
     offset = (step * BATCH_SIZE) % (es_vectores.shape[0] - BATCH_SIZE)
     batch_data = es_vectores[offset:(offset + BATCH_SIZE), :]
@@ -214,7 +217,7 @@ for i in range(3000):
                         X: es_vectores, y: na_vectores},
                         options=run_options,
                         run_metadata=run_metadata)
-    if (i % 100) == 0:
+    if (i % 500) == 0:
         print(_loss)
     writer.add_summary(sumOut, i)
     writer.add_run_metadata(run_metadata, 'step%03d' % i)
@@ -231,11 +234,10 @@ print(sess.run(hidden_layer1))
 
 
 
-tmp_hidden_layer1
+tmp_hidden_layer1["W1"]-sess.run(hidden_layer1["W1"])
 
 
 # In[26]:
 
 
 sess.run(hidden_layer2)
-
