@@ -8,6 +8,7 @@
 #http://ischlag.github.io/2016/06/04/how-to-use-tensorboard/
 #https://jhui.github.io/2017/03/12/TensorBoard-visualize-your-learning/
 #https://thecodacus.com/tensorboard-tutorial-visualize-networks-graphically/#.WlVvmnWnG00
+#http://ruder.io/transfer-learning/
 
 import tensorflow as tf
 from numpy import array, float32
@@ -83,7 +84,7 @@ print("shape es:",es_vectores.shape,"\nshape na:",na_vectores.shape)
 
 
 # Hyperparameters
-LEARNING_RATE = 0.1
+LEARNING_RATE = 0.3
 EPOCHS = 10
 BATCH_SIZE = 100
 
@@ -92,7 +93,7 @@ NODES_H1 = 100
 NODES_H2 = 100
 NODES_OUPUT = na_vectores[0].size
 INSTANCES = es_vectores.__len__()
-NUM_STEPS = 5000
+NUM_STEPS = 30000
 
 
 # In[13]:
@@ -188,12 +189,14 @@ optimiser = tf.train.AdagradOptimizer(learning_rate=LEARNING_RATE,
 
 
 #Session
-sess = tf.Session()
+config = tf.ConfigProto()
+config.intra_op_parallelism_threads = 44
+config.inter_op_parallelism_threads = 44
+sess = tf.Session(config=config)
 # Initialize variables
 summaryMerged = tf.summary.merge_all()
 writer = tf.summary.FileWriter("./logs/NN",sess.graph)
-run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
-run_metadata = tf.RunMetadata()
+
 init = tf.global_variables_initializer()
 sess.run(init)
 
@@ -207,12 +210,14 @@ tmp_hidden_layer1,tmp_hidden_layer2 = sess.run(hidden_layer1),sess.run(hidden_la
 # In[23]:
 
 
-for i in range(30000):
+for i in range(NUM_STEPS):
     '''
     offset = (step * BATCH_SIZE) % (es_vectores.shape[0] - BATCH_SIZE)
     batch_data = es_vectores[offset:(offset + BATCH_SIZE), :]
     batch_target = na_vectores[offset:(offset + BATCH_SIZE), :]
     '''
+    run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
+    run_metadata = tf.RunMetadata()
     _loss,_, sumOut = sess.run([loss,optimiser, summaryMerged], feed_dict={
                         X: es_vectores, y: na_vectores},
                         options=run_options,
@@ -241,3 +246,6 @@ tmp_hidden_layer1["W1"]-sess.run(hidden_layer1["W1"])
 
 
 sess.run(hidden_layer2)
+
+
+sess.close()
