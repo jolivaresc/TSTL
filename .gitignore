@@ -3,4 +3,7 @@ credentials.py
 *.json
 *.pyc
 *.multivac
+*.ELC13XS000A166W
 vectors/
+lexiconessemilla/
+lexiconevaluacion/
