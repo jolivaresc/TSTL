@@ -85,7 +85,6 @@ print("shape es:",es_vectores.shape,"\nshape na:",na_vectores.shape)
 
 # Hyperparameters
 LEARNING_RATE = 0.3
-EPOCHS = 10
 BATCH_SIZE = 100
 
 NODES_INPUT = es_vectores[0].size
@@ -93,7 +92,7 @@ NODES_H1 = 100
 NODES_H2 = 100
 NODES_OUPUT = na_vectores[0].size
 INSTANCES = es_vectores.__len__()
-NUM_STEPS = 30000
+EPOCHS = 3000
 
 
 # In[13]:
@@ -137,9 +136,9 @@ print(hidden_layer1)
 # Calcular la salida de la 1er capa oculta
 # h(x) = x*w + bias
 hidden_layer1_output = tf.add(tf.matmul(es_vectores, hidden_layer1["W1"]), hidden_layer1["b1"])
-# Función de activación usando ReLU
+# Función de activación usando leaky_relu
 tf.summary.histogram("pre_activations_h1", hidden_layer1_output)
-hidden_layer1_output = tf.nn.relu(hidden_layer1_output,name="h1Activation")
+hidden_layer1_output = tf.nn.leaky_relu(hidden_layer1_output,name="h1Activation")
 tf.summary.histogram('activationsh1', hidden_layer1_output)
 
 
@@ -149,9 +148,9 @@ tf.summary.histogram('activationsh1', hidden_layer1_output)
 # Calcular la salida de la 2da capa oculta
 # h(x) = x*w + bias
 hidden_layer2_output = tf.add(tf.matmul(hidden_layer1_output, hidden_layer2["W2"]), hidden_layer2["b2"])
-# Función de activación usando ReLU
+# Función de activación usando leaky_relu
 tf.summary.histogram("pre_activations_h2", hidden_layer2_output)
-hidden_layer2_output = tf.nn.relu(hidden_layer2_output,name="h2Activation")
+hidden_layer2_output = tf.nn.leaky_relu(hidden_layer2_output,name="h2Activation")
 tf.summary.histogram('activationsh2', hidden_layer2_output)
 
 
@@ -210,22 +209,30 @@ tmp_hidden_layer1,tmp_hidden_layer2 = sess.run(hidden_layer1),sess.run(hidden_la
 # In[23]:
 
 
-for i in range(NUM_STEPS):
+for i in range(EPOCHS):
     '''
     offset = (step * BATCH_SIZE) % (es_vectores.shape[0] - BATCH_SIZE)
     batch_data = es_vectores[offset:(offset + BATCH_SIZE), :]
     batch_target = na_vectores[offset:(offset + BATCH_SIZE), :]
     '''
-    run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
-    run_metadata = tf.RunMetadata()
+    
     _loss,_, sumOut = sess.run([loss,optimiser, summaryMerged], feed_dict={
-                        X: es_vectores, y: na_vectores},
-                        options=run_options,
-                        run_metadata=run_metadata)
+                        X: es_vectores, y: na_vectores})
     if (i % 500) == 0:
         print(_loss)
     writer.add_summary(sumOut, i)
-    writer.add_run_metadata(run_metadata, 'step%03d' % i)
+    
+
+    if i % 100 == 99:
+        run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
+        run_metadata = tf.RunMetadata()
+        _loss, _, sumOut = sess.run([loss, optimiser, summaryMerged], feed_dict={
+            X: es_vectores, y: na_vectores},
+            options=run_options,
+            run_metadata=run_metadata)
+        writer.add_run_metadata(run_metadata, 'step%03d' % i)
+        writer.add_summary(sumOut, i)
+
 writer.close()
 
 
