@@ -9,6 +9,7 @@
 #https://jhui.github.io/2017/03/12/TensorBoard-visualize-your-learning/
 #https://thecodacus.com/tensorboard-tutorial-visualize-networks-graphically/#.WlVvmnWnG00
 #http://ruder.io/transfer-learning/
+#https://www.tensorflow.org/get_started/graph_viz
 
 import tensorflow as tf
 from numpy import array, float32
