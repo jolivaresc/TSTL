@@ -196,12 +196,12 @@ print("shape es:", es_vectores.shape, "\nshape na:", na_vectores.shape)
 # In[18]:
 
 
-LEARNING_RATE = 0.5
+LEARNING_RATE = 0.7
 BATCH_SIZE = 100
 
 NODES_INPUT = es_vectores[0].size
-NODES_H1 = 42
-NODES_H2 = 42
+NODES_H1 = 15
+NODES_H2 = 15
 NODES_OUPUT = na_vectores[0].size
 INSTANCES = es_vectores.__len__()
 EPOCHS = 100000
