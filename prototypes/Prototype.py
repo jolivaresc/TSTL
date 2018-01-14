@@ -14,6 +14,11 @@
 #https://www.tensorflow.org/get_started/graph_viz
 #https://web.stanford.edu/class/cs294a/sparseAutoencoder.pdf
 #http://ieeexplore.ieee.org/abstract/document/554199/
+#https://stackoverflow.com/questions/36498127/how-to-effectively-apply-gradient-clipping-in-tensor-flow
+#https://gertjanvandenburg.com/blog/autoencoder/
+#https://jmetzen.github.io/2015-11-27/vae.html
+#https://gist.github.com/hussius/1534135a419bb0b957b9
+#https://blog.slavv.com/37-reasons-why-your-neural-network-is-not-working-4020854bd607
 
 import tensorflow as tf
 from pandas import set_option, read_csv
@@ -195,11 +200,11 @@ LEARNING_RATE = 0.5
 BATCH_SIZE = 100
 
 NODES_INPUT = es_vectores[0].size
-NODES_H1 = 32
-NODES_H2 = 32
+NODES_H1 = 42
+NODES_H2 = 42
 NODES_OUPUT = na_vectores[0].size
 INSTANCES = es_vectores.__len__()
-EPOCHS = 30000
+EPOCHS = 100000
 
 
 # In[19]:
@@ -255,11 +260,21 @@ print(hidden_layer1)
 # Calcular la salida de la 1er capa oculta
 # h(x) = x*w + bias
 hidden_layer1_output = tf.add(tf.matmul(es_vectores, hidden_layer1["W1"]), hidden_layer1["b1"])
-# Parámetro para función de activación relu
+# https://www.learnopencv.com/understanding-autoencoders-using-tensorflow-python/
+# 3.4 Why do we use a leaky ReLU and not a ReLU as an activation function?
+# We want gradients to flow while we backpropagate through the network. 
+# We stack many layers in a system in which there are some neurons 
+# whose value drop to zero or become negative. Using a ReLU as an activation 
+# function clips the negative values to zero and in the backward pass, 
+# the gradients do not flow through those neurons where the values become zero. 
+# Because of this the weights do not get updated, and the network stops learning 
+# for those values. So using ReLU is not always a good idea. However, we encourage 
+# you to change the activation function to ReLU and see the difference.
+# Parámetro para función de activación leaky_relu
 alpha = tf.constant(0.2, dtype=tf.float64)
-# Función de activación usando relu
+# Función de activación usando leaky_relu
 tf.summary.histogram("pre_activations_h1", hidden_layer1_output)
-hidden_layer1_output = tf.nn.relu(hidden_layer1_output, name="h1Activation")
+hidden_layer1_output = tf.nn.leaky_relu(hidden_layer1_output,alpha, name="h1Activation")
 tf.summary.histogram('activationsh1', hidden_layer1_output)
 
 
@@ -269,9 +284,9 @@ tf.summary.histogram('activationsh1', hidden_layer1_output)
 # Calcular la salida de la 2da capa oculta
 # h(x) = x*w + bias
 hidden_layer2_output = tf.add(tf.matmul(hidden_layer1_output, hidden_layer2["W2"]), hidden_layer2["b2"])
-# Función de activación usando relu
+# Función de activación usando leaky_relu
 tf.summary.histogram("pre_activations_h2", hidden_layer2_output)
-hidden_layer2_output = tf.nn.relu(hidden_layer2_output, name="h2Activation")
+hidden_layer2_output = tf.nn.leaky_relu(hidden_layer2_output,alpha, name="h2Activation")
 tf.summary.histogram('activationsh2', hidden_layer2_output)
 
 
@@ -294,29 +309,59 @@ print(nah_predicted.shape, y.shape)
 #loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=y, logits=nah_predicted))
 #loss = tf.reduce_mean(tf.reduce_sum((nah_predicted - y) ** 2))
 loss = tf.reduce_mean(tf.squared_difference(nah_predicted, y), name="loss_f")
-tf.summary.scalar("cost", loss)
+tf.summary.scalar("loss", loss)
 
 
 # In[26]:
 
+# Al parecer se presenta el problema de vanishing gradient 
+# problem (https://medium.com/@anishsingh20/the-vanishing-gradient-problem-48ae7f501257) 
+# por lo que se utiliza la función tf.clip_by_global_norm para evitar que el 
+# gradiente se vuelva muy pequeño y tarde más en converger.
+# https://www.tensorflow.org/versions/r0.12/api_docs/python/train/gradient_clipping
 
-#optimiser
+# Create an optimizer.
+# En pruebas la función tf.train.AdamOptimizer parace quedarse estancada 
+# en un mínimo local al momento de minimizar el error.
 optimiser = tf.train.AdagradOptimizer(learning_rate=LEARNING_RATE,
-                                      name="AdagradOptimizer").minimize(loss, name="loss")
+                                      name="AdagradOptimizer")
+
+# Compute gradients
+gradients, variables = zip(*optimiser.compute_gradients(loss))
+
+# For those who would like to understand the idea of gradient clipping(by norm):
+# Whenever the gradient norm is greater than a particular threshold, 
+# we clip the gradient norm so that it stays within the threshold. 
+# This threshold is sometimes set to 5.
+# https://stackoverflow.com/questions/36498127/how-to-effectively-apply-gradient-clipping-in-tensor-flow
+gradients, _ = tf.clip_by_global_norm(gradients, 5.0)
+
+# Apply processed gradients to optimizer.
+train_op = optimiser.apply_gradients(zip(gradients, variables))
+
+# Accuracy 
+with tf.name_scope('accuracy'):
+  with tf.name_scope('correct_prediction'):
+    correct_prediction = tf.equal(tf.argmax(nah_predicted, 1), tf.argmax(y, 1))
+  with tf.name_scope('accuracy'):
+    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float64))
+tf.summary.scalar('accuracy', accuracy)
 
 
 # In[27]:
 
 
+LOGPATH = "./logs/NN_MSE_ADAG_" + str(NODES_H1) + "h1_ " + str(NODES_H2) + "h2" 
+print("logpath", LOGPATH)
 #Session
-config = tf.ConfigProto()
-config.intra_op_parallelism_threads = 44
-config.inter_op_parallelism_threads = 44
+config = tf.ConfigProto(intra_op_parallelism_threads=4,
+                        inter_op_parallelism_threads=1,
+                        #log_device_placement=True
+                        )
 sess = tf.Session(config=config)
 # Initialize variables
 summaryMerged = tf.summary.merge_all()
-writer = tf.summary.FileWriter("./logs/NN", sess.graph)
-
+writer = tf.summary.FileWriter(LOGPATH, sess.graph)
 init = tf.global_variables_initializer()
 sess.run(init)
 
@@ -337,16 +382,16 @@ for i in range(EPOCHS):
     batch_target = na_vectores[offset:(offset + BATCH_SIZE), :]
     '''
 
-    _loss, _, sumOut = sess.run([loss, optimiser, summaryMerged], feed_dict={
+    _loss, _, sumOut = sess.run([loss, train_op, summaryMerged], feed_dict={
                                 X: es_vectores, y: na_vectores})
     if (i % 500) == 0:
-        print(_loss)
+        print("Epoch:",i,"/",EPOCHS, "\tLoss:", _loss)
     writer.add_summary(sumOut, i)
 
     if i % 100 == 99:
         run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
         run_metadata = tf.RunMetadata()
-        _loss, _, sumOut = sess.run([loss, optimiser, summaryMerged], feed_dict={
+        _loss, _, sumOut = sess.run([loss, train_op, summaryMerged], feed_dict={
                                     X: es_vectores, y: na_vectores},
                                     options=run_options,
                                     run_metadata=run_metadata)
