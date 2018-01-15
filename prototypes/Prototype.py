@@ -19,6 +19,8 @@
 #https://jmetzen.github.io/2015-11-27/vae.html
 #https://gist.github.com/hussius/1534135a419bb0b957b9
 #https://blog.slavv.com/37-reasons-why-your-neural-network-is-not-working-4020854bd607
+#https://www.tensorflow.org/api_docs/python/tf/nn/xw_plus_b
+#https://www.tensorflow.org/api_docs/python/tf/nn/dropout
 
 import tensorflow as tf
 from pandas import set_option, read_csv
@@ -200,8 +202,8 @@ LEARNING_RATE = 0.7
 BATCH_SIZE = 100
 
 NODES_INPUT = es_vectores[0].size
-NODES_H1 = 15
-NODES_H2 = 15
+NODES_H1 = 30
+NODES_H2 = 25
 NODES_OUPUT = na_vectores[0].size
 INSTANCES = es_vectores.__len__()
 EPOCHS = 100000
@@ -323,8 +325,7 @@ tf.summary.scalar("loss", loss)
 # Create an optimizer.
 # En pruebas la función tf.train.AdamOptimizer parace quedarse estancada 
 # en un mínimo local al momento de minimizar el error.
-optimiser = tf.train.AdagradOptimizer(learning_rate=LEARNING_RATE,
-                                      name="AdagradOptimizer")
+optimiser = tf.train.AdagradOptimizer(learning_rate=LEARNING_RATE)
 
 # Compute gradients
 gradients, variables = zip(*optimiser.compute_gradients(loss))
@@ -351,7 +352,8 @@ tf.summary.scalar('accuracy', accuracy)
 # In[27]:
 
 
-LOGPATH = "./logs/NN_MSE_ADAG_" + str(NODES_H1) + "h1_ " + str(NODES_H2) + "h2" 
+LOGPATH = "./logs/NN_MSE_RELU_AdagradOptimizer_" + \
+    str(NODES_H1) + "h1_" + str(NODES_H2) + "h2"
 print("logpath", LOGPATH)
 #Session
 config = tf.ConfigProto(intra_op_parallelism_threads=4,
