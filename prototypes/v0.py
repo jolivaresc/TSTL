@@ -224,9 +224,9 @@ tf.summary.histogram("output/softmax", output)
 
 #loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=y, logits=nah_predicted))
 #loss = tf.reduce_mean(tf.reduce_sum((nah_predicted - y) ** 2))
-with tf.name_scope("MSE"):
-    loss = tf.reduce_mean(tf.squared_difference(nah_predicted, y), name="loss")
-    tf.summary.scalar("loss", loss)
+#with tf.name_scope("MSE"):
+loss = tf.reduce_mean(tf.squared_difference(nah_predicted, y), name="loss")
+tf.summary.scalar("loss", loss)
 
 
 # # Optimiser
