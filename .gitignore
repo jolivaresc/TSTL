@@ -7,3 +7,4 @@ credentials.py
 vectors/
 lexiconessemilla/
 lexiconevaluacion/
+__pycache__/

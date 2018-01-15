@@ -1,11 +1,10 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 import tensorflow as tf
-from numpy import float64
 import utils
 __author__ = "Olivares Castillo José Luis"
 
@@ -13,7 +12,7 @@ __author__ = "Olivares Castillo José Luis"
 tf.reset_default_graph()
 
 
-# In[2]:
+# In[ ]:
 
 
 print("TensorFlow v{}".format(tf.__version__))
@@ -21,7 +20,7 @@ print("TensorFlow v{}".format(tf.__version__))
 
 # # Semilla para reproducibilidad
 
-# In[3]:
+# In[ ]:
 
 
 tf.set_random_seed(42)
@@ -30,22 +29,25 @@ tf.set_random_seed(42)
 # # Cargar vectores desde archivos.
 # Leer archivos node2vec
 
-# In[4]:
+# In[ ]:
 
 
 es, na = utils.load_node2vec()
+print("es:", es.shape, "\tna:", na.shape)
+
 
 # Se buscan los índices de los lexicones semilla dentro de los dataframes para poder acceder a sus representaciones vectoriales.
 
-# In[5]:
+# In[ ]:
 
 
 index_es, index_na = utils.get_seed_index(es, na)
+print("index_es:", index_es.__len__(), "index_na:", index_na.__len__())
 
 
 # Se obtienen los vectores de los lexicones semilla.
 
-# In[6]:
+# In[ ]:
 
 
 es_vectores = utils.get_vectors(es, index_es)
@@ -54,18 +56,18 @@ na_vectores = utils.get_vectors(na, index_na)
 
 # # Hyperparameters
 
-# In[28]:
+# In[ ]:
 
 
-LEARNING_RATE = 0.7
+LEARNING_RATE = 0.5
 
 # Dimensión de vectores de entrada (número de neuronas en capa de entrada).
 NODES_INPUT = es_vectores[0].size
 
 # Número de neuronas en capas ocultas.
-NODES_H1 = 70
-NODES_H2 = 42
-NODES_H3 = 70
+NODES_H1 = 70 - 20
+NODES_H2 = 42 - 20
+NODES_H3 = 70 - 20
 
 # (número de neuronas en capa de entrada).
 NODES_OUPUT = na_vectores[0].size
@@ -87,7 +89,7 @@ LOGPATH = utils.make_hparam_string("MSE", "RELU", "Adagrad", "H", NODES_H1,
 #
 # `tf.name_scope` se utiliza para mostrar las entradas del grafo computacional en `TensorBoard`.
 
-# In[29]:
+# In[ ]:
 
 
 with tf.name_scope('input'):
@@ -117,10 +119,10 @@ with tf.name_scope('input'):
 #
 #
 
-# In[30]:
+# In[ ]:
 
 
-def fully_connected_layer(input, size_in, size_out, name="fc", stddev=0.1,
+def fully_connected_layer(input, size_in, size_out, name, stddev=0.1,
                           dtype=tf.float64):
     with tf.name_scope(name):
         # Tensor de pesos.
@@ -165,24 +167,27 @@ def fully_connected_layer(input, size_in, size_out, name="fc", stddev=0.1,
 # you to change the activation function to ReLU and see the difference.
 # [See link](https://www.learnopencv.com/understanding-autoencoders-using-tensorflow-python/)
 
-# In[31]:
+# In[ ]:
 
 
 def activation_function(layer, act, name, alpha=tf.constant(0.2, dtype=tf.float64)):
     if act == "leaky_relu":
+        #print("leaky_relu")
         return tf.nn.leaky_relu(layer, alpha, name=name)
     elif act == "softmax":
+        #print("softmax")
         return tf.nn.softmax(layer, name=name)
+    #print("relu")
     return tf.nn.relu(layer, name=name)
 
 
 # Se definen las capas.
 
-# In[32]:
+# In[ ]:
 
 
 # Se calcula la salida de la capa.
-fc1 = fully_connected_layer(X, NODES_INPUT, NODES_H1)
+fc1 = fully_connected_layer(X, NODES_INPUT, NODES_H1, "fc1")
 
 # Activación de la capa.
 fc1 = activation_function(fc1, "relu", "fc1")
@@ -192,26 +197,26 @@ fc1 = activation_function(fc1, "relu", "fc1")
 tf.summary.histogram("fc1/relu", fc1)
 
 
-# In[33]:
+# In[ ]:
 
 
-fc2 = fully_connected_layer(fc1, NODES_H1, NODES_H2)
+fc2 = fully_connected_layer(fc1, NODES_H1, NODES_H2, "fc2")
 fc2 = activation_function(fc2, "relu", "fc2")
 tf.summary.histogram("fc2/relu", fc2)
 
 
-# In[34]:
+# In[ ]:
 
 
-fc3 = fully_connected_layer(fc2, NODES_H2, NODES_H3)
+fc3 = fully_connected_layer(fc2, NODES_H2, NODES_H3, "fc3")
 fc3 = activation_function(fc3, "relu", "fc3")
 tf.summary.histogram("fc2/relu", fc3)
 
 
-# In[35]:
+# In[ ]:
 
 
-output = fully_connected_layer(fc3, NODES_H3, NODES_OUPUT)
+output = fully_connected_layer(fc3, NODES_H3, NODES_OUPUT, "output")
 nah_predicted = activation_function(output, "softmax", "output")
 tf.summary.histogram("output/softmax", output)
 
@@ -219,7 +224,7 @@ tf.summary.histogram("output/softmax", output)
 # # Función de error
 # Se utiliza la función de error por mínimos cuadrados.
 
-# In[36]:
+# In[ ]:
 
 
 #loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=y, logits=nah_predicted))
@@ -236,7 +241,7 @@ tf.summary.scalar("loss", loss)
 #
 # > b) En pruebas, el optimizador para el algoritmo de backpropagation [AdamOptimizer](https://www.tensorflow.org/api_docs/python/tf/train/AdamOptimizer) se queda estancado apenas empieza el entrenamiento (100000 epochs).
 
-# In[37]:
+# In[ ]:
 
 
 #https://stackoverflow.com/questions/36498127/how-to-effectively-apply-gradient-clipping-in-tensor-flow
@@ -267,7 +272,7 @@ train_op = optimiser.apply_gradients(zip(gradients, variables))
 #
 #
 
-# In[38]:
+# In[ ]:
 
 
 # Accuracy
@@ -282,7 +287,7 @@ with tf.name_scope('accuracy'):
     tf.summary.scalar('accuracy', accuracy)
 
 
-# In[39]:
+# In[ ]:
 
 
 print("logpath:", LOGPATH)
@@ -292,7 +297,7 @@ print("logpath:", LOGPATH)
 #
 # Para poder realizar el entrenamiento se debe iniciar una sesión para que se puedan ejecutar las operaciones para entrenar y evaluar la red neuronal.
 
-# In[40]:
+# In[ ]:
 
 
 # Configuración para pasar como argumento a la sesión de TensorFlow.
@@ -318,7 +323,7 @@ init = tf.global_variables_initializer()
 sess.run(init)
 
 
-# In[41]:
+# In[ ]:
 
 
 def feed_dict(*placeholders, memUsage=False):
@@ -326,18 +331,17 @@ def feed_dict(*placeholders, memUsage=False):
             y: placeholders[1]}
 
 
-# In[42]:
+# In[ ]:
 
 
 for i in range(EPOCHS):
 
     # Se corre la sesión y se pasan como argumentos la función de error (loss),
     # el optimizador de backpropagation (train_op) y los histogramas (summaryMerged)
-    if i % 5 == 0:
-        _loss, _, sumOut = sess.run([loss, train_op, summaryMerged],
-                                    feed_dict=feed_dict(es_vectores, na_vectores))
-        # Actualiza los histogramas.
-        writer.add_summary(sumOut, i)
+    _loss, _, sumOut = sess.run([loss, train_op, summaryMerged],
+                                feed_dict=feed_dict(es_vectores, na_vectores))
+    # Actualiza los histogramas.
+    writer.add_summary(sumOut, i)
 
     # Muestra el valor del error cada 500 pasos de entrenamiento.
     if (i % 500) == 0:
