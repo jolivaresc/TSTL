@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 # In[ ]:
@@ -36,7 +35,8 @@ es, na = utils.load_node2vec()
 print("es:", es.shape, "\tna:", na.shape)
 
 
-# Se buscan los índices de los lexicones semilla dentro de los dataframes para poder acceder a sus representaciones vectoriales.
+# Se buscan los índices de los lexicones semilla dentro de los dataframes para poder 
+# acceder a sus representaciones vectoriales.
 
 # In[ ]:
 
@@ -65,15 +65,15 @@ LEARNING_RATE = 0.7
 NODES_INPUT = es_vectores[0].size
 
 # Número de neuronas en capas ocultas.
-NODES_H1 = 200  # 70 - 20 - 15
-NODES_H2 = 70  # 42 - 20
+NODES_H1 = 100  # 70 - 20 - 15
+NODES_H2 = 90  # 42 - 20
 NODES_H3 = 70 - 20
 
 # (número de neuronas en capa de entrada).
 NODES_OUPUT = na_vectores[0].size
 
 
-EPOCHS = 130000
+EPOCHS = 150000
 
 # Ruta donde se guarda el grafo para visualizar en TensorBoard.
 
@@ -93,8 +93,10 @@ EPOCHS = 130000
 with tf.name_scope('input'):
     # El valor None indica que se puede modificar la dimensión de los tensores
     # por si se usan todos los vectores o batches.
-    X = tf.placeholder(shape=[None, NODES_INPUT],dtype=tf.float64, name='input_es')
-    y = tf.placeholder(shape=[None, NODES_OUPUT],dtype=tf.float64, name='target_na')
+    X = tf.placeholder(shape=[None, NODES_INPUT],
+                       dtype=tf.float64, name='input_es')
+    y = tf.placeholder(shape=[None, NODES_OUPUT],
+                       dtype=tf.float64, name='target_na')
 
 
 # # Función para crear las capas de la red.
@@ -118,14 +120,13 @@ with tf.name_scope('input'):
 # In[ ]:
 
 
-def fully_connected_layer(input, size_in, size_out, name, stddev=0.1,dtype=tf.float64):
+def fully_connected_layer(input, size_in, size_out, name, stddev=0.1, dtype=tf.float64):
     """Función para crear capas.
     
     Arguments:
         input {Tensor} -- Tensor de entrada a la capa.
         size_in {int}, size_out {int} -- Dimensiones de entrada y salida de la capa.
         name {str} -- Nombre de la capa. Default: fc.
-
     Keyword Arguments:
         stddev {float} -- Desviación estándar con la que se inicializan los pesos de la capa. (default: {0})
         dtype {function} -- Floating-point representation. (default: {tf.float64})
@@ -149,7 +150,7 @@ def fully_connected_layer(input, size_in, size_out, name, stddev=0.1,dtype=tf.fl
         # visualizarlos en TensorBoard.
         tf.summary.histogram("weights", W)
         tf.summary.histogram("activations", output)
-        
+
         return output
 
 
@@ -159,7 +160,10 @@ def fully_connected_layer(input, size_in, size_out, name, stddev=0.1,dtype=tf.fl
 # Args:
 # * layer (Tensor): Capa que será activada.
 # * name (string): Nombre de la capa para mostrar en `TensorBoard`.
-# * act (string): Función de activación. Default: [ReLU](https://www.tensorflow.org/api_docs/python/tf/nn/relu). También se pueden utilizar [Leaky ReLU](https://www.tensorflow.org/api_docs/python/tf/nn/leaky_relu) con un parámetro `alpha = 0.2` por defecto y [Softmax](https://www.tensorflow.org/api_docs/python/tf/nn/softmax) para la capa de salida.
+# * act (string): Función de activación. Default: [ReLU](https://www.tensorflow.org/api_docs/python/tf/nn/relu). 
+# También se pueden utilizar [Leaky ReLU](https://www.tensorflow.org/api_docs/python/tf/nn/leaky_relu) 
+# con un parámetro `alpha = 0.2` por defecto y [Softmax](https://www.tensorflow.org/api_docs/python/tf/nn/softmax) 
+# para la capa de salida.
 #
 # Returns:
 #     Capa con función de activación aplicada.
@@ -188,7 +192,8 @@ def activation_function(layer, act, name, alpha=tf.constant(0.2, dtype=tf.float6
         name {str} -- Nombre para visualización de activación en TensorBoard.
     
     Keyword Arguments:
-        alpha {tf.constant} -- Constante que se usa como argumento para leaky_relu (default: {tf.constant(0.2)})
+        alpha {tf.constant} -- Constante que se usa como argumento para 
+                               leaky_relu (default: {tf.constant(0.2)})
         dtype {tf.function} -- Floating-point representation. (default: {tf.float64})
     
     Returns:
@@ -229,14 +234,11 @@ tf.summary.histogram("fc1/relu", fc1)
 # In[ ]:
 
 
-'''
 fc2 = fully_connected_layer(fc1, NODES_H1, NODES_H2, "fc2")
-fc2 = activation_function(fc2, "leaky_relu", "fc2")
+fc2 = activation_function(fc2, "relu", "fc2")
 tf.summary.histogram("fc2/relu", fc2)
-
+'''
 # In[ ]:
-
-
 fc3 = fully_connected_layer(fc2, NODES_H2, NODES_H3, "fc3")
 fc3 = activation_function(fc3, "relu", "fc3")
 tf.summary.histogram("fc2/relu", fc3)
@@ -245,9 +247,9 @@ tf.summary.histogram("fc2/relu", fc3)
 # In[ ]:
 
 
-output = fully_connected_layer(fc1, NODES_H1, NODES_OUPUT, "output")
-nah_predicted = activation_function(output, "softmax", "output")
-tf.summary.histogram("output/softmax", output)
+output = fully_connected_layer(fc2, NODES_H2, NODES_OUPUT, "output")
+nah_predicted = activation_function(output, "sigmoid", "output")
+tf.summary.histogram("output/sigmoid", output)
 
 
 # # Función de error
@@ -266,9 +268,16 @@ tf.summary.scalar("loss", loss)
 # # Optimiser
 #
 # **NOTAS**
-# > a) En pruebas, al parecer se presenta el problema de [Vanishing Gradient Problem(https://medium.com/@anishsingh20/the-vanishing-gradient-problem-48ae7f501257), la función de error parecía quedarse estancada en un mínimo local. Para contrarrestar esto, se utiliza la función `tf.clip_by_global_norm` que ajusta el gradiente a un valor específico y evitar que rebase un determinado umbral o se haga cero. [Ver liga](https://www.tensorflow.org/versions/r0.12/api_docs/python/train/gradient_clipping)
+# > a) En pruebas, al parecer se presenta el problema de [Vanishing Gradient 
+# Problem(https://medium.com/@anishsingh20/the-vanishing-gradient-problem-48ae7f501257), la función de 
+# error parecía quedarse estancada en un mínimo local. Para contrarrestar esto, se utiliza la función 
+# `tf.clip_by_global_norm` que ajusta el gradiente a un valor específico y evitar que rebase un 
+# determinado umbral o se haga cero. 
+# [Ver liga](https://www.tensorflow.org/versions/r0.12/api_docs/python/train/gradient_clipping)
 #
-# > b) En pruebas, el optimizador para el algoritmo de backpropagation [AdamOptimizer](https://www.tensorflow.org/api_docs/python/tf/train/AdamOptimizer) se queda estancado apenas empieza el entrenamiento (100000 epochs).
+# > b) En pruebas, el optimizador para el algoritmo de backpropagation 
+# [AdamOptimizer](https://www.tensorflow.org/api_docs/python/tf/train/AdamOptimizer) se queda 
+# estancado apenas empieza el entrenamiento (100000 epochs).
 
 # In[ ]:
 
@@ -325,7 +334,8 @@ print("logpath:", LOGPATH)
 
 # # TensorFlow Session
 #
-# Para poder realizar el entrenamiento se debe iniciar una sesión para que se puedan ejecutar las operaciones para entrenar y evaluar la red neuronal.
+# Para poder realizar el entrenamiento se debe iniciar una sesión para que se puedan ejecutar las 
+# operaciones para entrenar y evaluar la red neuronal.
 
 # In[ ]:
 
