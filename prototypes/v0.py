@@ -59,14 +59,14 @@ na_vectores = utils.get_vectors(na, index_na)
 # In[ ]:
 
 
-LEARNING_RATE = 0.63
+LEARNING_RATE = 0.7
 
 # Dimensión de vectores de entrada (número de neuronas en capa de entrada).
 NODES_INPUT = es_vectores[0].size
 
 # Número de neuronas en capas ocultas.
-NODES_H1 = 90 #70 - 20 - 15
-NODES_H2 = 70 #42 - 20
+NODES_H1 = 200  # 70 - 20 - 15
+NODES_H2 = 70  # 42 - 20
 NODES_H3 = 70 - 20
 
 # (número de neuronas en capa de entrada).
@@ -76,7 +76,6 @@ NODES_OUPUT = na_vectores[0].size
 EPOCHS = 130000
 
 # Ruta donde se guarda el grafo para visualizar en TensorBoard.
-LOGPATH = utils.make_hparam_string("MSE", "LEAKYRELU", "Adagrad", "H", NODES_H1,NODES_H2, "LR", LEARNING_RATE)
 
 
 # # Placeholders
@@ -94,24 +93,22 @@ LOGPATH = utils.make_hparam_string("MSE", "LEAKYRELU", "Adagrad", "H", NODES_H1,
 with tf.name_scope('input'):
     # El valor None indica que se puede modificar la dimensión de los tensores
     # por si se usan todos los vectores o batches.
-    X = tf.placeholder(shape=[None, NODES_INPUT],
-                       dtype=tf.float64, name='input_es')
-    y = tf.placeholder(shape=[None, NODES_OUPUT],
-                       dtype=tf.float64, name='target_na')
+    X = tf.placeholder(shape=[None, NODES_INPUT],dtype=tf.float64, name='input_es')
+    y = tf.placeholder(shape=[None, NODES_OUPUT],dtype=tf.float64, name='target_na')
 
 
 # # Función para crear las capas de la red.
 #
 #
 # Función para crear capas.
-#
+
 # Args:
 # * input (Tensor): Tensor de entrada a la capa.
 # * size_in, size_out (int): Dimensiones de entrada y salida de la capa.
 # * name (str): Nombre de la capa. Default: fc.
 # * stddev (float): Desviación estándar con la que se inicializan los pesos de la capa.
 # * dtype: Floating-point representation.
-#
+
 # Returns:
 # * act (Tensor): $(input * weights) + bias $
 #
@@ -121,8 +118,22 @@ with tf.name_scope('input'):
 # In[ ]:
 
 
-def fully_connected_layer(input, size_in, size_out, name, stddev=0.1,
-                          dtype=tf.float64):
+def fully_connected_layer(input, size_in, size_out, name, stddev=0.1,dtype=tf.float64):
+    """Función para crear capas.
+    
+    Arguments:
+        input {Tensor} -- Tensor de entrada a la capa.
+        size_in {int}, size_out {int} -- Dimensiones de entrada y salida de la capa.
+        name {str} -- Nombre de la capa. Default: fc.
+
+    Keyword Arguments:
+        stddev {float} -- Desviación estándar con la que se inicializan los pesos de la capa. (default: {0})
+        dtype {function} -- Floating-point representation. (default: {tf.float64})
+    
+    Returns:
+        Tensor -- Salida de la capa: (input * Weights) + bias
+    """
+
     with tf.name_scope(name):
         # Tensor de pesos.
         W = tf.Variable(tf.truncated_normal([size_in, size_out], stddev=stddev,
@@ -132,15 +143,14 @@ def fully_connected_layer(input, size_in, size_out, name, stddev=0.1,
             0.1, shape=[size_out], dtype=dtype), name="b")
 
         # Realiza la operación input * + b (tf.nn.xw_plus_b)
-        act = tf.add(tf.matmul(input, W), b)
+        ouput = tf.add(tf.matmul(input, W), b)
 
         # Se generan histogramas de los pesos y la salida de la capa para poder
         # visualizarlos en TensorBoard.
         tf.summary.histogram("weights", W)
-        #tf.summary.histogram("biases", b)
-        tf.summary.histogram("activations", act)
-
-        return act
+        tf.summary.histogram("activations", output)
+        
+        return ouput
 
 
 # # Activación de capas.
@@ -170,12 +180,33 @@ def fully_connected_layer(input, size_in, size_out, name, stddev=0.1,
 
 
 def activation_function(layer, act, name, alpha=tf.constant(0.2, dtype=tf.float64)):
+    """Esta función aplica la activación a la capa neuronal.
+    
+    Arguments:
+        layer {Tensor} -- Capa a activar.
+        act {tf.function} -- Función de activación (default: {tf.nn.relu}).
+        name {str} -- Nombre para visualización de activación en TensorBoard.
+    
+    Keyword Arguments:
+        alpha {tf.constant} -- Constante que se usa como argumento para leaky_relu (default: {tf.constant(0.2)})
+        dtype {tf.function} -- Floating-point representation. (default: {tf.float64})
+    
+    Returns:
+        Tensor -- Capa con función de activación aplicada.
+    """
+
     if act == "leaky_relu":
         return tf.nn.leaky_relu(layer, alpha, name=name)
+
     elif act == "softmax":
         return tf.nn.softmax(layer, name=name)
+
     elif act == "sigmoid":
         return tf.nn.sigmoid(layer, name=name)
+
+    elif act == "tanh":
+        return tf.nn.tanh(layer, name=name)
+
     return tf.nn.relu(layer, name=name)
 
 
@@ -198,11 +229,11 @@ tf.summary.histogram("fc1/relu", fc1)
 # In[ ]:
 
 
+'''
 fc2 = fully_connected_layer(fc1, NODES_H1, NODES_H2, "fc2")
 fc2 = activation_function(fc2, "leaky_relu", "fc2")
 tf.summary.histogram("fc2/relu", fc2)
 
-'''
 # In[ ]:
 
 
@@ -214,7 +245,7 @@ tf.summary.histogram("fc2/relu", fc3)
 # In[ ]:
 
 
-output = fully_connected_layer(fc2, NODES_H2, NODES_OUPUT, "output")
+output = fully_connected_layer(fc1, NODES_H1, NODES_OUPUT, "output")
 nah_predicted = activation_function(output, "softmax", "output")
 tf.summary.histogram("output/softmax", output)
 
@@ -287,7 +318,8 @@ with tf.name_scope('accuracy'):
 
 # In[ ]:
 
-
+LOGPATH = utils.make_hparam_string(
+    "MSE", "RELU", "Adagrad", "H", NODES_H1, "LR", LEARNING_RATE)
 print("logpath:", LOGPATH)
 
 
