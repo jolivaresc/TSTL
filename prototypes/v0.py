@@ -328,7 +328,7 @@ with tf.name_scope('accuracy'):
 # In[ ]:
 
 LOGPATH = utils.make_hparam_string(
-    "MSE", "RELU", "Adagrad", "H", NODES_H1, "LR", LEARNING_RATE)
+    "MSE", "RELU_SIGMOID", "Adagrad", "H", NODES_H1,NODES_H2, "LR", LEARNING_RATE)
 print("logpath:", LOGPATH)
 
 
