@@ -59,25 +59,24 @@ na_vectores = utils.get_vectors(na, index_na)
 # In[ ]:
 
 
-LEARNING_RATE = 0.5
+LEARNING_RATE = 0.63
 
 # Dimensión de vectores de entrada (número de neuronas en capa de entrada).
 NODES_INPUT = es_vectores[0].size
 
 # Número de neuronas en capas ocultas.
-NODES_H1 = 70 - 20
-NODES_H2 = 42 - 20
+NODES_H1 = 90 #70 - 20 - 15
+NODES_H2 = 70 #42 - 20
 NODES_H3 = 70 - 20
 
 # (número de neuronas en capa de entrada).
 NODES_OUPUT = na_vectores[0].size
 
 
-EPOCHS = 100000
+EPOCHS = 130000
 
 # Ruta donde se guarda el grafo para visualizar en TensorBoard.
-LOGPATH = utils.make_hparam_string("MSE", "RELU", "Adagrad", "H", NODES_H1,
-                                   NODES_H2, NODES_H3, "LR", LEARNING_RATE)
+LOGPATH = utils.make_hparam_string("MSE", "LEAKYRELU", "Adagrad", "H", NODES_H1,NODES_H2, "LR", LEARNING_RATE)
 
 
 # # Placeholders
@@ -172,12 +171,11 @@ def fully_connected_layer(input, size_in, size_out, name, stddev=0.1,
 
 def activation_function(layer, act, name, alpha=tf.constant(0.2, dtype=tf.float64)):
     if act == "leaky_relu":
-        #print("leaky_relu")
         return tf.nn.leaky_relu(layer, alpha, name=name)
     elif act == "softmax":
-        #print("softmax")
         return tf.nn.softmax(layer, name=name)
-    #print("relu")
+    elif act == "sigmoid":
+        return tf.nn.sigmoid(layer, name=name)
     return tf.nn.relu(layer, name=name)
 
 
@@ -201,22 +199,22 @@ tf.summary.histogram("fc1/relu", fc1)
 
 
 fc2 = fully_connected_layer(fc1, NODES_H1, NODES_H2, "fc2")
-fc2 = activation_function(fc2, "relu", "fc2")
+fc2 = activation_function(fc2, "leaky_relu", "fc2")
 tf.summary.histogram("fc2/relu", fc2)
 
-
+'''
 # In[ ]:
 
 
 fc3 = fully_connected_layer(fc2, NODES_H2, NODES_H3, "fc3")
 fc3 = activation_function(fc3, "relu", "fc3")
 tf.summary.histogram("fc2/relu", fc3)
-
+'''
 
 # In[ ]:
 
 
-output = fully_connected_layer(fc3, NODES_H3, NODES_OUPUT, "output")
+output = fully_connected_layer(fc2, NODES_H2, NODES_OUPUT, "output")
 nah_predicted = activation_function(output, "softmax", "output")
 tf.summary.histogram("output/softmax", output)
 
