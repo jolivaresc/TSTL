@@ -53,22 +53,25 @@ def get_dataframe_index(dataframe, palabra):
     return 0
 
 
-def get_seed_index(lexicon_input, lexicon_target):
+def get_seed_index(lexicon_input, lexicon_target, source ="training_set"):
     """Esta función obtiene los índices de las palabras semillas de los
     dataframes.
     
     Arguments:
         lexicon_input {Dataframe} -- Contiene vectores n2v de español.
         lexicon_target {Dataframe} -- Contiene vectores n2v de náhuatl.
-        source {string} -- Indica si se leen lexicon semilla o de evaluación.
+        source {string} -- Indica si se lee el lexicon semilla o de evaluación.
     
     Returns:
         list (2) -- Listas con índices de las palabras semillas.
+    
+    TODO:
+        Agregar opción para leer set de evaluación o pruebas.
     """
-
+    names = ["esp", "nah"]
     # Se lee el lexicon necesario
-    lexiconsemilla = read_csv("../lexiconessemilla/lexicon.esna.proc.norep.tmp2",
-                                  delimiter=" ", names=["esp", "nah"])
+    lexiconsemilla = read_csv("../lexiconessemilla/lexicon.esna.proc.norep.tmp2",delimiter=" ", names=names)
+
 
     # Se almacenan las palabras semillas de español y náhuatl en listas.
     semillas_esp = list(lexiconsemilla["esp"].values)
