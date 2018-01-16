@@ -143,14 +143,14 @@ def fully_connected_layer(input, size_in, size_out, name, stddev=0.1,dtype=tf.fl
             0.1, shape=[size_out], dtype=dtype), name="b")
 
         # Realiza la operación input * + b (tf.nn.xw_plus_b)
-        ouput = tf.add(tf.matmul(input, W), b)
+        output = tf.add(tf.matmul(input, W), b)
 
         # Se generan histogramas de los pesos y la salida de la capa para poder
         # visualizarlos en TensorBoard.
         tf.summary.histogram("weights", W)
         tf.summary.histogram("activations", output)
         
-        return ouput
+        return output
 
 
 # # Activación de capas.
