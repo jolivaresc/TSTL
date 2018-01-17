@@ -2,9 +2,10 @@
 # coding: utf-8
 
 
-from pandas import set_option, read_csv
-from numpy import array, float64, dot
+import numpy as np
+from numpy import dot, float64, array
 from numpy.linalg import norm
+from pandas import set_option, read_csv
 
 __author__ = "Olivares Castillo José Luis"
 
@@ -105,7 +106,7 @@ def get_vectors(dataframe, index, format=float64):
     """
 
     return array([(dataframe.iloc[_].loc[1::])
-                  for _ in index]).astype(float64)
+                  for _ in index]).astype(format)
 
 
 def make_hparam_string(*args):
@@ -139,7 +140,7 @@ def get_distance(vector, matrix, distance="cos"):
 
     # Distancia coseno
     if distance == "cos":
-        return [(i, 1 - ((dot(vector, matrix[i])) / (norm(vector) * norm(matrix[i]))))
+        return [(i,1 - ((dot(vector,matrix[i]))/(norm(vector)*norm(matrix[i]))))
                 for i in range(matrix.shape[0])]
 
     # Distancia euclidiana
