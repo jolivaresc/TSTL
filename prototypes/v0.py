@@ -66,14 +66,14 @@ NODES_INPUT = es_vectores[0].size
 
 # Número de neuronas en capas ocultas.
 NODES_H1 = 100  # 70 - 20 - 15
-NODES_H2 = 90  # 42 - 20
+NODES_H2 = 84  # 42 - 20
 NODES_H3 = 70 - 20
 
 # (número de neuronas en capa de entrada).
 NODES_OUPUT = na_vectores[0].size
 
 
-EPOCHS = 150000
+EPOCHS = 350000
 
 # Ruta donde se guarda el grafo para visualizar en TensorBoard.
 
