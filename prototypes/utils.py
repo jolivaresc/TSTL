@@ -3,7 +3,8 @@
 
 
 from pandas import set_option, read_csv
-from numpy import array, float64
+from numpy import array, float64, dot
+from numpy.linalg import norm
 
 __author__ = "Olivares Castillo José Luis"
 
@@ -118,3 +119,29 @@ def make_hparam_string(*args):
     """
 
     return "./logs/NN_" + "".join([str(i)+"_" for i in args])
+
+
+def get_distance(vector, matrix, distance="cos"):
+    """Calcular distancias entre vectores. La métrica por defecto es la distancia coseno.
+    Se puede calcular la dist euclidiana.
+    Se calcula la distancia de un vector a un arreglo de vectores. 
+    
+    Arguments:
+        vector {numpy array} -- Vector a medir. 
+        matrix {numpy array} -- Arreglo de vectores
+    
+    Keyword Arguments:
+        distance {string} -- Argumento para especificar el tipo de métrica (default: {"cos"})
+    
+    Returns:
+        {list} -- Regresa una lista de tuplas con el índice del vector y la distancia.
+    """
+
+    # Distancia coseno
+    if distance == "cos":
+        return [(i, 1 - ((dot(vector, matrix[i])) / (norm(vector) * norm(matrix[i]))))
+                for i in range(matrix.shape[0])]
+
+    # Distancia euclidiana
+    return [(i, norm(vector - matrix[i]))
+            for i in range(matrix.shape[0])]
