@@ -1,8 +1,6 @@
 
 # coding: utf-8
 
-
-import numpy as np
 from numpy import dot, float64, array
 from numpy.linalg import norm
 from pandas import set_option, read_csv
