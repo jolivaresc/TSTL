@@ -59,14 +59,13 @@ na_vectores = utils.get_vectors(na, index_na)
 # In[ ]:
 
 
-LEARNING_RATE = 0.7
-
+LEARNING_RATE = 0.74
 # Dimensión de vectores de entrada (número de neuronas en capa de entrada).
 NODES_INPUT = es_vectores[0].size
 
 # Número de neuronas en capas ocultas.
-NODES_H1 = 100  # 70 - 20 - 15
-NODES_H2 = 84  # 42 - 20
+NODES_H1 = 90  # 70 - 20 - 15
+NODES_H2 = 83  # 42 - 20
 NODES_H3 = 70 - 20
 
 # (número de neuronas en capa de entrada).
@@ -285,6 +284,7 @@ tf.summary.scalar("loss", loss)
 #https://stackoverflow.com/questions/36498127/how-to-effectively-apply-gradient-clipping-in-tensor-flow
 
 # Create an optimizer.
+# TODO: cambiar por AdamOptimizer...
 optimiser = tf.train.AdagradOptimizer(learning_rate=LEARNING_RATE)
 
 # Compute gradients
@@ -328,7 +328,7 @@ with tf.name_scope('accuracy'):
 # In[ ]:
 
 LOGPATH = utils.make_hparam_string(
-    "MSE", "RELU_SIGMOID", "Adagrad", "H", NODES_H1,NODES_H2, "LR", LEARNING_RATE)
+    "MSE", "RELU_SIGMOID_ACC", "Adagrad", "H", NODES_H1,NODES_H2, "LR", LEARNING_RATE)
 print("logpath:", LOGPATH)
 
 
@@ -378,6 +378,7 @@ for i in range(EPOCHS):
 
     # Se corre la sesión y se pasan como argumentos la función de error (loss),
     # el optimizador de backpropagation (train_op) y los histogramas (summaryMerged)
+    
     _loss, _, sumOut = sess.run([loss, train_op, summaryMerged],
                                 feed_dict=feed_dict(es_vectores, na_vectores))
     # Actualiza los histogramas.
@@ -385,6 +386,8 @@ for i in range(EPOCHS):
 
     # Muestra el valor del error cada 500 pasos de entrenamiento.
     if (i % 500) == 0:
-        print("Epoch:", i, "/", EPOCHS, "\tLoss:", _loss)
+        train_accuracy = accuracy.eval(session=sess,feed_dict=feed_dict(es_vectores, na_vectores))
+        print("Epoch:", i, "/", EPOCHS, "\tLoss:", _loss,"\tAccuracy:",train_accuracy)
 
+    #print("\nAccuracy:", accuracy.eval(feed_dict=feed_dict(es_vectores, na_vectores)))
 writer.close()
