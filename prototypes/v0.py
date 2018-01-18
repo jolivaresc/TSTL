@@ -65,7 +65,7 @@ LEARNING_RATE = 0.4666
 NODES_INPUT = es_vectores[0].size
 
 # Número de neuronas en capas ocultas.
-NODES_H1 = 95  # 70 - 20 - 15
+NODES_H1 = 300  # 70 - 20 - 15
 NODES_H2 = 79  # 42 - 20
 NODES_OUPUT = na_vectores[0].size
 
@@ -240,11 +240,11 @@ tf.summary.histogram("fc1/relu", fc1)
 # In[ ]:
 
 
+'''
 fc2 = fully_connected_layer(fc1, NODES_H1, NODES_H2, "fc2")
 fc2 = activation_function(fc2, "relu", "fc2")
 tf.summary.histogram("fc2/relu", fc2)
 #fc2 = tf.nn.dropout(fc2, pkeep)
-'''
 # In[ ]:
 #fc2 = tf.nn.dropout(fc2, pkeep)
 fc3 = fully_connected_layer(fc2, NODES_H2, NODES_H3, "fc3")
@@ -255,7 +255,7 @@ tf.summary.histogram("fc2/relu", fc3)
 # In[ ]:
 
 
-output = fully_connected_layer(fc2, NODES_H2, NODES_OUPUT, "output")
+output = fully_connected_layer(fc1, NODES_H1, NODES_OUPUT, "output")
 nah_predicted = activation_function(output, "sigmoid", "output")
 tf.summary.histogram("output/sigmoid", output)
 
@@ -337,7 +337,7 @@ with tf.name_scope('accuracy'):
 # In[ ]:
 
 LOGPATH = utils.make_hparam_string(
-    "MSE, "RELU_SIGM_ACC", "Adagrad", "H", NODES_H1, NODES_H2, "LR", LEARNING_RATE)
+    "Adagrad", "H", NODES_H1, "LR", LEARNING_RATE)
 print("logpath:", LOGPATH)
 
 
@@ -379,11 +379,11 @@ sess.run(init)
 for i in range(EPOCHS):
     # learning rate decay
     # https://github.com/martin-gorner/tensorflow-mnist-tutorial/blob/master/mnist_2.1_five_layers_relu_lrdecay.py
-    max_learning_rate = 0.45
+    """max_learning_rate = 0.45
     min_learning_rate = 0.03
     decay_speed = 5000
     learning_rate = min_learning_rate + \
-        (max_learning_rate - min_learning_rate) * exp(-i / decay_speed)
+        (max_learning_rate - min_learning_rate) * exp(-i / decay_speed)"""
 
     # Se corre la sesión y se pasan como argumentos la función de error (loss),
     # el optimizador de backpropagation (train_op) y los histogramas (summaryMerged)
