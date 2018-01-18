@@ -65,8 +65,8 @@ LEARNING_RATE = 0.4666
 NODES_INPUT = es_vectores[0].size
 
 # Número de neuronas en capas ocultas.
-NODES_H1 = 86  # 70 - 20 - 15
-NODES_H2 = 70  # 42 - 20
+NODES_H1 = 95  # 70 - 20 - 15
+NODES_H2 = 79  # 42 - 20
 NODES_OUPUT = na_vectores[0].size
 
 
@@ -337,7 +337,7 @@ with tf.name_scope('accuracy'):
 # In[ ]:
 
 LOGPATH = utils.make_hparam_string(
-    "MSE", "DROPOUT", "RELU_SIGM_ACC", "Adagrad", "H", NODES_H1, NODES_H2, "LR", LEARNING_RATE)
+    "MSE, "RELU_SIGM_ACC", "Adagrad", "H", NODES_H1, NODES_H2, "LR", LEARNING_RATE)
 print("logpath:", LOGPATH)
 
 
