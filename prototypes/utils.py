@@ -120,7 +120,7 @@ def make_hparam_string(*args):
     return "./logs/NN_" + "".join([str(i)+"_" for i in args])
 
 
-def get_distance(vector, matrix, distance="cos"):
+def get_top10_closest(vector, matrix, distance="cos"):
     """Calcular distancias entre vectores. La métrica por defecto es la distancia coseno.
     Se puede calcular la dist euclidiana.
     Se calcula la distancia de un vector a un arreglo de vectores. 
@@ -133,14 +133,23 @@ def get_distance(vector, matrix, distance="cos"):
         distance {string} -- Argumento para especificar el tipo de métrica (default: {"cos"})
     
     Returns:
-        {list} -- Regresa una lista de tuplas con el índice del vector y la distancia.
+        {list} -- Regresa una lista de tuplas con el índice y las 10 distancias
+                  más cercanas al vector.
     """
 
     # Distancia coseno
     if distance == "cos":
-        return [(i,1 - ((dot(vector,matrix[i]))/(norm(vector)*norm(matrix[i]))))
-                for i in range(matrix.shape[0])]
+        tmp_dist = [(i, 1 - ((dot(vector, matrix[i])) / (norm(vector) * norm(matrix[i]))))
+                    for i in range(matrix.shape[0])]
+        tmp_dist = sorted(tmp_dist, key=lambda dist: dist[1])
+        distances = tmp_dist[:10]
+        del tmp_dist
+        return distances
 
     # Distancia euclidiana
-    return [(i, norm(vector - matrix[i]))
-            for i in range(matrix.shape[0])]
+    tmp_dist = [(i, norm(vector - matrix[i]))
+                for i in range(matrix.shape[0])]
+    tmp_dist = sorted(tmp_dist, key=lambda dist: dist[1])
+    distances = tmp_dist[:10]
+    del tmp_dist
+    return distances
