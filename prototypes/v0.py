@@ -5,6 +5,7 @@
 
 import tensorflow as tf
 import utils
+from math import exp
 __author__ = "Olivares Castillo José Luis"
 
 # reset everything to rerun in jupyter
@@ -35,7 +36,7 @@ es, na = utils.load_node2vec()
 print("es:", es.shape, "\tna:", na.shape)
 
 
-# Se buscan los índices de los lexicones semilla dentro de los dataframes para poder 
+# Se buscan los índices de los lexicones semilla dentro de los dataframes para poder
 # acceder a sus representaciones vectoriales.
 
 # In[ ]:
@@ -59,16 +60,13 @@ na_vectores = utils.get_vectors(na, index_na)
 # In[ ]:
 
 
-LEARNING_RATE = 0.74
+LEARNING_RATE = 0.4666
 # Dimensión de vectores de entrada (número de neuronas en capa de entrada).
 NODES_INPUT = es_vectores[0].size
 
 # Número de neuronas en capas ocultas.
-NODES_H1 = 90  # 70 - 20 - 15
-NODES_H2 = 83  # 42 - 20
-NODES_H3 = 70 - 20
-
-# (número de neuronas en capa de entrada).
+NODES_H1 = 86  # 70 - 20 - 15
+NODES_H2 = 70  # 42 - 20
 NODES_OUPUT = na_vectores[0].size
 
 
@@ -96,6 +94,14 @@ with tf.name_scope('input'):
                        dtype=tf.float64, name='input_es')
     y = tf.placeholder(shape=[None, NODES_OUPUT],
                        dtype=tf.float64, name='target_na')
+
+"""
+with tf.name_scope("dropout"):
+    # Placeholder para aplicar dropout a las capas de la red.
+    pkeep = tf.placeholder(tf.float64)
+
+with tf.name_scope("lr_decay"):
+    lr = tf.placeholder(tf.float64)"""
 
 
 # # Función para crear las capas de la red.
@@ -143,9 +149,9 @@ def fully_connected_layer(input, size_in, size_out, name, stddev=0.1, dtype=tf.f
             0.1, shape=[size_out], dtype=dtype), name="b")
 
         # Realiza la operación input * + b (tf.nn.xw_plus_b)
-        output = tf.add(tf.matmul(input, W), b)
+        #output = tf.add(tf.matmul(input, W), b)
 
-        # Se generan histogramas de los pesos y la salida de la capa para poder
+        output = tf.nn.xw_plus_b(input, W, b)
         # visualizarlos en TensorBoard.
         tf.summary.histogram("weights", W)
         tf.summary.histogram("activations", output)
@@ -159,9 +165,9 @@ def fully_connected_layer(input, size_in, size_out, name, stddev=0.1, dtype=tf.f
 # Args:
 # * layer (Tensor): Capa que será activada.
 # * name (string): Nombre de la capa para mostrar en `TensorBoard`.
-# * act (string): Función de activación. Default: [ReLU](https://www.tensorflow.org/api_docs/python/tf/nn/relu). 
-# También se pueden utilizar [Leaky ReLU](https://www.tensorflow.org/api_docs/python/tf/nn/leaky_relu) 
-# con un parámetro `alpha = 0.2` por defecto y [Softmax](https://www.tensorflow.org/api_docs/python/tf/nn/softmax) 
+# * act (string): Función de activación. Default: [ReLU](https://www.tensorflow.org/api_docs/python/tf/nn/relu).
+# También se pueden utilizar [Leaky ReLU](https://www.tensorflow.org/api_docs/python/tf/nn/leaky_relu)
+# con un parámetro `alpha = 0.2` por defecto y [Softmax](https://www.tensorflow.org/api_docs/python/tf/nn/softmax)
 # para la capa de salida.
 #
 # Returns:
@@ -184,17 +190,14 @@ def fully_connected_layer(input, size_in, size_out, name, stddev=0.1, dtype=tf.f
 
 def activation_function(layer, act, name, alpha=tf.constant(0.2, dtype=tf.float64)):
     """Esta función aplica la activación a la capa neuronal.
-    
     Arguments:
         layer {Tensor} -- Capa a activar.
         act {tf.function} -- Función de activación (default: {tf.nn.relu}).
         name {str} -- Nombre para visualización de activación en TensorBoard.
-    
     Keyword Arguments:
         alpha {tf.constant} -- Constante que se usa como argumento para 
                                leaky_relu (default: {tf.constant(0.2)})
         dtype {tf.function} -- Floating-point representation. (default: {tf.float64})
-    
     Returns:
         Tensor -- Capa con función de activación aplicada.
     """
@@ -225,9 +228,13 @@ fc1 = fully_connected_layer(X, NODES_INPUT, NODES_H1, "fc1")
 # Activación de la capa.
 fc1 = activation_function(fc1, "relu", "fc1")
 
+
 # Se añade histograma de activación de la capa para visualizar en
 # TensorBoard.
 tf.summary.histogram("fc1/relu", fc1)
+
+# Aplicar dropout a la capa para prevenir sobreajustes.
+#fc1 = tf.nn.dropout(fc1, pkeep)
 
 
 # In[ ]:
@@ -236,8 +243,10 @@ tf.summary.histogram("fc1/relu", fc1)
 fc2 = fully_connected_layer(fc1, NODES_H1, NODES_H2, "fc2")
 fc2 = activation_function(fc2, "relu", "fc2")
 tf.summary.histogram("fc2/relu", fc2)
+#fc2 = tf.nn.dropout(fc2, pkeep)
 '''
 # In[ ]:
+#fc2 = tf.nn.dropout(fc2, pkeep)
 fc3 = fully_connected_layer(fc2, NODES_H2, NODES_H3, "fc3")
 fc3 = activation_function(fc3, "relu", "fc3")
 tf.summary.histogram("fc2/relu", fc3)
@@ -267,15 +276,15 @@ tf.summary.scalar("loss", loss)
 # # Optimiser
 #
 # **NOTAS**
-# > a) En pruebas, al parecer se presenta el problema de [Vanishing Gradient 
-# Problem(https://medium.com/@anishsingh20/the-vanishing-gradient-problem-48ae7f501257), la función de 
-# error parecía quedarse estancada en un mínimo local. Para contrarrestar esto, se utiliza la función 
-# `tf.clip_by_global_norm` que ajusta el gradiente a un valor específico y evitar que rebase un 
-# determinado umbral o se haga cero. 
+# > a) En pruebas, al parecer se presenta el problema de [Vanishing Gradient
+# Problem(https://medium.com/@anishsingh20/the-vanishing-gradient-problem-48ae7f501257), la función de
+# error parecía quedarse estancada en un mínimo local. Para contrarrestar esto, se utiliza la función
+# `tf.clip_by_global_norm` que ajusta el gradiente a un valor específico y evitar que rebase un
+# determinado umbral o se haga cero.
 # [Ver liga](https://www.tensorflow.org/versions/r0.12/api_docs/python/train/gradient_clipping)
 #
-# > b) En pruebas, el optimizador para el algoritmo de backpropagation 
-# [AdamOptimizer](https://www.tensorflow.org/api_docs/python/tf/train/AdamOptimizer) se queda 
+# > b) En pruebas, el optimizador para el algoritmo de backpropagation
+# [AdamOptimizer](https://www.tensorflow.org/api_docs/python/tf/train/AdamOptimizer) se queda
 # estancado apenas empieza el entrenamiento (100000 epochs).
 
 # In[ ]:
@@ -284,7 +293,7 @@ tf.summary.scalar("loss", loss)
 #https://stackoverflow.com/questions/36498127/how-to-effectively-apply-gradient-clipping-in-tensor-flow
 
 # Create an optimizer.
-# TODO: cambiar por AdamOptimizer...
+# TODO: cambiar por AdamOptimizer... upd: Adam se estanca...
 optimiser = tf.train.AdagradOptimizer(learning_rate=LEARNING_RATE)
 
 # Compute gradients
@@ -328,13 +337,13 @@ with tf.name_scope('accuracy'):
 # In[ ]:
 
 LOGPATH = utils.make_hparam_string(
-    "MSE", "RELU_SIGMOID_ACC", "Adagrad", "H", NODES_H1,NODES_H2, "LR", LEARNING_RATE)
+    "MSE", "DROPOUT", "RELU_SIGM_ACC", "Adagrad", "H", NODES_H1, NODES_H2, "LR", LEARNING_RATE)
 print("logpath:", LOGPATH)
 
 
 # # TensorFlow Session
 #
-# Para poder realizar el entrenamiento se debe iniciar una sesión para que se puedan ejecutar las 
+# Para poder realizar el entrenamiento se debe iniciar una sesión para que se puedan ejecutar las
 # operaciones para entrenar y evaluar la red neuronal.
 
 # In[ ]:
@@ -363,31 +372,34 @@ init = tf.global_variables_initializer()
 sess.run(init)
 
 
-# In[ ]:
-
-
-def feed_dict(*placeholders, memUsage=False):
-    return {X: placeholders[0],
-            y: placeholders[1]}
-
 
 # In[ ]:
 
 
 for i in range(EPOCHS):
+    # learning rate decay
+    # https://github.com/martin-gorner/tensorflow-mnist-tutorial/blob/master/mnist_2.1_five_layers_relu_lrdecay.py
+    max_learning_rate = 0.45
+    min_learning_rate = 0.03
+    decay_speed = 5000
+    learning_rate = min_learning_rate + \
+        (max_learning_rate - min_learning_rate) * exp(-i / decay_speed)
 
     # Se corre la sesión y se pasan como argumentos la función de error (loss),
     # el optimizador de backpropagation (train_op) y los histogramas (summaryMerged)
-    
+
     _loss, _, sumOut = sess.run([loss, train_op, summaryMerged],
-                                feed_dict=feed_dict(es_vectores, na_vectores))
+                                feed_dict={X: es_vectores,
+                                           y: na_vectores})
     # Actualiza los histogramas.
     writer.add_summary(sumOut, i)
 
     # Muestra el valor del error cada 500 pasos de entrenamiento.
     if (i % 500) == 0:
-        train_accuracy = accuracy.eval(session=sess,feed_dict=feed_dict(es_vectores, na_vectores))
-        print("Epoch:", i, "/", EPOCHS, "\tLoss:", _loss,"\tAccuracy:",train_accuracy)
+        train_accuracy = accuracy.eval(session=sess, feed_dict={X: es_vectores,
+                                                                y: na_vectores})
+        print("Epoch:", i, "/", EPOCHS, "\tLoss:",
+              _loss, "\tAccuracy:", train_accuracy)
 
     #print("\nAccuracy:", accuracy.eval(feed_dict=feed_dict(es_vectores, na_vectores)))
 writer.close()
