@@ -138,6 +138,11 @@ def get_top10_closest(vector, matrix, distance="cos"):
     """
 
     # Distancia coseno
+    #return 1 - (np.matmul(vector, matrix.T) / (np.linalg.norm(vector) *
+    #  np.sqrt(np.einsum('ij,ij->i', matrix, matrix))))
+    
+    # [np.linalg.norm(x[_]) for _ in range(x.shape[0])] 
+    # => np.sqrt((x*x).sum(axis=1))
     if distance == "cos":
         tmp_dist = [(i, 1 - ((dot(vector, matrix[i])) / (norm(vector) * norm(matrix[i]))))
                     for i in range(matrix.shape[0])]
@@ -153,3 +158,15 @@ def get_top10_closest(vector, matrix, distance="cos"):
     distances = tmp_dist[:10]
     del tmp_dist
     return distances
+
+
+def get_closest_words_to(top_10,dataframe):
+    """Muestra las 10 palabras más cercanas al vector generado por el modelo.
+    
+    Arguments:
+        top_10 {list} -- Lista con índices y distancias más cercanas al vector 
+                         generador por el modelo.
+    """ 
+
+    for index, _ in top_10:
+        print(dataframe.iloc[index][0])
