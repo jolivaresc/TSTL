@@ -5,7 +5,7 @@
 
 import tensorflow as tf
 import utils
-from math import exp
+# from math import exp
 __author__ = "Olivares Castillo José Luis"
 
 # reset everything to rerun in jupyter
@@ -69,8 +69,10 @@ NODES_H1 = 300  # 70 - 20 - 15
 NODES_H2 = 79  # 42 - 20
 NODES_OUPUT = na_vectores[0].size
 
+# Inicializar pesos usando xavier_init
+XAVIER_INIT = False
 
-EPOCHS = 350000
+EPOCHS = 370000
 
 # Ruta donde se guarda el grafo para visualizar en TensorBoard.
 
@@ -125,7 +127,8 @@ with tf.name_scope("lr_decay"):
 # In[ ]:
 
 
-def fully_connected_layer(input, size_in, size_out, name, stddev=0.1, dtype=tf.float64):
+def fully_connected_layer(input, size_in, size_out, name,
+                          xavier_init=True, stddev=0.1, dtype=tf.float64):
     """Función para crear capas.
     
     Arguments:
@@ -133,6 +136,8 @@ def fully_connected_layer(input, size_in, size_out, name, stddev=0.1, dtype=tf.f
         size_in {int}, size_out {int} -- Dimensiones de entrada y salida de la capa.
         name {str} -- Nombre de la capa. Default: fc.
     Keyword Arguments:
+        xavier_init {bool} -- Inicializar pesos usando el método Xavier.
+                              Xavier Glorot and Yoshua Bengio (2010)
         stddev {float} -- Desviación estándar con la que se inicializan los pesos de la capa. (default: {0})
         dtype {function} -- Floating-point representation. (default: {tf.float64})
     
@@ -142,15 +147,27 @@ def fully_connected_layer(input, size_in, size_out, name, stddev=0.1, dtype=tf.f
 
     with tf.name_scope(name):
         # Tensor de pesos.
-        W = tf.Variable(tf.truncated_normal([size_in, size_out], stddev=stddev,
-                                            dtype=dtype), name="W")
+        """This initializer is designed to keep the scale of the gradients 
+        roughly the same in all layers. In uniform distribution this ends up 
+        being the range: x = sqrt(6. / (in + out)); [-x, x] and for normal 
+        distribution a standard deviation of sqrt(2. / (in + out)) is used.
+        Xavier Glorot and Yoshua Bengio (2010)
+        http://www.jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf
+        """
+
+        if xavier_init:
+            W = tf.get_variable(name="W" + name, shape=[size_in, size_out], dtype=dtype,
+                                initializer=tf.contrib.layers.xavier_initializer(
+                                    dtype=dtype),
+                                use_resource=True)
+        else:
+            W = tf.Variable(tf.truncated_normal([size_in, size_out], stddev=stddev,
+                                                dtype=dtype), name="W")
         # Bias.
         b = tf.Variable(tf.constant(
             0.1, shape=[size_out], dtype=dtype), name="b")
 
-        # Realiza la operación input * + b (tf.nn.xw_plus_b)
-        #output = tf.add(tf.matmul(input, W), b)
-
+        # h(x) = (input * weights) + bias
         output = tf.nn.xw_plus_b(input, W, b)
         # visualizarlos en TensorBoard.
         tf.summary.histogram("weights", W)
@@ -223,7 +240,8 @@ def activation_function(layer, act, name, alpha=tf.constant(0.2, dtype=tf.float6
 
 
 # Se calcula la salida de la capa.
-fc1 = fully_connected_layer(X, NODES_INPUT, NODES_H1, "fc1")
+fc1 = fully_connected_layer(X, NODES_INPUT, NODES_H1, "fc1",
+                            xavier_init=XAVIER_INIT)
 
 # Activación de la capa.
 fc1 = activation_function(fc1, "relu", "fc1")
@@ -255,7 +273,8 @@ tf.summary.histogram("fc2/relu", fc3)
 # In[ ]:
 
 
-output = fully_connected_layer(fc1, NODES_H1, NODES_OUPUT, "output")
+output = fully_connected_layer(fc1, NODES_H1, NODES_OUPUT, "output",
+                               xavier_init=XAVIER_INIT)
 nah_predicted = activation_function(output, "sigmoid", "output")
 tf.summary.histogram("output/sigmoid", output)
 
@@ -336,8 +355,7 @@ with tf.name_scope('accuracy'):
 
 # In[ ]:
 
-LOGPATH = utils.make_hparam_string(
-    "Adagrad", "H", NODES_H1, "LR", LEARNING_RATE)
+LOGPATH = utils.make_hparam_string("80ACC_Adagrad", "H", NODES_H1, "LR", LEARNING_RATE)
 print("logpath:", LOGPATH)
 
 
@@ -368,9 +386,11 @@ writer = tf.summary.FileWriter(LOGPATH, sess.graph)
 # Se inicializan los valores de los tensores.
 init = tf.global_variables_initializer()
 
+# Add ops to save and restore all the variables.
+saver = tf.train.Saver()
+
 # Ejecutando sesión
 sess.run(init)
-
 
 
 # In[ ]:
@@ -383,7 +403,7 @@ for i in range(EPOCHS):
     min_learning_rate = 0.03
     decay_speed = 5000
     learning_rate = min_learning_rate + \
-        (max_learning_rate - min_learning_rate) * exp(-i / decay_speed)"""
+        # (max_learning_rate - min_learning_rate) * exp(-i / decay_speed)"""
 
     # Se corre la sesión y se pasan como argumentos la función de error (loss),
     # el optimizador de backpropagation (train_op) y los histogramas (summaryMerged)
@@ -400,6 +420,8 @@ for i in range(EPOCHS):
                                                                 y: na_vectores})
         print("Epoch:", i, "/", EPOCHS, "\tLoss:",
               _loss, "\tAccuracy:", train_accuracy)
-
+SAVE_PATH = "./models/Adagrad_H_305_LR_0.433.ckpt"
+save_model = saver.save(sess, SAVE_PATH)
+print("Model saved in file: %s", save_path)
     #print("\nAccuracy:", accuracy.eval(feed_dict=feed_dict(es_vectores, na_vectores)))
 writer.close()
