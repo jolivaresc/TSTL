@@ -168,5 +168,4 @@ def get_closest_words_to(top_10,dataframe):
                          generador por el modelo.
     """ 
 
-    for index, _ in top_10:
-        print(dataframe.iloc[index][0])
+    return [dataframe.iloc[index][0] for index,_ in top_10]
