@@ -1,0 +1,2 @@
+model_checkpoint_path: "Adagrad_H_300_LR_0.4666.ckpt"
+all_model_checkpoint_paths: "Adagrad_H_300_LR_0.4666.ckpt"
