@@ -422,6 +422,6 @@ for i in range(EPOCHS):
               _loss, "\tAccuracy:", train_accuracy)
 SAVE_PATH = "./models/Adagrad_H_305_LR_0.433.ckpt"
 save_model = saver.save(sess, SAVE_PATH)
-print("Model saved in file: %s", save_path)
+print("Model saved in file: %s", SAVE_PATH)
     #print("\nAccuracy:", accuracy.eval(feed_dict=feed_dict(es_vectores, na_vectores)))
 writer.close()
