@@ -1,3 +1,5 @@
+# https://blog.keras.io/building-autoencoders-in-keras.html
+
 from keras.layers import Input, Dense
 from keras.models import Model
 

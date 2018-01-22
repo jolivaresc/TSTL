@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-from numpy import dot, float64, array
+from numpy import dot, float64, array, sqrt, matmul, einsum
 from numpy.linalg import norm
 from pandas import set_option, read_csv
 
@@ -53,7 +53,7 @@ def get_dataframe_index(dataframe, palabra):
     return 0
 
 
-def get_seed_index(lexicon_input, lexicon_target, source ="training_set"):
+def get_seed_index(lexicon_input, lexicon_target, source="training_set"):
     """Esta función obtiene los índices de las palabras semillas de los
     dataframes.
     
@@ -70,8 +70,8 @@ def get_seed_index(lexicon_input, lexicon_target, source ="training_set"):
     """
     names = ["esp", "nah"]
     # Se lee el lexicon necesario
-    lexiconsemilla = read_csv("../lexiconessemilla/lexicon.esna.proc.norep.tmp2",delimiter=" ", names=names)
-
+    lexiconsemilla = read_csv(
+        "../lexiconessemilla/lexicon.esna.proc.norep.tmp2", delimiter=" ", names=names)
 
     # Se almacenan las palabras semillas de español y náhuatl en listas.
     semillas_esp = list(lexiconsemilla["esp"].values)
@@ -117,7 +117,7 @@ def make_hparam_string(*args):
         string -- Ruta del LOGPATH
     """
 
-    return "./logs/NN_" + "".join([str(i)+"_" for i in args])
+    return "./logs/NN_" + "".join([str(i) + "_" for i in args])
 
 
 def get_top10_closest(vector, matrix, distance="cos"):
@@ -138,17 +138,17 @@ def get_top10_closest(vector, matrix, distance="cos"):
     """
 
     # Distancia coseno
-    #return 1 - (np.matmul(vector, matrix.T) / (np.linalg.norm(vector) *
-    #  np.sqrt(np.einsum('ij,ij->i', matrix, matrix))))
-    
-    # [np.linalg.norm(x[_]) for _ in range(x.shape[0])] 
-    # => np.sqrt((x*x).sum(axis=1))
     if distance == "cos":
-        tmp_dist = [(i, 1 - ((dot(vector, matrix[i])) / (norm(vector) * norm(matrix[i]))))
-                    for i in range(matrix.shape[0])]
+        # Medir distancias
+        tmp_dist = list(enumerate((1 - (matmul(vector, matrix.T) /
+                                        (norm(vector) *
+                                         sqrt(einsum('ij,ij->i',
+                                                     matrix, matrix)))))))
+        # Se ordena lista según distancias más cercanas.
         tmp_dist = sorted(tmp_dist, key=lambda dist: dist[1])
         distances = tmp_dist[:10]
         del tmp_dist
+        # Retorna 10 vectores más cercanos.
         return distances
 
     # Distancia euclidiana
@@ -160,12 +160,12 @@ def get_top10_closest(vector, matrix, distance="cos"):
     return distances
 
 
-def get_closest_words_to(top_10,dataframe):
+def get_closest_words_to(top_10, dataframe):
     """Muestra las 10 palabras más cercanas al vector generado por el modelo.
     
     Arguments:
         top_10 {list} -- Lista con índices y distancias más cercanas al vector 
                          generador por el modelo.
-    """ 
+    """
 
-    return [dataframe.iloc[index][0] for index,_ in top_10]
+    return [dataframe.iloc[index][0] for index, _ in top_10]

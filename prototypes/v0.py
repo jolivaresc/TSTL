@@ -60,17 +60,19 @@ na_vectores = utils.get_vectors(na, index_na)
 # In[ ]:
 
 
-LEARNING_RATE = 0.4666
+LEARNING_RATE = 1.0
 # Dimensión de vectores de entrada (número de neuronas en capa de entrada).
 NODES_INPUT = es_vectores[0].size
 
 # Número de neuronas en capas ocultas.
-NODES_H1 = 300  # 70 - 20 - 15
-NODES_H2 = 79  # 42 - 20
+NODES_H1 = 90  # 70 - 20 - 15
+NODES_H2 = 74  # 42 - 20
+NODES_H3 = 74  # 42 - 20
+NODES_H4 = 90  # 42 - 20
 NODES_OUPUT = na_vectores[0].size
 
 # Inicializar pesos usando xavier_init
-XAVIER_INIT = False
+XAVIER_INIT = True
 
 EPOCHS = 370000
 
@@ -171,7 +173,7 @@ def fully_connected_layer(input, size_in, size_out, name,
         output = tf.nn.xw_plus_b(input, W, b)
         # visualizarlos en TensorBoard.
         tf.summary.histogram("weights", W)
-        tf.summary.histogram("activations", output)
+        tf.summary.histogram("pre_activations", output)
 
         return output
 
@@ -244,12 +246,12 @@ fc1 = fully_connected_layer(X, NODES_INPUT, NODES_H1, "fc1",
                             xavier_init=XAVIER_INIT)
 
 # Activación de la capa.
-fc1 = activation_function(fc1, "relu", "fc1")
+fc1 = activation_function(fc1, "sigmoid", "fc1")
 
 
 # Se añade histograma de activación de la capa para visualizar en
 # TensorBoard.
-tf.summary.histogram("fc1/relu", fc1)
+tf.summary.histogram("fc1/sigmoid", fc1)
 
 # Aplicar dropout a la capa para prevenir sobreajustes.
 #fc1 = tf.nn.dropout(fc1, pkeep)
@@ -259,24 +261,32 @@ tf.summary.histogram("fc1/relu", fc1)
 
 
 '''
-fc2 = fully_connected_layer(fc1, NODES_H1, NODES_H2, "fc2")
+fc2 = fully_connected_layer(fc1, NODES_H1, NODES_H2,
+                            "fc2", xavier_init=XAVIER_INIT)
 fc2 = activation_function(fc2, "relu", "fc2")
 tf.summary.histogram("fc2/relu", fc2)
 #fc2 = tf.nn.dropout(fc2, pkeep)
 # In[ ]:
 #fc2 = tf.nn.dropout(fc2, pkeep)
-fc3 = fully_connected_layer(fc2, NODES_H2, NODES_H3, "fc3")
+fc3 = fully_connected_layer(fc2, NODES_H2, NODES_H3,
+                            "fc3", xavier_init=XAVIER_INIT)
 fc3 = activation_function(fc3, "relu", "fc3")
-tf.summary.histogram("fc2/relu", fc3)
+tf.summary.histogram("fc3/relu", fc3)
+
+
+fc4 = fully_connected_layer(fc3, NODES_H3, NODES_H4,
+                            "fc4", xavier_init=XAVIER_INIT)
+fc4 = activation_function(fc4, "relu", "fc4")
+tf.summary.histogram("fc4/relu", fc4)
 '''
 
 # In[ ]:
 
 
-output = fully_connected_layer(fc1, NODES_H1, NODES_OUPUT, "output",
-                               xavier_init=XAVIER_INIT)
-nah_predicted = activation_function(output, "sigmoid", "output")
-tf.summary.histogram("output/sigmoid", output)
+nah_predicted = fully_connected_layer(fc1, NODES_H1, NODES_OUPUT, "output",
+                                      xavier_init=XAVIER_INIT)
+#nah_predicted = activation_function(output, "sigmoid", "output")
+tf.summary.histogram("output/noact", nah_predicted)
 
 
 # # Función de error
@@ -313,7 +323,8 @@ tf.summary.scalar("loss", loss)
 
 # Create an optimizer.
 # TODO: cambiar por AdamOptimizer... upd: Adam se estanca...
-optimiser = tf.train.AdagradOptimizer(learning_rate=LEARNING_RATE)
+#optimiser = tf.train.AdagradOptimizer(learning_rate=LEARNING_RATE).minimize(loss,name="optimizer")
+optimiser = tf.train.MomentumOptimizer(learning_rate=LEARNING_RATE,momentum=0.5)
 
 # Compute gradients
 gradients, variables = zip(*optimiser.compute_gradients(loss))
@@ -355,7 +366,8 @@ with tf.name_scope('accuracy'):
 
 # In[ ]:
 
-LOGPATH = utils.make_hparam_string("80ACC_Adagrad", "H", NODES_H1, "LR", LEARNING_RATE)
+LOGPATH = utils.make_hparam_string(
+    "80ACC_Adagrad", "H", NODES_H1, "LR", LEARNING_RATE)
 print("logpath:", LOGPATH)
 
 
@@ -420,8 +432,8 @@ for i in range(EPOCHS):
                                                                 y: na_vectores})
         print("Epoch:", i, "/", EPOCHS, "\tLoss:",
               _loss, "\tAccuracy:", train_accuracy)
-SAVE_PATH = "./models/Adagrad_H_305_LR_0.433.ckpt"
+SAVE_PATH = "./models/model2/Adagrad_H_90_LR_1.0.ckpt"
 save_model = saver.save(sess, SAVE_PATH)
 print("Model saved in file: %s", SAVE_PATH)
-    #print("\nAccuracy:", accuracy.eval(feed_dict=feed_dict(es_vectores, na_vectores)))
+#print("\nAccuracy:", accuracy.eval(feed_dict=feed_dict(es_vectores, na_vectores)))
 writer.close()

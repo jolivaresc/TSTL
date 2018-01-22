@@ -1,0 +1,2 @@
+model_checkpoint_path: "Momentum_H_90_LR_1.0.ckpt"
+all_model_checkpoint_paths: "Momentum_H_90_LR_1.0.ckpt"
