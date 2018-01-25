@@ -53,14 +53,13 @@ def get_dataframe_index(dataframe, palabra):
     return 0
 
 
-def get_seed_index(lexicon_input, lexicon_target, source="training_set"):
+def get_seed_index(lexicon_input, lexicon_target):
     """Esta función obtiene los índices de las palabras semillas de los
     dataframes.
     
     Arguments:
         lexicon_input {Dataframe} -- Contiene vectores n2v de español.
         lexicon_target {Dataframe} -- Contiene vectores n2v de náhuatl.
-        source {string} -- Indica si se lee el lexicon semilla o de evaluación.
     
     Returns:
         list (2) -- Listas con índices de las palabras semillas.
@@ -68,24 +67,73 @@ def get_seed_index(lexicon_input, lexicon_target, source="training_set"):
     TODO:
         Agregar opción para leer set de evaluación o pruebas.
     """
+    def get_seed_index(lexicon_input, lexicon_target):
     names = ["esp", "nah"]
     # Se lee el lexicon necesario
     lexiconsemilla = read_csv(
-        "../lexiconessemilla/lexicon.esna.proc.norep.tmp2", delimiter=" ", names=names)
+        "../lexiconessemilla/lexiconsemilla_final.txt", delimiter=" ", names=names)
 
-    # Se almacenan las palabras semillas de español y náhuatl en listas.
+    print(lexiconsemilla.shape)
     semillas_esp = list(lexiconsemilla["esp"].values)
     semillas_nah = list(lexiconsemilla["nah"].values)
 
-    # Se buscan los índices de las palabras semilla en los dataframes para obtener sus
-    # representaciones vectoriales.
-    # Nota: Se omite la palabra semilla si no existe su representación vectorial.
-    index_esp = [int(lexicon_input[lexicon_input[0] == palabra].index.get_values())
-                 for palabra in semillas_esp
-                 if int(lexicon_input[lexicon_input[0] == palabra].index.get_values().__len__()) == 1]
-    index_nah = [int(lexicon_target[lexicon_target[0] == palabra].index.get_values())
-                 for palabra in semillas_nah
-                 if int(lexicon_target[lexicon_target[0] == palabra].index.get_values().__len__()) == 1]
+    pares = list(zip(semillas_esp, semillas_nah))
+
+    # Busca vectores de las semillas, sino existen, lo descarta
+    # lexicones en español. 
+    not_found = list()
+    for i, palabra_es in enumerate(semillas_esp):
+        if lexicon_input[lexicon_input[0] == palabra_es].shape[0] == 0:
+            not_found.append(i)
+    print("es", not_found)
+    # Índices de lexicones que no tienen vectores
+    not_found = tuple(not_found)
+    
+    '''Muestra las palabras sin vectores
+    for i in not_found:
+        print(pares[i][0])
+    '''
+    pares = [v for i, v in enumerate(pares) if i not in frozenset(not_found)]
+    '''
+    with open("newlexicona.lst", "w") as fd:
+        for _ in pares:
+            fd.write(_[0] + " " + _[1] + "\n")
+    '''
+    ##################
+    # Nuevo lexicon 
+    semillas_esp, semillas_nah = zip(*pares)
+    #print(len(semillas_esp))
+    del not_found
+    # Busca vectores de las semillas, sino existen, lo descarta
+    # lexicones en náhuatl.
+    not_found = list()
+    for i, palabra_na in enumerate(semillas_nah):
+        if lexicon_target[lexicon_target[0] == palabra_na].shape[0] == 0:
+            not_found.append(i)
+    #print("nah", not_found)
+
+    not_found = tuple(not_found)
+    ''' Muestra palabras en náhuatl sin vectores
+    for i in not_found:
+        print(pares[i][1])'''
+    pares = [v for i, v in enumerate(pares) if i not in frozenset(not_found)]
+    # Genera un nuevo lexicon donde todas tienen sus correspondientes
+    # representaciones vectoriales 
+    """
+    with open("newlexiconb.lst", "w") as fd:
+        for _ in pares:
+            fd.write(_[0] + " " + _[1] + "\n")
+    """
+    semillas_esp, semillas_nah = zip(*pares)
+    #print("asd",type(semillas_esp),len(semillas_nah))
+
+    # Busca el índice del lexicon dentro de los dataframes para acceder a 
+    # sus vectores.
+    index_esp = [int(lexicon_input[lexicon_input[0] == palabra].index[0])
+                 for palabra in semillas_esp]
+
+    index_nah = [int(lexicon_target[lexicon_target[0] == palabra].index[0])
+                 for palabra in semillas_nah]
 
     return index_esp, index_nah
 
