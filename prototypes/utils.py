@@ -67,13 +67,12 @@ def get_seed_index(lexicon_input, lexicon_target):
     TODO:
         Agregar opción para leer set de evaluación o pruebas.
     """
-    def get_seed_index(lexicon_input, lexicon_target):
     names = ["esp", "nah"]
     # Se lee el lexicon necesario
     lexiconsemilla = read_csv(
         "../lexiconessemilla/lexiconsemilla_final.txt", delimiter=" ", names=names)
 
-    print(lexiconsemilla.shape)
+    #print(lexiconsemilla.shape)
     semillas_esp = list(lexiconsemilla["esp"].values)
     semillas_nah = list(lexiconsemilla["nah"].values)
 
@@ -85,7 +84,7 @@ def get_seed_index(lexicon_input, lexicon_target):
     for i, palabra_es in enumerate(semillas_esp):
         if lexicon_input[lexicon_input[0] == palabra_es].shape[0] == 0:
             not_found.append(i)
-    print("es", not_found)
+    #print("es", not_found)
     # Índices de lexicones que no tienen vectores
     not_found = tuple(not_found)
     
