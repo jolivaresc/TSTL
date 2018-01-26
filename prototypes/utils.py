@@ -187,12 +187,12 @@ def get_top10_closest(vector, matrix, distance="cos"):
     # Distancia coseno
     if distance == "cos":
         # Medir distancias
-        tmp_dist = list(enumerate((1 - (matmul(vector, matrix.T) /
+        tmp_dist = list(enumerate(((matmul(vector, matrix.T) /
                                         (norm(vector) *
                                          sqrt(einsum('ij,ij->i',
                                                      matrix, matrix)))))))
         # Se ordena lista según distancias más cercanas.
-        tmp_dist = sorted(tmp_dist, key=lambda dist: dist[1])
+        tmp_dist = sorted(tmp_dist, key=lambda dist: dist[1],reverse=True)
         distances = tmp_dist[:10]
         del tmp_dist
         # Retorna 10 vectores más cercanos.
