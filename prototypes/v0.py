@@ -74,7 +74,7 @@ NODES_OUPUT = na_vectores[0].size
 # Inicializar pesos usando xavier_init
 XAVIER_INIT = True
 
-EPOCHS = 370000
+EPOCHS = 5000
 
 # Ruta donde se guarda el grafo para visualizar en TensorBoard.
 
@@ -285,8 +285,8 @@ tf.summary.histogram("fc4/relu", fc4)
 
 nah_predicted = fully_connected_layer(fc1, NODES_H1, NODES_OUPUT, "output",
                                       xavier_init=XAVIER_INIT)
-#nah_predicted = activation_function(output, "sigmoid", "output")
-tf.summary.histogram("output/noact", nah_predicted)
+nah_predicted = activation_function(nah_predicted, "sigmoid", "output")
+tf.summary.histogram("output/sigmoid", nah_predicted)
 
 
 # # Función de error
@@ -367,7 +367,7 @@ with tf.name_scope('accuracy'):
 # In[ ]:
 
 LOGPATH = utils.make_hparam_string(
-    "80ACC_Adagrad", "H", NODES_H1, "LR", LEARNING_RATE)
+    "AF_OUTPUTLAYER", "H", NODES_H1, "LR", LEARNING_RATE)
 print("logpath:", LOGPATH)
 
 
