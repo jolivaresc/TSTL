@@ -63,23 +63,22 @@ na_vectores = utils.get_vectors(na, index_na)
 tf.set_random_seed(42)
 tf.reset_default_graph()
 print(tf.test.gpu_device_name())
-
 LEARNING_RATE = 1
 EPOCHS = 1000
 # Dimensión de vectores de entrada (número de neuronas en capa de entrada).
 NODES_INPUT = es_vectores[0].size
 
 # Número de neuronas en capas ocultas.
-NODES_H1 = 350  # 70 - 20 - 15
+NODES_H1 = 300  # 70 - 20 - 15
 NODES_H2 = 240  # 42 - 20
 NODES_H3 = 220  # 42 - 20
 NODES_H4 = 200  # 42 - 20
 NODES_OUTPUT = na_vectores[0].size
 
 # Inicializar pesos usando xavier_init
-XAVIER_INIT = False
+XAVIER_INIT = True
 
-model = "model2143"
+model = "model2250"
 
 
 with tf.name_scope('input'):
@@ -135,7 +134,6 @@ def activation_function(layer, act, name, alpha=tf.constant(0.2, dtype=tf.float6
 
 
 # Se definen las capas.
-
 W1 = tf.get_variable(name="W1", shape=[NODES_INPUT, NODES_H1], dtype=tf.float64,
                      initializer=tf.contrib.layers.xavier_initializer(
                          dtype=tf.float64),
@@ -143,62 +141,36 @@ W1 = tf.get_variable(name="W1", shape=[NODES_INPUT, NODES_H1], dtype=tf.float64,
                      regularizer=tf.contrib.layers.l2_regularizer(scale=0.1))
 b1 = tf.Variable(tf.constant(
     0.1, shape=[NODES_H1], dtype=tf.float64), name="b1")
-
-fc1 = tf.nn.xw_plus_b(X, W1, b1)
-# Se calcula la salida de la capa.
-#fc1 = fully_connected_layer(X, NODES_INPUT, NODES_H1, "fc1", xavier_init=XAVIER_INIT)
-
-# Activación de la capa.
-fc1 = activation_function(fc1, "relu", "fc1")
-
-
-# Se añade histograma de activación de la capa para visualizar en
-# TensorBoard.
+fc1 = activation_function(tf.nn.xw_plus_b(X, W1, b1), "relu", "fc1")
 tf.summary.histogram("fc1/relu", fc1)
 
-"""
-#2nd layer
-fc2 = fully_connected_layer(fc1, NODES_H1, NODES_H2, "fc2", xavier_init=XAVIER_INIT)
-fc2 = activation_function(fc2, "relu", "fc2")
+W2 = tf.get_variable(name="W2", shape=[NODES_H1, NODES_H2], dtype=tf.float64,
+                     initializer=tf.contrib.layers.xavier_initializer(
+                         dtype=tf.float64),
+                     use_resource=True,
+                     regularizer=tf.contrib.layers.l2_regularizer(scale=0.1))
+b2 = tf.Variable(tf.constant(
+    0.1, shape=[NODES_H2], dtype=tf.float64), name="b2")
+fc2 = activation_function(tf.nn.xw_plus_b(fc1, W2, b2), "relu", "fc2")
+
 tf.summary.histogram("fc2/relu", fc2)
 
 
-#3rd layer
-fc3 = fully_connected_layer(fc2, NODES_H2, NODES_H3, "fc3", xavier_init=XAVIER_INIT)
-fc3 = activation_function(fc3, "relu", "fc3")
-tf.summary.histogram("fc3/relu", fc3)
-
-fc4 = fully_connected_layer(fc3,NODES_H3,NODES_H4,"fc4",xavier_init=XAVIER_INIT)
-fc4 = activation_function(fc4,"relu","fc4")
-tf.summary.histogram("fc4/relu", fc4)
-"""
-W_na = tf.get_variable(name="W_na", shape=[NODES_H1, NODES_OUTPUT], dtype=tf.float64,
+W_na = tf.get_variable(name="W_na", shape=[NODES_H2, NODES_OUTPUT], dtype=tf.float64,
                        initializer=tf.contrib.layers.xavier_initializer(
                            dtype=tf.float64),
                        use_resource=True,
                        regularizer=tf.contrib.layers.l2_regularizer(scale=0.1))
 b_na = tf.Variable(tf.constant(
     0.1, shape=[NODES_OUTPUT], dtype=tf.float64), name="b_na")
-#Wp = tf.transpose(W1)
-
-nah_predicted = tf.nn.xw_plus_b(fc1, W_na, b_na)
-#nah_predicted = fully_connected_layer(fc1, NODES_H1, NODES_OUTPUT, "output",xavier_init=XAVIER_INIT)
-#nah_predicted = fully_connected_layer(fc4, NODES_H4, NODES_OUTPUT, "output", xavier_init=XAVIER_INIT)
-#nah_predicted = activation_function(nah_predicted, "sigmoid", "output")
-#tf.summary.histogram("output/tanh", nah_predicted)
-tf.summary.histogram("output", nah_predicted)
+nah_predicted = tf.nn.xw_plus_b(fc2, W_na, b_na)
 
 
 #regularizers = tf.nn.l2_loss(W1) + tf.nn.l2_loss(W1)
-
 #http://www.ritchieng.com/machine-learning/deep-learning/tensorflow/regularization/
 
 # Loss
 loss = tf.reduce_mean(tf.squared_difference(nah_predicted, y), name="loss")
-
-'''# Loss function with L2 Regularization with beta=0.01
-regularizers = tf.nn.l2_loss(W1) + tf.nn.l2_loss(W2)
-loss = tf.reduce_mean(loss + 0.01 * regularizers)'''
 
 
 tf.summary.scalar("loss", loss)
@@ -231,7 +203,7 @@ with tf.name_scope('accuracy'):
 
 # In[ ]:
 
-LOGPATH = "logs/modeld"
+LOGPATH = ".logs/model"
 print("logpath:", LOGPATH)
 
 
@@ -265,10 +237,3 @@ for i in range(EPOCHS):
                                        X: es_vectores, y: na_vectores})
         print("Epoch:", i, "/", EPOCHS, "\tLoss:",
               _loss, "\tAccuracy:", train_accuracy)
-
-
-SAVE_PATH = "./" + model + ".ckpt"
-print("save path", SAVE_PATH)
-#save_model = saver.save(sess, SAVE_PATH)
-print("Model saved in file: %s", SAVE_PATH)
-writer.close()
