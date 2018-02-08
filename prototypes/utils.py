@@ -257,3 +257,18 @@ def apk(actual, predicted, k=10):
         return 0.0
 
     return score / min(len(actual), k)
+
+
+def next_batch(x, step, batch_size):
+    """Función para obtener batches de un conjunto de datos
+    
+    Arguments:
+        x {numpyarray} -- Conjunto de datos.
+        step {int} -- Batches.
+        batch_size {int} -- Tamaño del batch.
+    
+    Returns:
+        numpyarray -- Subconjunto de tamaño batch_size.
+    """
+
+    return x[batch_size * step:batch_size * step + batch_size]
