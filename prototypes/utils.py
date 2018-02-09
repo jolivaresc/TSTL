@@ -69,8 +69,8 @@ def get_seed_index(lexicon_input, lexicon_target):
     """
     names = ["esp", "nah"]
     # Se lee el lexicon necesario
-    lexiconsemilla = read_csv(
-        "../lexiconessemilla/lexiconsemilla_final.txt", delimiter=" ", names=names)
+    #lexiconsemilla = read_csv("../lexiconessemilla/lexiconsemilla_final.txt", delimiter=" ", names=names)
+    lexiconsemilla = read_csv("../lexiconesevaluacion/evaluationset", delimiter=" ", names=names)
 
     #print(lexiconsemilla.shape)
     semillas_esp = list(lexiconsemilla["esp"].values)

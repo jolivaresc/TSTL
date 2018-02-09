@@ -30,6 +30,7 @@ saver = tf.train.import_meta_graph('./models/model1111_gpu/model2250.ckpt.meta')
 saver.restore(sess,tf.train.latest_checkpoint('./models/model1111_gpu/'))
 graph = tf.get_default_graph()
 X = graph.get_tensor_by_name("input/input_es:0")
+kprop = graph.get_tensor_by_name("")
 #y = graph.get_tensor_by_name("input/target_na:0")
 
 
