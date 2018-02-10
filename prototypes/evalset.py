@@ -26,7 +26,8 @@ test_vectors = np.array([np.array(es.iloc[indice][1::]).astype(
 
 
 sess = tf.Session()
-saver = tf.train.import_meta_graph('./models/model1111_gpu/model2250.ckpt.meta')
+saver = tf.train.import_meta_graph(
+    './models/model1111_gpu/model2250.ckpt.meta')
 saver.restore(sess, tf.train.latest_checkpoint('./models/model1111_gpu/'))
 #saver = tf.train.import_meta_graph('./models/model_joyce/modeljoyce.ckpt.meta')
 #saver.restore(sess, tf.train.latest_checkpoint('./models/model_joyce/'))
@@ -37,7 +38,7 @@ kprob = graph.get_tensor_by_name("dropout_prob:0")
 
 #print([n.name for n in tf.get_default_graph().as_graph_def().node])
 
-#output_NN = graph.get_tensor_by_name("output/xw_plus_b:0")#model1937
+# output_NN = graph.get_tensor_by_name("output/xw_plus_b:0")#model1937
 output_NN = graph.get_tensor_by_name("xw_plus_b_1:0")
 
 #output_NN = graph.get_tensor_by_name("dense_2/BiasAdd:0")
@@ -89,7 +90,7 @@ for palabra_gold in list_esp_eval:
             p10 += 1
         if min(hits) > 5 and min(hits) <= 10:
             p10 += 1
-        #print(palabra_gold,min(hits),hits,p1,p5,p10)
+        # print(palabra_gold,min(hits),hits,p1,p5,p10)
     else:
         not_found.append(palabra_gold)
         #print(palabra_gold+": NOT FOUND")
@@ -97,5 +98,5 @@ for palabra_gold in list_esp_eval:
     hits.clear()
 
 length = list_esp_eval.__len__()
-print("\nnot found:", not_found.__len__(),"-", not_found.__len__() / length,"%",
+print("\nnot found:", not_found.__len__(), "-", not_found.__len__() / length, "%",
       "\nP@1:", p1 / length, "\tP@5:", p5 / length, "\tP@10:", p10 / length)
