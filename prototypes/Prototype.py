@@ -53,7 +53,7 @@ set_option('precision', 18)
 # In[5]:
 
 
-def load_node2vec():
+def load_embeddings():
     """
     Esta función lee los archivos para almacenar los vectores node2vec del español
     y náhuatl los retorna en dataframes de Pandas.
@@ -70,7 +70,7 @@ def load_node2vec():
 # In[6]:
 
 
-es, nah = load_node2vec()
+es, nah = load_embeddings()
 
 
 # In[7]:

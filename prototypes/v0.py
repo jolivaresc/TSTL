@@ -32,7 +32,7 @@ tf.set_random_seed(42)
 # In[ ]:
 
 
-es, na = utils.load_node2vec()
+es, na = utils.load_embeddings()
 print("es:", es.shape, "\tna:", na.shape)
 
 

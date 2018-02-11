@@ -14,7 +14,7 @@ __author__ = "Olivares Castillo José Luis"
 - Se obtienen las palabras del lexicon.
 - Se obtienen índices de las palabras a traducir de los dataframes [N2V/W2V]
 """
-es, na = utils.load_node2vec("w2v3")
+es, na = utils.load_embeddings("w2v3")
 na_dummy = na.drop(na.columns[0], axis=1)
 na_vectores1 = np.array(na_dummy)
 eval_set = utils.get_lexicon("eval")

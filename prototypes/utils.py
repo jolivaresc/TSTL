@@ -14,7 +14,7 @@ set_option('display.max_colwidth', -1)
 set_option('precision', 18)
 
 
-def load_node2vec(source):
+def load_embeddings(source):
     """Esta función lee los archivos para almacenar los vectores node2vec del español
     y náhuatl los retorna en dataframes de Pandas.
 
@@ -62,7 +62,6 @@ def get_lexicon(source):
         return read_csv("../lexiconessemilla/newlexiconb.lst", delimiter=" ", names=["esp", "nah"])
     else:
         print("ERR: Ingrese un lexicon válido..")
-        exit(0)
 
 
 def get_dataframe_index(dataframe, palabra):

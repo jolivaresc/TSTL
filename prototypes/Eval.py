@@ -15,7 +15,7 @@ tf.__version__
 # In[2]:
 
 
-es,na = utils.load_node2vec()
+es,na = utils.load_embeddings()
 
 
 # In[3]:
