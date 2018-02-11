@@ -8,3 +8,7 @@ vectors/
 lexiconessemilla/
 lexiconevaluacion/
 __pycache__/
+prototypes/MNIST_data/t10k-images-idx3-ubyte.gz
+prototypes/MNIST_data/t10k-labels-idx1-ubyte.gz
+prototypes/MNIST_data/train-images-idx3-ubyte.gz
+prototypes/MNIST_data/train-labels-idx1-ubyte.gz
