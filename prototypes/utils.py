@@ -3,7 +3,7 @@
 
 from numpy import dot, float64, array, sqrt, matmul, einsum
 from numpy.linalg import norm
-from pandas import set_option, read_csv
+from pandas import set_option, read_csv, DataFrame
 
 __author__ = "Olivares Castillo José Luis"
 
@@ -24,28 +24,45 @@ def load_embeddings(source):
         Dataframe (2) -- dataframes con palabras - node2vec.
     """
 
+    # Cargar embeddings desde archivos
     if source.__eq__("n2v"):
-        es = read_csv("../vectors/es.node2vec.embeddings",
-                      delimiter=" ", skiprows=1, header=None)
-        nah = read_csv("../vectors/na.node2vec.embeddings",
-                       delimiter=" ", skiprows=1, header=None)
+        esp = open("../vectors/es.node2vec.embeddings", "r")
+        nah = open("../vectors/na.node2vec.embeddings", "r")
     elif source.__eq__("w2v3"):
-        es = read_csv("../vectors/es.w2v.300",
-                      delimiter=" ", skiprows=1, header=None)
-        nah = read_csv("../vectors/na.w2v.300",
-                       delimiter=" ", skiprows=1, header=None)
-    elif source.__eq__("w2v4"):
-        es = read_csv("../vectors/es.w2v.400",
-                      delimiter=" ", skiprows=1, header=None)
-        nah = read_csv("../vectors/na.w2v.400",
-                       delimiter=" ", skiprows=1, header=None)
+        esp = open("../vectors/es.w2v.300", "r")
+        nah = open("../vectors/na.w2v.300", "r")
+    elif source.__eq__("w2v7"):
+        esp = open("../vectors/es.w2v.700", "r")
+        nah = open("../vectors/na.w2v.700", "r")
     elif source.__eq__("w2v14"):
-        es = read_csv("../vectors/es.w2v.1400",
-                      delimiter=" ", skiprows=1, header=None)
-        nah = read_csv("../vectors/na.w2v.1400",
-                       delimiter=" ", skiprows=1, header=None)
+        esp = open("../vectors/es.w2v.1400", "r")
+        nah = open("../vectors/na.w2v.1400", "r")
 
-    return es, nah
+    # Se guardan los archivos en listas.
+    lines_es = esp.readlines()
+    lines_na = nah.readlines()
+    
+    # Se elimina el primer elemento de la lista ya que no se utiliza
+    lines_es.pop(0)
+    lines_na.pop(0)
+
+    # Listas temporales
+    tmp_es, tmp_na = list(), list()
+    
+    # Para cada item de la lista, se separa por espacios y se añade a la lista temporal
+    for line in lines_es:
+        tmp_es.append(line.split())
+
+    for line in lines_na:
+        tmp_na.append(line.split())
+
+    # Se eliminan variables que ya no se utilizan
+
+    es_df = DataFrame.from_records(tmp_es)
+    na_df = DataFrame.from_records(tmp_na)
+    # Se regresan los dataframes con los embeddings.
+    return es_df, na_df
+
 
 def get_lexicon(source):
     """Función para leer lexicon.
@@ -87,7 +104,7 @@ def get_dataframe_index(dataframe, palabra):
     return 0
 
 
-def get_seed_index(lexicon_input, lexicon_target,source="seed"):
+def get_seed_index(lexicon_input, lexicon_target, source="seed"):
     """Esta función busca las palabras dentro de los dataframes y si existen
     obtiene los índices que ocupan dentro de los dataframes.
 
@@ -105,9 +122,11 @@ def get_seed_index(lexicon_input, lexicon_target,source="seed"):
     names = ["esp", "nah"]
     # Se lee el lexicon necesario
     if source.__eq__("seed"):
-        lexiconsemilla = read_csv("../lexiconessemilla/newlexiconb.lst", delimiter=" ", names=names)
+        lexiconsemilla = read_csv(
+            "../lexiconessemilla/newlexiconb.lst", delimiter=" ", names=names)
     elif source.__eq__("eval"):
-        lexiconsemilla = read_csv("../lexiconesevaluacion/evaluationset", delimiter=" ", names=names)
+        lexiconsemilla = read_csv(
+            "../lexiconesevaluacion/evaluationset", delimiter=" ", names=names)
 
     # print(lexiconsemilla.shape)
     semillas_esp = list(lexiconsemilla["esp"].values)
@@ -224,10 +243,7 @@ def get_top10_closest(vector, matrix, distance="cos"):
     # Distancia coseno
     if distance == "cos":
         # Medir distancias
-        tmp_dist = list(enumerate(((matmul(vector, matrix.T) /
-                                    (norm(vector) *
-                                     sqrt(einsum('ij,ij->i',
-                                                 matrix, matrix)))))))
+        tmp_dist = list(enumerate(((matmul(vector, matrix.T)/(norm(vector)*sqrt(einsum('ij,ij->i',matrix, matrix)))))))
         # Se ordena lista según distancias más cercanas.
         tmp_dist = sorted(tmp_dist, key=lambda dist: dist[1], reverse=True)
         distances = tmp_dist[:10]
