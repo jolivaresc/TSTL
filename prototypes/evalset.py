@@ -1,10 +1,20 @@
 # coding: utf-8
+"""
+- Para ejecutar: python evalset.py SOURCE_VEC SOURCE_LEXICON
+
+- SOURCE_VEC es el archivo a leer que contiene vectores 
+  [ n2v | w2v3 | w2v7 | w2v14 ]
+- SOURCE_LEXICON es el archivo del lexicon a utilizar [seed | eval]
+"""
 
 import tensorflow as tf
 import utils
 import pandas as pd
 import numpy as np
+from sys import argv
 from collections import defaultdict
+
+
 __author__ = "Olivares Castillo José Luis"
 
 
@@ -14,13 +24,15 @@ __author__ = "Olivares Castillo José Luis"
 - Se obtienen las palabras del lexicon.
 - Se obtienen índices de las palabras a traducir de los dataframes [N2V/W2V]
 """
-es, na = utils.load_embeddings("w2v3")
+es, na = utils.load_embeddings(argv[1])
 na_dummy = na.drop(na.columns[0], axis=1)
-na_vectores1 = np.array(na_dummy)
-eval_set = utils.get_lexicon("eval")
+na_vectores1 = na_dummy.values.astype(np.float64)
+eval_set = utils.get_lexicon(argv[2])
 eval_es = list(set(eval_set["esp"]))
 eval_es_index = [int(es[es[0] == palabra].index[0])
                  for palabra in eval_es]
+
+
 
 """
 - Se buscan en los dataframes [N2V/W2V] los índices de las palabras a traducir para obtener sus representaciones vectoriales.
@@ -54,6 +66,7 @@ kprob = graph.get_tensor_by_name("dropout_prob:0")
 # output_NN = graph.get_tensor_by_name("output/xw_plus_b:0")#model1937
 """
 - Se guarda la salida del modelo en una variable, será la que nos dará el resultado de evualuar el modelo
+- NOTA: La salida varía de acuerdo al número de capas que tenga la red.
 """
 output_NN = graph.get_tensor_by_name("xw_plus_b_1:0")
 #output_NN = graph.get_tensor_by_name("dense_2/BiasAdd:0")
