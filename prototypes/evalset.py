@@ -32,7 +32,7 @@ eval_es = list(set(eval_set["esp"]))
 eval_es_index = [int(es[es[0] == palabra].index[0])
                  for palabra in eval_es]
 
-
+PRINT = False
 
 """
 - Se buscan en los dataframes [N2V/W2V] los índices de las palabras a traducir para obtener sus representaciones vectoriales.
@@ -49,6 +49,8 @@ test_vectors = np.array([np.array(es.iloc[indice][1::]).astype(np.float64) for i
 sess = tf.Session()
 saver = tf.train.import_meta_graph('./models/model1111_gpu/model2250.ckpt.meta')
 saver.restore(sess, tf.train.latest_checkpoint('./models/model1111_gpu/'))
+#saver = tf.train.import_meta_graph('./models/model_klein/modelklein.ckpt.meta')
+#saver.restore(sess, tf.train.latest_checkpoint('./models/model_klein/'))
 #saver = tf.train.import_meta_graph('./models/model_joyce/modeljoyce.ckpt.meta')
 #saver.restore(sess, tf.train.latest_checkpoint('./models/model_joyce/'))
 
@@ -69,6 +71,7 @@ kprob = graph.get_tensor_by_name("dropout_prob:0")
 - NOTA: La salida varía de acuerdo al número de capas que tenga la red.
 """
 output_NN = graph.get_tensor_by_name("xw_plus_b_1:0")
+#output_NN = graph.get_tensor_by_name("nah_predicted:0")
 #output_NN = graph.get_tensor_by_name("dense_2/BiasAdd:0")
 #output_NN = graph.get_tensor_by_name("output_1:0")
 
@@ -143,3 +146,24 @@ length = list_esp_eval.__len__()
 print("not found:", not_found.__len__(), "-", not_found.__len__() / length, "%")
 print("P@1:", p1,"\tP@5:", p5 , "\tP@10:", p10)
 print("P@1:", p1 / length,"\tP@5:", p5 / length, "\tP@10:", p10 / length)
+
+if PRINT:
+    # Diccionario que contiene la palabra, sus traducción y los canditados a 
+    # traducción obtenidos por el autoencoder
+    resultados_gold = dict()
+    for k, v in resultados.items():
+        resultados_gold[k] = {"GOLD": gold[k], "RESULTS": v}
+
+    # Muestra palabras que no se encontraron en los candidatos a traducción..
+    print("\n=================================================")
+    print("PALABRAS NO ENCONTRADAS Y SUS CANDIDATOS...")
+    for palabra in not_found:
+        print(palabra.upper() + ":", "\nGOLD", resultados_gold[palabra]["GOLD"],
+            "\nRESULTADOS", resultados_gold[palabra]["RESULTS"], end="\n" * 2)
+
+    # Muestra las palabras, su traducción y los canditados a traducción
+    print("=================================================")
+    print("PALABRAS DEL EVALSET CON SU TRADUCCIÓN Y 10 CANDIDATOS")
+    for k, v in resultados_gold.items():
+        print("Palabra:", k.upper(), "\nGOLD:", v["GOLD"], "\nRESULTADOS:",
+            v["RESULTS"], end="\n" * 2)
