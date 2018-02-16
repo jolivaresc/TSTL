@@ -1,0 +1,672 @@
+not found: 16 - 0.10666666666666667 %
+P@1: 98 	P@5: 133 	P@10: 134
+P@1: 0.6533333333333333 	P@5: 0.8866666666666667 	P@10: 0.8933333333333333
+
+=================================================
+PALABRAS NO ENCONTRADAS Y SUS CANDIDATOS...
+CARGO: 
+GOLD ['tlahtoca', 'toca'] 
+RESULTADOS ['ahqui', 'tlaliliz', 'onino', 'chihui', 'xip', 'milacatzo', 'im', 'ticmo', 'pampa', 'mix']
+
+BRAZO: 
+GOLD ['aca'] 
+RESULTADOS ['cuecue', 'milacatzo', 'tonehua', 'icemel', 'cocone', 'ticte', 'timamalihuac', 'tepotz', 'huetzi', 'tecuan']
+
+VALER: 
+GOLD ['patio'] 
+RESULTADOS ['1', 'quexquich', 'ton', 'mama', 'quezqui', 'toma', 's', 'pi', 'yancui', 'xip']
+
+CHIQUILLO: 
+GOLD ['pipil'] 
+RESULTADOS ['ninozcalia', 'cuiya', 'cuitl', 'miec', 'quetza', 'xip', 'tlachia', 'mahui', 'ten', 'itzopelica']
+
+VISCERAS: 
+GOLD ['ihti', 'ehua'] 
+RESULTADOS ['cuacualaca', 'tlahuicxitilli', 'itzoltilia', 'motlali', 'tlalia', 'cuacua', 'temolcax', 'zoqui', 'paca', 'caxi']
+
+REINAR: 
+GOLD ['motlahtocatlalli', 'toca'] 
+RESULTADOS ['14', 'cayotl', 'tlalli', 'nahui', 'mahtlac', 'nauh', 'peuh', 'pipil', 'gali', 'y']
+
+NIDO: 
+GOLD ['tapazolli', 'tapazol', 'pa', 'zol'] 
+RESULTADOS ['nepapan', 'motemilih', 'mota', 'huipan', 'tenanco', 'tlazo', 'diego', 'dral', 'secretario', 'xochi']
+
+UNIR: 
+GOLD ['cen'] 
+RESULTADOS ['f', 'george', 'estado', 'do', 'cahuan', 'tlahtocayotl', 'fe', 'ahuacatl', '19', 'isoldado']
+
+EFECTO: 
+GOLD ['nel'] 
+RESULTADOS ['tlaocox', 'ihtotia', 'oquich', 'nehnemi', 'mixco', 'oceloquichtle', 'tz', 'ixeo', 'timamalihuac', 'ellel']
+
+ESTABLECER: 
+GOLD ['tlalia', 'chan'] 
+RESULTADOS ['itoa', 'cauh', 'iuh', 'tepe', 'auh', 'acique', 'ixpetla', 'lique', 'y', 'pul']
+
+FINAL: 
+GOLD ['tlatz'] 
+RESULTADOS ['mix', 'im', 'xip', 'mochi', 'cauh', 'zcuco', 'y', 'yb', 'tlalia', 'yuhqui']
+
+ENORME: 
+GOLD ['huey'] 
+RESULTADOS ['mil', 'huehca', 'cpac', 'tepahpaquiltia', 'jard', 'moch', 'xochi', 'dral', 'fr', 'zcuco']
+
+DESTROZAR: 
+GOLD ['teciz', 'tlanteciz'] 
+RESULTADOS ['x', 'tepahpaquiltia', 'yb', 'fa', 'auh', 'dral', 'zcuco', 'zque', 'l', 'yuhqui']
+
+PRESENCIA: 
+GOLD ['ix'] 
+RESULTADOS ['mopechteccac', 'tlacuauh', 'quimolhui', 'tzinco', 'contla', 'eltilitiuh', 'tlazoh', 'uad', 'chiyali', 'xip']
+
+ESCALERA: 
+GOLD ['mama'] 
+RESULTADOS ['nmediasco', 'oquinanquili', 'ilpia', 'dia', 'icuilacta', 'comal', 'pualhuany', 'nonotza', 'cocone', 'mahca']
+
+PURAMENTE: 
+GOLD ['zan', 'za'] 
+RESULTADOS ['ommihzo', 'imayauhcan', 'imayauhcampa', 'ceuh', 'iye', 'tepahpaquiltia', 'nepantla', 'dral', 'secretario', 'diego']
+
+=================================================
+PALABRAS DEL EVALSET CON SU TRADUCCIÓN Y 10 CANDIDATOS
+Palabra: DESEAR 
+GOLD: ['elehui', 'elehuia', 'znequi', 'nequi'] 
+RESULTADOS: ['elehui', 'elehuia', 'quechi', 'qu', 'znequi', 'monequilti', 'achto', 'nequia', 'nec', 'nequi']
+
+Palabra: TEMA 
+GOLD: ['tema'] 
+RESULTADOS: ['tema', 'salvador', 'zcal', 'cachihualiz', 'quixti', 'xip', 'mauh', 'zque', 'auh', 'mac']
+
+Palabra: TEPANECA 
+GOLD: ['eca'] 
+RESULTADOS: ['colhuaca', 'eca', 'popolo', 'culhuacan', 'oquim', 'ahuacatl', 'mexica', 'motlanahuatili', 'mil', 'xmatia']
+
+Palabra: AIRE 
+GOLD: ['yehyecatl', 'yeyeca', 'eheca', 'eheca'] 
+RESULTADOS: ['yehyecatl', 'eheca', 'eca', 'tetzahui', 'hui', 'yeyeca', 'tlacochcalca', 'mach', 'ahua', 'huilo']
+
+Palabra: CARGO 
+GOLD: ['tlahtoca', 'toca'] 
+RESULTADOS: ['ahqui', 'tlaliliz', 'onino', 'chihui', 'xip', 'milacatzo', 'im', 'ticmo', 'pampa', 'mix']
+
+Palabra: PEZ 
+GOLD: ['mimic'] 
+RESULTADOS: ['mimic', 'ahhua', 'michi', 'ictique', 'mic', 'dral', 'diego', 'secretario', 'yb', 'castillo']
+
+Palabra: FAMILIAR 
+GOLD: ['familiar'] 
+RESULTADOS: ['familiar', 'xicol', 'tlaloa', 'chmotlahpalhui', 'secretario', 'salveros', 'comal', 'dral', 'xacualoa', 'castillo']
+
+Palabra: CIUDAD 
+GOLD: ['altpe', 'altepe'] 
+RESULTADOS: ['altepe', 'altpe', 'huey', 'hueyi', 'tepe', 'tlahtoca', 'gali', 'mexica', 'nemiliz', 'diego']
+
+Palabra: COGER 
+GOLD: ['ana', 'cana', 'cui'] 
+RESULTADOS: ['ana', 'milacatzo', 'ochol', 'tecuan', 'cholo', 'mac', 'cuecue', 'ictique', 'miqui', 'tlahueliloc']
+
+Palabra: DESPRECIAR 
+GOLD: ['mah', 'pehua'] 
+RESULTADOS: ['xinech', 'ech', 'tlecuezal', 'pu', 'cizu', 'pehua', 'xmechmo', 'nino', 'tlachie', 'petz']
+
+Palabra: TOMAR 
+GOLD: ['concui', 'ana', 'cuilia', 'cui', 'can'] 
+RESULTADOS: ['cui', 'xip', 'zcuco', 'fa', 'tepahpaquiltia', 'milacatzo', 'yb', 'auh', 'hual', 'zque']
+
+Palabra: LODO 
+GOLD: ['zoqui'] 
+RESULTADOS: ['atlatzicuina', 'mimacaci', 'zoqui', 'atahuit', 'itti', 'caxi', 'ich', 'chililiz', 'tema', 'motzicoa']
+
+Palabra: BRAZO 
+GOLD: ['aca'] 
+RESULTADOS: ['cuecue', 'milacatzo', 'tonehua', 'icemel', 'cocone', 'ticte', 'timamalihuac', 'tepotz', 'huetzi', 'tecuan']
+
+Palabra: VENIR 
+GOLD: ['hualla', 'hual'] 
+RESULTADOS: ['hual', 'hualla', 'huitz', 'm', 'zque', 'zcuco', 'yb', 'quin', 'uh', 'auh']
+
+Palabra: SABOR 
+GOLD: ['iahhuui', 'mati'] 
+RESULTADOS: ['mati', 'lan', 'tro', 'chil', 'iahhuui', 'yol', 'pasilla', 'ermanos', 'pia', 'ahnozo']
+
+Palabra: CIERTO 
+GOLD: ['melahua', 'nel', 'cecni'] 
+RESULTADOS: ['melahua', 'nel', 'mitzmo', 'omo', 'ihtoh', 'zque', 'oquimo', 'xip', 'yb', 'ichpoc']
+
+Palabra: SALVAJE 
+GOLD: ['uanime'] 
+RESULTADOS: ['uanime', 'ticuahcua', 'dral', 'secretario', 'rosario', 'acamapich', 'xolochcue', 'salveros', 'castillo', 'comal']
+
+Palabra: SALTAR 
+GOLD: ['ochol', 'chol'] 
+RESULTADOS: ['huixoa', 'ochol', 'oquich', 'laxoc', 'tzetzeloa', 'cholo', 'im', 'choloa', 'huitequi', 'tzatzi']
+
+Palabra: VALER 
+GOLD: ['patio'] 
+RESULTADOS: ['1', 'quexquich', 'ton', 'mama', 'quezqui', 'toma', 's', 'pi', 'yancui', 'xip']
+
+Palabra: CHIQUILLO 
+GOLD: ['pipil'] 
+RESULTADOS: ['ninozcalia', 'cuiya', 'cuitl', 'miec', 'quetza', 'xip', 'tlachia', 'mahui', 'ten', 'itzopelica']
+
+Palabra: NIÑO 
+GOLD: ['cocone', 'conetl', 'cihuanton', 'pipil'] 
+RESULTADOS: ['tzitzintin', 'cocone', 'conetl', 'pipil', 'toton', 'cihuanton', 'pil', 'machti', 'tlamachtil', 'telpoca']
+
+Palabra: ALEGRAR 
+GOLD: ['ahuia', 'pahpa', 'pahpaqui'] 
+RESULTADOS: ['ahuia', 'pahpaqui', 'papa', 'tlaza', 'tehhuellamac', 'cuica', 'tinemiz', 'cuic', 'tepahpaquiltia', 'tixtomahua']
+
+Palabra: PEDIRLE 
+GOLD: ['mihtlanililia'] 
+RESULTADOS: ['mihtlanililia', 'pouhilil', 'neltili', 'eltilitiuh', 'tti', 'titlani', 'chililiz', 'chiyali', 'imottilih', 'quimolhui']
+
+Palabra: INDÍGENA 
+GOLD: ['macehual'] 
+RESULTADOS: ['lahtol', 'macehual', 'nahuatlahtol', 'elehuia', 'toyalhuayo', 'moyacanilia', 'cultura', 'macihui', 'hcuilo', 'tepahpaquiltia']
+
+Palabra: RAMO 
+GOLD: ['ramos'] 
+RESULTADOS: ['ramos', 'g', 'señor', 'vor', 'pixca', 'ri', 'poalli', 'gr', 'rafael', 'dral']
+
+Palabra: VESTIDO 
+GOLD: ['quen', 'tzotzoma'] 
+RESULTADOS: ['tzotzoma', 'nequia', 'quen', 'cocone', 'xolochcue', 'sa', 'cah', 'oncuan', 'oquin', 'ilpi']
+
+Palabra: VACA 
+GOLD: ['uacax', 'cuacua'] 
+RESULTADOS: ['uacax', 'enepil', 'huen', 'cueh', 'cuacua', 'tictohuaxcati', 'cihua', 'panoa', 'mp', 'dral']
+
+Palabra: PEDIR 
+GOLD: ['tamechtahtanil', 'tahtan', 'htlani', 'mihtlanililia', 'htlan'] 
+RESULTADOS: ['htlani', 'tlania', 'neltili', 'tamechtahtanil', 'tahtan', 'nimitz', 'lih', 'ichpoc', 'nenca', 'tenehui']
+
+Palabra: DIVERSO 
+GOLD: ['nepapan'] 
+RESULTADOS: ['nepapan', 'mota', 'motemilih', 'tatemp', 'huipan', 'tenanco', 'tepahpaquiltia', 'cuexan', 'izqui', 'huiptla']
+
+Palabra: ALIMENTO 
+GOLD: ['pal', 'atetzocoa'] 
+RESULTADOS: ['pal', 'tota', 'ol', 'nuestro', 'celi', 'tlacual', 'xip', 'quiyauh', 'tiaz', 'ihchican']
+
+Palabra: AGUACATE 
+GOLD: ['ahua'] 
+RESULTADOS: ['aztlacapalli', 'tolachno', 'ahua', 'poyox', 'pix', 'izhua', 'diego', 'dral', 'castillo', 'secretario']
+
+Palabra: VOZ 
+GOLD: ['tozki', 'tzahtzi', 'tzatzi'] 
+RESULTADOS: ['tzahtzi', 'nopiltzin', 'mu', 'xinechmotlapohpolhuili', 'tzatzi', 'omitz', 'tepotz', 'eua', 'tze', 'im']
+
+Palabra: VISCERAS 
+GOLD: ['ihti', 'ehua'] 
+RESULTADOS: ['cuacualaca', 'tlahuicxitilli', 'itzoltilia', 'motlali', 'tlalia', 'cuacua', 'temolcax', 'zoqui', 'paca', 'caxi']
+
+Palabra: DESCANSO 
+GOLD: ['mocehui'] 
+RESULTADOS: ['mocehui', 'calyolot', 'pepe', 'huizque', 'immotla', 'icpal', 'acia', 'ciauh', 'tlauh', 'timamalihuac']
+
+Palabra: ANÁHUAC 
+GOLD: ['nahuac'] 
+RESULTADOS: ['noch', 'siempre', 'tzaoctimanca', 'nahuac', 'cultura', 'zcuco', 'tlamatiliz', 'm', 'nahua', 'dueño']
+
+Palabra: ADMIRAR 
+GOLD: ['mahuizo', 'iglesia', 'tlamahuiz'] 
+RESULTADOS: ['mahuizo', 'imottilih', 'tlamahuiz', 'itt', 'chililiz', 'xip', 'onimitz', 'mahui', 'mihtlanililia', 'mahuiztili']
+
+Palabra: LAVAR 
+GOLD: ['paca'] 
+RESULTADOS: ['paca', 'caxi', 'tlahuicxitilli', 'tlalia', 'cuacualaca', 'motlali', 'tec', 'huic', 'tectli', 'zoqui']
+
+Palabra: VASIJA 
+GOLD: ['cax', 'tecoma', 'comitl'] 
+RESULTADOS: ['comitl', 'cax', 'chiquihui', 'tecoma', 'zoqui', 'nechicalhui', 'caxi', 'xommo', 'xaxa', 'xel']
+
+Palabra: UÑA 
+GOLD: ['itz'] 
+RESULTADOS: ['cuicuil', 'moci', 'ahuiz', 'itz', 'poch', 'mihiyohuilti', 'tlaloa', 'tlil', 'ciauh', 'diego']
+
+Palabra: OCURRIR 
+GOLD: ['pano', 'chiuh'] 
+RESULTADOS: ['quem', 'yoh', 'pano', 'machi', 'nicnemili', 'zquiani', 'onino', 'ammo', 'bar', 'chiuh']
+
+Palabra: PASAR 
+GOLD: ['pano', 'panoa'] 
+RESULTADOS: ['pano', 'saroa', 'amen', 'lti', 'tlen', 'moch', 'yb', 'omo', 'tepahpaquiltia', 'im']
+
+Palabra: ECHAR 
+GOLD: ['atlatzicuina', 'contla'] 
+RESULTADOS: ['patahuaz', 'contla', 'tz', 'zque', 'xip', 'yaca', 'totoca', 'yauh', 'zcuco', 'yb']
+
+Palabra: MESERO 
+GOLD: ['xexelo'] 
+RESULTADOS: ['xexelo', 'ahco', 'pech', 'cualica', 'comal', 'xeloa', 'federal', 'diego', 'secretario', 'rosario']
+
+Palabra: GALLETA 
+GOLD: ['galleta', 'tlaxcal'] 
+RESULTADOS: ['galleta', 'pohualli', 'comal', 'beethoven', 'yb', 'rafael', 'xacualoa', 'acamapich', 'gr', 'diego']
+
+Palabra: LLANO 
+GOLD: ['talmanic', 'tlal', 'xtlahua'] 
+RESULTADOS: ['talmanic', 'mani', 'tlal', 'tlalticpac', 'dral', 'diego', 'rosario', 'secretario', 'acamapich', 'castillo']
+
+Palabra: SUEÑO 
+GOLD: ['cochi', 'temictli', 'temic'] 
+RESULTADOS: ['cochi', 'coch', 'znequi', 'tepuz', 'chix', 'quetz', 'yohua', 'iye', 'elo', 'dral']
+
+Palabra: MUERTO 
+GOLD: ['mimic', 'mic'] 
+RESULTADOS: ['mimic', 'mic', 'ictique', 'cuecuepotza', 'oquin', 'tzontequili', 'potoni', 'im', 'miqui', 'zapata']
+
+Palabra: QUILTONILES 
+GOLD: ['quil'] 
+RESULTADOS: ['cualac', 'illi', 'alac', 'apiaz', 'cuacualaca', 'quil', 'oomicihcicu', '1', 'cuih', 'ton']
+
+Palabra: TRÁIGANLA 
+GOLD: ['cui', 'huica'] 
+RESULTADOS: ['xic', 'namoahtapal', 'cui', 'hual', 'necoc', 'dar', 'nican', 'tih', 'yb', 'agua']
+
+Palabra: LLANURA 
+GOLD: ['xtlahua'] 
+RESULTADOS: ['xtlahua', 'as', 'ip', 'ua', 'mitz', 'xinach', 'tlahui', 'tlalli', 'cueh', 'eu']
+
+Palabra: HORNO 
+GOLD: ['horno'] 
+RESULTADOS: ['horno', 'tu', 'timihtil', 'cuepa', 'teoticanantzin', 'tz', 'huic', 'cuep', 'temi', 'tlahuicxitilli']
+
+Palabra: OLVIDAR 
+GOLD: ['ilcaruaz', 'cahua'] 
+RESULTADOS: ['huilli', 'quil', 'cahua', 'mihtalhui', 'el', 'xquin', 'xonm', 'vor', 'cahui', 'nino']
+
+Palabra: JADEAR 
+GOLD: ['tixtomahua'] 
+RESULTADOS: ['tixtomahua', 'itlachi', 'tolini', 'ixpetla', 'timamalihuac', 'cuitl', 'icemel', 'ixeo', 'ili', 'milacatzo']
+
+Palabra: NOMBRE 
+GOLD: ['toca'] 
+RESULTADOS: ['toca', 'tocayoti', 'tlahtoca', 'hispan', 'ixiptla', 'y', 'de', 'v', 'd', 'gali']
+
+Palabra: LIMPIAR 
+GOLD: ['pohpo', 'chipahuaque', 'chipahua', 'popo'] 
+RESULTADOS: ['chipahuaque', 'pohpo', 'mitz', 'comitl', 'cciz', 'mozacaticonti', 'cuih', 'stancia', 'chi', 'popo']
+
+Palabra: PRESIDENTE 
+GOLD: ['presi'] 
+RESULTADOS: ['presi', 'us', 'tlahtoca', 'ludovi', 'premios', 'nario', 'tlahtoani', 'luis', 'gali', 'hueyi']
+
+Palabra: MIRADA 
+GOLD: ['tlachia'] 
+RESULTADOS: ['tlachia', 'im', 'mix', 'tz', 'xip', 'milacatzo', 'zque', 'yuhqui', 'tzinco', 'ix']
+
+Palabra: VER 
+GOLD: ['tta', 'conmottilia', 'itta', 'itac', 'ver'] 
+RESULTADOS: ['ver', 'tta', 'yb', 'uh', 'xip', 'itta', 'tepahpaquiltia', 'auh', 'im', 'oncan']
+
+Palabra: REINAR 
+GOLD: ['motlahtocatlalli', 'toca'] 
+RESULTADOS: ['14', 'cayotl', 'tlalli', 'nahui', 'mahtlac', 'nauh', 'peuh', 'pipil', 'gali', 'y']
+
+Palabra: LEVANTAR 
+GOLD: ['quetza'] 
+RESULTADOS: ['quetza', 'yollo', 'ohuatzintic', 'yb', 'quechi', 'ihca', 'yaca', 'pie', 'zcuco', 'xip']
+
+Palabra: ADORNAR 
+GOLD: ['apana', 'chihchihua'] 
+RESULTADOS: ['apana', 'uan', 'chihchihua', 'quimon', 'oquich', 'tizque', 'yahualoa', 'xip', 'zcuco', 'tlauhtia']
+
+Palabra: ALFREDO 
+GOLD: ['alfredo'] 
+RESULTADOS: ['alfredo', 'matiloa', 'chachal', 'ieltapach', 'felipe', 'xacualoa', 'rafael', 'salveros', 'organil', 'club']
+
+Palabra: COMER 
+GOLD: ['cuaz', 'cua', 'tlacual', 'otlacua', 'cualtiz'] 
+RESULTADOS: ['cua', 'cuaz', '´tos', 'tlacual', 'cualtiz', 'zque', 'tepahpaquiltia', 'cuap', 'niquintlayocoli', 'xip']
+
+Palabra: NIDO 
+GOLD: ['tapazolli', 'tapazol', 'pa', 'zol'] 
+RESULTADOS: ['nepapan', 'motemilih', 'mota', 'huipan', 'tenanco', 'tlazo', 'diego', 'dral', 'secretario', 'xochi']
+
+Palabra: PASO 
+GOLD: ['pasilla'] 
+RESULTADOS: ['pasilla', 'chilcuitlaxcolli', 'chil', 'zoh', 'club', 'dral', 'xacualoa', 'xumalli', 'secretario', 'diego']
+
+Palabra: PESAR 
+GOLD: ['etic', 'eti', 'cem', 'eamiiiz', 'ticcua'] 
+RESULTADOS: ['xihui', 'palehui', 'ticcua', 'tema', 'uepahua', 'mictia', 'dral', 'cah', 'tepahpaquiltia', 'miec']
+
+Palabra: FINO 
+GOLD: ['tlazo', 'quetzal'] 
+RESULTADOS: ['tlazo', 'xomoihui', 'zacuan', 'quetzal', 'xical', 'quechol', 'cahuia', 'concui', 'pech', 'teocuitla']
+
+Palabra: VERDE 
+GOLD: ['xoxo', 'xoxouhqui'] 
+RESULTADOS: ['xoxo', 'xoxouhqui', 'ayohhuach', 'zaca', 'chilmolli', 'molli', 'calhuahza', 'chalchiuh', 'chichil', 'xo']
+
+Palabra: MADERA 
+GOLD: ['cuauh', 'tlacuauh'] 
+RESULTADOS: ['icuil', 'tlapech', 'cuahuitl', 'cuauh', 'llan', 'pech', 'icpac', 'tepe', 'yuhqui', 'ahco']
+
+Palabra: PRESTAR 
+GOLD: ['ehuia'] 
+RESULTADOS: ['ehuia', 'onite', 'icni', '19', 'diego', 'nocupix', 'rosario', 'acamapich', 'dral', 'secretario']
+
+Palabra: TAPAR 
+GOLD: ['pachoa'] 
+RESULTADOS: ['pachoa', 'cciz', 'cuih', 'motequipacho', 'itzoltilia', 'pacho', 'zoqui', 'tlahuicxitilli', 'huic', 'caxi']
+
+Palabra: PERFORAR 
+GOLD: ['coyoc', 'coyoni'] 
+RESULTADOS: ['coyoni', 'coyoc', 'acacic', 'ohuehyiyac', 'amaihcuilol', 'rdenas', 'diego', 'dral', 'secretario', 'rosario']
+
+Palabra: AMADO 
+GOLD: ['tlazo', 'tlazohtla'] 
+RESULTADOS: ['tlazohtla', 'ama', 'ticcua', 'zquia', 'tlazo', 'diego', 'federal', 'secretario', 'comal', 'dral']
+
+Palabra: YO 
+GOLD: ['ne', 'nehhua'] 
+RESULTADOS: ['nicpia', 'ne', 'fa', 'zquia', 'hua', 'iuh', 'nehhua', 'chichi', 'al', 'mani']
+
+Palabra: SUCEDER 
+GOLD: ['pano', 'chiuh', 'panoa', 'chiu'] 
+RESULTADOS: ['chiuh', 'cholo', 'xip', 'ga', 'chihua', 'im', 'tihuetz', 'itta', 'oquimo', 'ictique']
+
+Palabra: ADQUISICIÓN 
+GOLD: ['quipiaz', 'tocococauh', 'cococauh', 'cococa'] 
+RESULTADOS: ['oticma', 'chiquiuh', 'mel', 'amech', 'ceuh', 'lahtol', 'amaneapan', 'poyox', 'dral', 'quipiaz']
+
+Palabra: MUÑECA 
+GOLD: ['quech', 'muñeca'] 
+RESULTADOS: ['quech', 'motozcatlan', 'notozca', 'cotona', 'nacaz', 'ilpi', 'immoma', 'lpilia', 'acol', 'chalchihui']
+
+Palabra: PORTAL 
+GOLD: ['por', 'tal'] 
+RESULTADOS: ['ticchi', 'por', 'chia', 'min', 'yehhua', 'tlalticpac', 'chix', 'tal', 'chien', 'axcan']
+
+Palabra: CULTURA 
+GOLD: ['tlamatiliz', 'cultura'] 
+RESULTADOS: ['cultura', 'tlamatiliz', 'toyalhuayo', 'nahuatlahtol', 'iayah', 'lahtol', 'moyacanilia', 'moteihtitili', 'potz', 'huehue']
+
+Palabra: TIGRE 
+GOLD: ['ocelo', 'tecuan'] 
+RESULTADOS: ['ocelo', 'tecuan', 'zacuan', 'quechol', 'cacehuaztli', 'totome', 'ehua', 'quetzal', 'xahua', 'dral']
+
+Palabra: TANTO 
+GOLD: ['zazan', 'izqui'] 
+RESULTADOS: ['ih', 'zazan', 'meh', 'amuel', 'itemohui', 't', 'tepahpaquiltia', 'yuhqui', 'zcuco', 'yb']
+
+Palabra: PÍDELE 
+GOLD: ['htlan'] 
+RESULTADOS: ['htlan', 'puebla', 'mayana', 'htlani', 'xicol', 'illi', 'apiaz', 'apiz', 'icni', 'secretario']
+
+Palabra: UNIR 
+GOLD: ['cen'] 
+RESULTADOS: ['f', 'george', 'estado', 'do', 'cahuan', 'tlahtocayotl', 'fe', 'ahuacatl', '19', 'isoldado']
+
+Palabra: EFECTO 
+GOLD: ['nel'] 
+RESULTADOS: ['tlaocox', 'ihtotia', 'oquich', 'nehnemi', 'mixco', 'oceloquichtle', 'tz', 'ixeo', 'timamalihuac', 'ellel']
+
+Palabra: TIERNO 
+GOLD: ['ne', 'xoxouhqui'] 
+RESULTADOS: ['xoxouhqui', 'stancia', 'chilmolli', 'calhuahza', 'nohpal', 'catarina', 'xoxo', 'nopal', 'izhua', 'ahnozo']
+
+Palabra: ANIMAL 
+GOLD: ['yolca', 'yoyolcameh'] 
+RESULTADOS: ['yolca', 'v', 'pu', 'iapizmi', 'pah', 'ichca', 'mictia', 'yoyolcameh', 'rn', 'dral']
+
+Palabra: PIPIÁN 
+GOLD: ['chilacach', 'yohuac'] 
+RESULTADOS: ['chilacach', 'secretario', 'castillo', 'acamapich', 'rosario', 'rafael', 'salveros', 'federal', 'dral', 'echicoliz']
+
+Palabra: SILVESTRE 
+GOLD: ['tlal', 'cuauh'] 
+RESULTADOS: ['tlal', 'tlalticpac', 'ayo', 'y', 'tal', 'talmanic', 'al', 'ax', 'cuechac', 'm']
+
+Palabra: MONTAÑA 
+GOLD: ['tepe'] 
+RESULTADOS: ['huehca', 'cem', 'tepe', 'tlaloa', 'miec', 'ahquetz', 'dral', 'choca', 'yb', 'diego']
+
+Palabra: NABO 
+GOLD: ['bo'] 
+RESULTADOS: ['stancia', 'bo', 'catarina', 'ga', 'cuechahua', 'cec', 'acacic', 'chicauh', 'temolcax', 'pexon']
+
+Palabra: JUGAR 
+GOLD: ['mahui'] 
+RESULTADOS: ['mahui', 'nocniu', 'ltih', 'ahuil', 'pahpa', 'mahuizzo', 'ihcuilo', 'tizque', 'ticmo', 'mitzmo']
+
+Palabra: ESTABLECER 
+GOLD: ['tlalia', 'chan'] 
+RESULTADOS: ['itoa', 'cauh', 'iuh', 'tepe', 'auh', 'acique', 'ixpetla', 'lique', 'y', 'pul']
+
+Palabra: COMENZAR 
+GOLD: ['pehua', 'peuh'] 
+RESULTADOS: ['pehua', 'peuh', 'pen', 'ignacio', 'omo', 'xip', 'tlahuiz', 'popolo', 'uel', 'ltia']
+
+Palabra: DESIERTO 
+GOLD: ['des'] 
+RESULTADOS: ['ceuh', 'des', 'er', 'ommihzo', 'olpi', 'diego', 'izquin', 'dral', 'secretario', 'federal']
+
+Palabra: AGREGAR 
+GOLD: ['motlali', 'tlalia'] 
+RESULTADOS: ['motlali', 'tiliaya', 'tlahuicxitilli', 'cuacualaca', 'tlalia', 'tec', 'itzoltilia', 'huic', 'paca', 'caxi']
+
+Palabra: NARANJA 
+GOLD: ['naranja', 'xal', 'ronyaa'] 
+RESULTADOS: ['naranja', 'juzga', 'comal', 'ieltapach', 'rafael', 'chachal', 'orcasitas', 'salveros', 'federal', 'castillo']
+
+Palabra: TRANSPORTAR 
+GOLD: ['axiti'] 
+RESULTADOS: ['axiti', 'chalchiuh', 'chalchihui', 'quetzal', 'zacuan', 'illam', 'xip', 'teu', 'itoz', 'tqui']
+
+Palabra: FINAL 
+GOLD: ['tlatz'] 
+RESULTADOS: ['mix', 'im', 'xip', 'mochi', 'cauh', 'zcuco', 'y', 'yb', 'tlalia', 'yuhqui']
+
+Palabra: COFRE 
+GOLD: ['top', 'petlacal'] 
+RESULTADOS: ['top', 'petlacal', 'tlachie', 'dral', 'itoz', 'diego', 'secretario', 'xillan', 'acamapich', 'federal']
+
+Palabra: GRANDE 
+GOLD: ['huey', 'hueyi'] 
+RESULTADOS: ['hueyi', 'huey', 'hue', 'gali', 'altpe', 'ohuehyiyac', 'chamahuac', 'altepe', 'izcal', 'yb']
+
+Palabra: INTRODUCIR 
+GOLD: ['calaquia', 'calaqui'] 
+RESULTADOS: ['calaqui', 'calaquia', 'calac', 'nican', 'xip', 'hual', 'im', 'cala', 'auh', 'yb']
+
+Palabra: OÍR 
+GOLD: ['cac', 'caqui'] 
+RESULTADOS: ['acica', 'nlcaci', 'cac', 'cuic', 'ami', 'ihuinti', 'camati', 'quimolhui', 'oiuhquimoca', 'tlahtoani']
+
+Palabra: SÓLO 
+GOLD: ['zan', 'za'] 
+RESULTADOS: ['zan', 'zcuco', 'im', 'choh', 'yuhqui', 'zque', 'xip', 'yb', 'auh', 'oc']
+
+Palabra: ENORME 
+GOLD: ['huey'] 
+RESULTADOS: ['mil', 'huehca', 'cpac', 'tepahpaquiltia', 'jard', 'moch', 'xochi', 'dral', 'fr', 'zcuco']
+
+Palabra: ITACATES 
+GOLD: ['ihtacatl'] 
+RESULTADOS: ['ihtacatl', 'huauh', 'calhuahza', 'pinol', 'chichil', 'xipehua', 'xip', 'castillo', 'zacuam', 'secretario']
+
+Palabra: CENTENARIO 
+GOLD: ['nario', 'presi'] 
+RESULTADOS: ['nario', 'premios', 'icuilacta', 'ipanoque', 'presi', 'tazohta', 'elehui', 'hcuilo', 'diego', 'dral']
+
+Palabra: AMARGO 
+GOLD: ['chichi'] 
+RESULTADOS: ['chichi', 'itzcuin', 'choca', 'tepahpaquiltia', 'pia', 'mocnopil', 'miz', 'mimizt', 'ixpetla', 'onohualco']
+
+Palabra: PLUMA 
+GOLD: ['quetzal'] 
+RESULTADOS: ['quetzal', 'ihui', 'potonia', 'xahua', 'huitz', 'tapayol', 'zacuan', 'ten', 'coatl', 'quechol']
+
+Palabra: DESTROZAR 
+GOLD: ['teciz', 'tlanteciz'] 
+RESULTADOS: ['x', 'tepahpaquiltia', 'yb', 'fa', 'auh', 'dral', 'zcuco', 'zque', 'l', 'yuhqui']
+
+Palabra: PATIO 
+GOLD: ['patio', 'itual', 'ithual'] 
+RESULTADOS: ['patio', 'itual', 'ithual', 'ber', 'nepantla', 'calitic', 'cotona', 'pixca', 'ticatca', 'rosario']
+
+Palabra: ROGAR 
+GOLD: ['tahtan'] 
+RESULTADOS: ['tahtan', 'tlauhti', 'tamechtahtanil', 'tlauhtia', 'ili', 'idl', 'end', 'xip', 'namech', 'vor']
+
+Palabra: TEATRO 
+GOLD: ['tlamahuiz', 'mahui'] 
+RESULTADOS: ['tlamahuiz', 'mahuizo', 'mahui', 'yah', 'imottilih', 'diego', 'dral', 'rosario', 'cala', 'secretario']
+
+Palabra: PRESENCIA 
+GOLD: ['ix'] 
+RESULTADOS: ['mopechteccac', 'tlacuauh', 'quimolhui', 'tzinco', 'contla', 'eltilitiuh', 'tlazoh', 'uad', 'chiyali', 'xip']
+
+Palabra: QUETZAL 
+GOLD: ['quetzal'] 
+RESULTADOS: ['quetzal', 'zacuan', 'chalchihui', 'coatl', 'chalchiuh', 'potonia', 'ihui', 'quechol', 'tapayol', 'xahua']
+
+Palabra: TORTUGA 
+GOLD: ['ayo'] 
+RESULTADOS: ['tectli', 'tlahuicxitilli', 'ayo', 'tlalia', 'paca', 'alac', 'caxi', 'zoqui', 'motlali', 'cuacualaca']
+
+Palabra: REUNIR 
+GOLD: ['nechico', 'cen'] 
+RESULTADOS: ['potz', 'nechico', 'nemoa', 'puchteca', 'pochteca', 'iuhqui', 'xipehua', 'moyacanilia', 'mochi', 'auh']
+
+Palabra: QUERER 
+GOLD: ['znequi', 'nequi', 'monequilti', 'nequia'] 
+RESULTADOS: ['nequi', 'znequi', 'nequia', 'ixquich', 'zazo', 'nec', 'fa', 'den', 'amo', 'nozo']
+
+Palabra: PANTALÓN 
+GOLD: ['pantalon'] 
+RESULTADOS: ['pantalon', 'beethoven', 'villistas', 'chachal', 'matiloa', 'comal', 'echicoliz', 'anechhuall', 'rafael', 'salveros']
+
+Palabra: INDIO 
+GOLD: ['macehual'] 
+RESULTADOS: ['ig', 'macehual', 'quiliz', 'quixtiz', 'obispo', 'chix', 'ocaxil', 'xip', 'monexiti', 'quimolhui']
+
+Palabra: LLEVAR 
+GOLD: ['huica', 'cuica', 'tqui'] 
+RESULTADOS: ['huica', 'cuica', 'mama', 'tqui', 'polactia', 'tepahpaquiltia', 'xip', 'quiliz', 'zcuco', 'cui']
+
+Palabra: MOLCAJETE 
+GOLD: ['molcaxitl', 'temolcax'] 
+RESULTADOS: ['molcaxitl', 'temolcax', 'caxi', 'xommo', 'otzoy', 'zoqui', 'tlaxamanil', 'tzoaloni', 'chiquihui', 'cciz']
+
+Palabra: IZQUIERDA 
+GOLD: ['pochcopa', 'poch', 'opoch'] 
+RESULTADOS: ['pochcopa', 'poch', 'imayauhcampa', 'iye', 'imayauhcan', 'dral', 'secretario', 'diego', 'au', 'rosario']
+
+Palabra: BARCA 
+GOLD: ['acalli'] 
+RESULTADOS: ['acalli', 'ltemalo', 'latuic', 'tlatia', 'ono', 'tzitz', 'tlathui', 'aquia', 'tzcal', 'poyahua']
+
+Palabra: ESCUPIR 
+GOLD: ['chicha', 'chichi'] 
+RESULTADOS: ['chichi', 'huiz', 'zcuco', 'itzcuin', 'im', 'cual', 'zque', 'za', 'oc', 'yb']
+
+Palabra: ESFUERZO 
+GOLD: ['cuammaca', 'chicahua', 'chicahuaz'] 
+RESULTADOS: ['quexquich', 'chicahua', 'ihiyo', 'potztlatziuh', 'nohuian', 'quezqui', 'machi', 'cahua', 'omiquiliaya', 'cac']
+
+Palabra: MIXCÓLOTL 
+GOLD: ['mixco'] 
+RESULTADOS: ['tepuz', 'mixco', 'cochi', 'timamalihuac', 'tlachia', 'tepotz', 'ncmi', 'ahuacatl', 'tz', 'naz']
+
+Palabra: ESCALERA 
+GOLD: ['mama'] 
+RESULTADOS: ['nmediasco', 'oquinanquili', 'ilpia', 'dia', 'icuilacta', 'comal', 'pualhuany', 'nonotza', 'cocone', 'mahca']
+
+Palabra: ACABAR 
+GOLD: ['tlami', 'tami'] 
+RESULTADOS: ['tlami', 'mic', 'cauh', 'ahui', 'yoltequipacho', 'auh', 'miqui', 'totecuyo', 'xip', 'tepahpaquiltia']
+
+Palabra: CAJA 
+GOLD: ['petlacal'] 
+RESULTADOS: ['petlacal', 'top', 'tlachie', 'ixtelolo', 'ui', 'ilpi', 'xip', 'quexquich', 'dral', 'cxi']
+
+Palabra: DERRIBAR 
+GOLD: ['tatemp'] 
+RESULTADOS: ['mota', 'tatemp', 'tata', 'motemilih', 'nepapan', 'secretario', 'tepahpaquiltia', 'dral', 'nimitz', 'castillo']
+
+Palabra: QUITAR 
+GOLD: ['cuicuil', 'cuilia'] 
+RESULTADOS: ['ihcuani', 'cciz', 'nech', 'cuilia', 'tlalia', 'cuih', 'cui', 'huizque', 'me', 'cequi']
+
+Palabra: DECIR 
+GOLD: ['lhuia', 'ilhuia', 'lhui', 'hto'] 
+RESULTADOS: ['hto', 'lhuia', 'lhui', 'zcuco', 'ilhui', 'auh', 'niman', 'quin', 'zque', 'tepahpaquiltia']
+
+Palabra: CONOCER 
+GOLD: ['ixmati', 'ixmachilia', 'mati', 'oixmatilia', 'iximacho'] 
+RESULTADOS: ['ixmati', 'quix', 'mati', 'quiximati', 'iximacho', 'ixmachilia', 'machi', 'choh', 'tlaca', 'y']
+
+Palabra: SALVADOR 
+GOLD: ['salvador', 'tema', 'quixti'] 
+RESULTADOS: ['salvador', 'tema', 'quixti', 'pr', 'cachihualiz', 'jesu', 'tepon', 'macehui', 'dral', 'yb']
+
+Palabra: LECHE 
+GOLD: ['chichi'] 
+RESULTADOS: ['ihchican', 'chichi', 'notlazohca', 'itzcuin', 'tzitzintin', 'illi', 'pac', 'xonm', 'xmechmo', 'iztaleh']
+
+Palabra: PERDONAR 
+GOLD: ['pohpo'] 
+RESULTADOS: ['pohpo', 'mozacaticonti', 'otimitzno', 'chipahuaque', 'pahcayo', 'mochantilia', 'comitl', 'iahhuui', 'chi', 'ahqui']
+
+Palabra: VOLVER 
+GOLD: ['cuepa', 'mocuep'] 
+RESULTADOS: ['cuepa', 'mocuep', 'ixpetani', 'yahualoa', 'ac', 'im', 'vuelta', 'cuep', 'yb', 'eu']
+
+Palabra: GRITAR 
+GOLD: ['tzatzi', 'tzahtzi'] 
+RESULTADOS: ['tzatzi', 'ihcahuaca', 'lero', 'tzahtzi', 'laxoc', 'cirio', 'secretario', 'dral', 'diego', 'acamapich']
+
+Palabra: COYOTE 
+GOLD: ['coyo', 'coyoc'] 
+RESULTADOS: ['camachalo', 'coyoc', 'ichca', 'cuaz', 'zauh', 'zahua', 'huitequi', 'tlauh', 'po', 'dios']
+
+Palabra: ROPA 
+GOLD: ['tzotzoma'] 
+RESULTADOS: ['tzotzoma', 'ui', 'dral', 'xolochcue', 'nuevo', 'secretario', 'rosario', 'diego', 'acamapich', 'federal']
+
+Palabra: ROSTRO 
+GOLD: ['mixco'] 
+RESULTADOS: ['mixco', 'tlachia', 'yollo', 'timamalihuac', 'notelpo', 'mix', 'ixeo', 'notozca', 'naz', 'immoma']
+
+Palabra: DAR 
+GOLD: ['maca', 'dar'] 
+RESULTADOS: ['dar', 'maca', 'xic', 'zcuco', 'auh', 'quin', 'taca', 'mah', 'omo', 'quim']
+
+Palabra: VENDER 
+GOLD: ['tlanamacazquia', 'tlanamaca', 'namaca', 'namaco'] 
+RESULTADOS: ['tlanamaca', 'tlanamacazquia', 'namaco', 'namaca', 'villistas', 'rosario', 'secretario', 'pina', 'dral', 'onitla']
+
+Palabra: PIEZA 
+GOLD: ['xexelo'] 
+RESULTADOS: ['xexelo', 'xeloa', 'lero', 'micuani', 'loyan', 'ticatca', 'nah', 'tlacual', 'cualica', 'nocupix']
+
+Palabra: SEÑORITO 
+GOLD: ['sihuat', 'ichpoca'] 
+RESULTADOS: ['etzta', 'sihuat', 'omote', 'oquim', 'tiliaya', 'ipilhua', 'tinenca', 'yb', 'ilhuia', 'chiliaya']
+
+Palabra: CHICO 
+GOLD: ['notelpochtli', 'tzitz', 'tepi'] 
+RESULTADOS: ['tzitz', 'acalli', 'tepi', 'ton', 'calehcapo', '1', 'cec', 'uepahua', 'patlahua', 'tzi']
+
+Palabra: TRAER 
+GOLD: ['itqui', 'huica', 'huiqui', 'cui'] 
+RESULTADOS: ['hual', 'cui', 'huica', 'tqui', 'tih', 'cuica', 'tepahpaquiltia', 'cualica', 'xochi', 'zcuco']
+
+Palabra: DERECHO 
+GOLD: ['melahua', 'melauh', 'yec'] 
+RESULTADOS: ['ihtoh', 'melahua', 'iyaca', 'melauh', 'ozto', 'itt', 'nel', 'quetza', 'chiyali', 'yb']
+
+Palabra: PURAMENTE 
+GOLD: ['zan', 'za'] 
+RESULTADOS: ['ommihzo', 'imayauhcan', 'imayauhcampa', 'ceuh', 'iye', 'tepahpaquiltia', 'nepantla', 'dral', 'secretario', 'diego']
+
+Palabra: SENO 
+GOLD: ['xillan'] 
+RESULTADOS: ['xillan', 'notozca', 'illam', 'itoz', 'motozcatlan', 'immoma', 'mocnelili', 'uitlapilco', 'icnop', 'xuchitl']
+
