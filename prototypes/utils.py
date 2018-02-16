@@ -57,7 +57,13 @@ def load_embeddings(source):
         tmp_na.append(line.split())
 
     # Se eliminan variables que ya no se utilizan
+    del lines_es
+    del lines_na
+    del esp
+    del nah
 
+
+    # Variables de retorno
     es_df = DataFrame.from_records(tmp_es)
     na_df = DataFrame.from_records(tmp_na)
     # Se regresan los dataframes con los embeddings.
