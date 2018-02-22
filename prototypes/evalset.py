@@ -163,7 +163,7 @@ if PRINT:
               "\nRESULTADOS", resultados_gold[palabra]["RESULTS"], end="\n" * 2)
 
     # Muestra las palabras, su traducción y los canditados a traducción
-    print("=================================================")
+    print("\n=================================================")
     print("PALABRAS DEL EVALSET CON SU TRADUCCIÓN Y 10 CANDIDATOS")
     for k, v in resultados_gold.items():
         print("Palabra:", k.upper(), "\nGOLD:", v["GOLD"], "\nRESULTADOS:",
