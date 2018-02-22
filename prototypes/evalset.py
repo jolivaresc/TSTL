@@ -39,7 +39,8 @@ PRINT = False
 - Se crea un arreglo matricial con las representaciones vectoriales obtenidas
 """
 eval_es_vectores = utils.get_vectors(es, eval_es_index)
-test_vectors = np.array([np.array(es.iloc[indice][1::]).astype(np.float64) for indice in eval_es_index])
+test_vectors = np.array([np.array(es.iloc[indice][1::]).astype(
+    np.float64) for indice in eval_es_index])
 
 """
 - Se inicia una sesión de TensorFlow.
@@ -71,7 +72,7 @@ kprob = graph.get_tensor_by_name("dropout_prob:0")
 - NOTA: La salida varía de acuerdo al número de capas que tenga la red.
 """
 output_NN = graph.get_tensor_by_name("xw_plus_b_1:0")
-#output_NN = graph.get_tensor_by_name("nah_predicted:0")
+output_NN = graph.get_tensor_by_name("nah_predicted:0")
 #output_NN = graph.get_tensor_by_name("dense_2/BiasAdd:0")
 #output_NN = graph.get_tensor_by_name("output_1:0")
 
@@ -97,7 +98,8 @@ closest = [utils.get_closest_words_to(top_10[_], na)
 """
 - Se crea un diccionario con la palabra y las predicciones que obtuvo el modelo
 """
-resultados = {palabra_es: top_10_nah for (palabra_es, top_10_nah) in zip(eval_es, closest)}
+resultados = {palabra_es: top_10_nah for (
+    palabra_es, top_10_nah) in zip(eval_es, closest)}
 
 
 """
@@ -116,13 +118,11 @@ gold = dict(gold)
 - Se evalua la precisión de las predicciones usando P@k usando una lista de hits y sus índices.
 - Se guardan en una lista las palabras que no fueron encontradas dentro de las traducciones predichas.
 """
-p1 = 0
-p5 = 0
-p10 = 0
-list_esp_eval = (list(resultados.keys()))
-hits = list()
-not_found = list()
-# Se buscan las traducciones gold standard dentro de las predicciones y se obtiene 
+p1, p5, p10 = 0, 0, 0
+list_esp_eval = list(resultados.keys())
+hits, not_found = list(), list()
+
+# Se buscan las traducciones gold standard dentro de las predicciones y se obtiene
 # P@K, sino se encuentran, se añade a una lista de no encontrados.
 for palabra_gold in list_esp_eval:
     for i in gold[palabra_gold]:
@@ -136,19 +136,20 @@ for palabra_gold in list_esp_eval:
         if min(hits) >= 1 and min(hits) <= 5:
             p5 += 1
             p10 += 1
-        if min(hits) > 5 and min(hits) <= 10:
+        if min(hits) > 5 and min(hits) < 10:
             p10 += 1
     else:
         not_found.append(palabra_gold)
     hits.clear()
 
 length = list_esp_eval.__len__()
-print("not found:", not_found.__len__(), "-", not_found.__len__() / length, "%")
-print("P@1:", p1,"\tP@5:", p5 , "\tP@10:", p10)
-print("P@1:", p1 / length,"\tP@5:", p5 / length, "\tP@10:", p10 / length)
+print("not found:", not_found.__len__(),
+      "-", not_found.__len__() / length, "%")
+print("P@1:", p1, "\tP@5:", p5, "\tP@10:", p10)
+print("P@1:", p1 / length, "\tP@5:", p5 / length, "\tP@10:", p10 / length)
 
 if PRINT:
-    # Diccionario que contiene la palabra, sus traducción y los canditados a 
+    # Diccionario que contiene la palabra, sus traducción y los canditados a
     # traducción obtenidos por el autoencoder
     resultados_gold = dict()
     for k, v in resultados.items():
@@ -159,11 +160,11 @@ if PRINT:
     print("PALABRAS NO ENCONTRADAS Y SUS CANDIDATOS...")
     for palabra in not_found:
         print(palabra.upper() + ":", "\nGOLD", resultados_gold[palabra]["GOLD"],
-            "\nRESULTADOS", resultados_gold[palabra]["RESULTS"], end="\n" * 2)
+              "\nRESULTADOS", resultados_gold[palabra]["RESULTS"], end="\n" * 2)
 
     # Muestra las palabras, su traducción y los canditados a traducción
     print("=================================================")
     print("PALABRAS DEL EVALSET CON SU TRADUCCIÓN Y 10 CANDIDATOS")
     for k, v in resultados_gold.items():
         print("Palabra:", k.upper(), "\nGOLD:", v["GOLD"], "\nRESULTADOS:",
-            v["RESULTS"], end="\n" * 2)
+              v["RESULTS"], end="\n" * 2)
