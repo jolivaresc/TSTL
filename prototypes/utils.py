@@ -26,48 +26,53 @@ def load_embeddings(source):
 
     # Cargar embeddings desde archivos
     if source.__eq__("n2v"):
-        esp = open("../vectors/es.node2vec.embeddings", "r")
-        nah = open("../vectors/na.node2vec.embeddings", "r")
+        origin = open("../vectors/es.node2vec.embeddings", "r")
+        target = open("../vectors/na.node2vec.embeddings", "r")
     elif source.__eq__("w2v3"):
-        esp = open("../vectors/es.w2v.300", "r")
-        nah = open("../vectors/na.w2v.300", "r")
+        origin = open("../vectors/es.w2v.300", "r")
+        target = open("../vectors/na.w2v.300", "r")
     elif source.__eq__("w2v7"):
-        esp = open("../vectors/es.w2v.700", "r")
-        nah = open("../vectors/na.w2v.700", "r")
+        origin = open("../vectors/es.w2v.700", "r")
+        target = open("../vectors/na.w2v.700", "r")
     elif source.__eq__("w2v14"):
-        esp = open("../vectors/es.w2v.1400", "r")
-        nah = open("../vectors/na.w2v.1400", "r")
+        origin = open("../vectors/es.w2v.1400", "r")
+        target = open("../vectors/na.w2v.1400", "r")
+    elif source.__eq__("it-en"):
+        origin = open(
+            "../dataset/IT.200K.cbow1_wind5_hs0_neg10_size300_smpl1e-05.txt", "rb")#, encoding="utf-8")
+        target = open(
+            "../dataset/EN.200K.cbow1_wind5_hs0_neg10_size300_smpl1e-05.txt", "rb")#, encoding="utf-8")
 
     # Se guardan los archivos en listas.
-    lines_es = esp.readlines()
-    lines_na = nah.readlines()
+    lines_origin = origin.readlines()
+    lines_target = target.readlines()
     
     # Se elimina el primer elemento de la lista ya que no se utiliza
-    lines_es.pop(0)
-    lines_na.pop(0)
+    lines_origin.pop(0)
+    lines_target.pop(0)
 
     # Listas temporales
-    tmp_es, tmp_na = list(), list()
+    tmp_origin, tmp_target = list(), list()
     
     # Para cada item de la lista, se separa por espacios y se añade a la lista temporal
-    for line in lines_es:
-        tmp_es.append(line.split())
+    for line in lines_origin:
+        tmp_origin.append(line.split())
 
-    for line in lines_na:
-        tmp_na.append(line.split())
+    for line in lines_target:
+        tmp_target.append(line.split())
 
     # Se eliminan variables que ya no se utilizan
-    del lines_es
-    del lines_na
-    del esp
-    del nah
-
+    del lines_origin
+    del lines_targel
+    del origin
+    del target
 
     # Variables de retorno
-    es_df = DataFrame.from_records(tmp_es)
-    na_df = DataFrame.from_records(tmp_na)
+    origin_df = DataFrame.from_records(tmp_origin)
+    target_df = DataFrame.from_records(tmp_target)
+    print(source + "loaded..")
     # Se regresan los dataframes con los embeddings.
-    return es_df, na_df
+    return origin_df, target_df
 
 
 def get_lexicon(source):
