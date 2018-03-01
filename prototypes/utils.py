@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-from numpy import dot, float64, array, sqrt, matmul, einsum
+from numpy import dot, float64, array, sqrt, matmul, einsum,mean
 from numpy.linalg import norm
 from pandas import set_option, read_csv, DataFrame
 
@@ -63,14 +63,14 @@ def load_embeddings(source):
 
     # Se eliminan variables que ya no se utilizan
     del lines_origin
-    del lines_targel
+    del lines_target
     del origin
     del target
 
     # Variables de retorno
     origin_df = DataFrame.from_records(tmp_origin)
     target_df = DataFrame.from_records(tmp_target)
-    print(source + "loaded..")
+    #print(source + "loaded..")
     # Se regresan los dataframes con los embeddings.
     return origin_df, target_df
 
@@ -91,6 +91,20 @@ def get_lexicon(source):
     else:
         print("ERR: Ingrese un lexicon válido..")
 
+
+def mean_center(matrix):
+    """Normalizar vectores
+    
+    Arguments:
+        matrix {np.array} -- Matriz de vectores
+    
+    Returns:
+        [np.array] -- Matriz normalizada
+    """
+
+    xp = (matrix)
+    avg = mean(matrix, axis=0)
+    return matrix - avg
 
 def get_dataframe_index(dataframe, palabra):
     """Obtiene el índice dentro del dataframe de la palabra si es que
