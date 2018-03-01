@@ -42,6 +42,8 @@ eval_es_vectores = utils.get_vectors(es, eval_es_index)
 test_vectors = np.array([np.array(es.iloc[indice][1::]).astype(
     np.float64) for indice in eval_es_index])
 
+#test_vectors = utils.mean_center(test_vectors)
+
 """
 - Se inicia una sesión de TensorFlow.
 - Se carga el modelo a evaluar.
@@ -71,9 +73,9 @@ kprob = graph.get_tensor_by_name("dropout_prob:0")
 - Se guarda la salida del modelo en una variable, será la que nos dará el resultado de evualuar el modelo
 - NOTA: La salida varía de acuerdo al número de capas que tenga la red.
 """
-output_NN = graph.get_tensor_by_name("xw_plus_b_5:0")
+output_NN = graph.get_tensor_by_name("xw_plus_b_1:0")
 #output_NN = graph.get_tensor_by_name("nah_predicted:0")
-#output_NN = graph.get_tensor_by_name("dense_2/BiasAdd:0")
+##output_NN = graph.get_tensor_by_name("dense_2/BiasAdd:0")
 #output_NN = graph.get_tensor_by_name("output_1:0")
 
 
