@@ -4,6 +4,7 @@
 from numpy import dot, float64, array, sqrt, matmul, einsum,mean
 from numpy.linalg import norm
 from pandas import set_option, read_csv, DataFrame
+from sys import exit
 
 __author__ = "Olivares Castillo José Luis"
 
@@ -37,12 +38,14 @@ def load_embeddings(source):
     elif source.__eq__("w2v14"):
         origin = open("../vectors/es.w2v.1400", "r")
         target = open("../vectors/na.w2v.1400", "r")
-    elif source.__eq__("it-en"):
+    elif source.__eq__("en-it"):
         origin = open(
             "../dataset/IT.200K.cbow1_wind5_hs0_neg10_size300_smpl1e-05.txt", "rb")#, encoding="utf-8")
         target = open(
             "../dataset/EN.200K.cbow1_wind5_hs0_neg10_size300_smpl1e-05.txt", "rb")#, encoding="utf-8")
-
+    else:
+        print("ERR: dataset <"+source+"> no encontrado.")
+        exit(-1)
     # Se guardan los archivos en listas.
     lines_origin = origin.readlines()
     lines_target = target.readlines()

@@ -50,8 +50,8 @@ test_vectors = np.array([np.array(es.iloc[indice][1::]).astype(
 - Se restaura el modelo usando la sesión de TF.
 """
 sess = tf.Session()
-saver = tf.train.import_meta_graph('./models/model1111_gpu/model2250.ckpt.meta')
-saver.restore(sess, tf.train.latest_checkpoint('./models/model1111_gpu/'))
+saver = tf.train.import_meta_graph('./models/es-na/model1111_gpu/model2250.ckpt.meta')
+saver.restore(sess, tf.train.latest_checkpoint('./models/es-na/model1111_gpu/'))
 #saver = tf.train.import_meta_graph('./models/model_klein/modelklein.ckpt.meta')
 #saver.restore(sess, tf.train.latest_checkpoint('./models/model_klein/'))
 #saver = tf.train.import_meta_graph('./models/model_joyce/modeljoyce.ckpt.meta')
