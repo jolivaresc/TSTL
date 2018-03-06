@@ -109,11 +109,8 @@ resultados = {palabra_es: top_10_nah for (
 """
 esp = list(eval_set["esp"].values)
 nah = list(eval_set["nah"].values)
-pares_eval = list(zip(esp, nah))
-gold = defaultdict(list)
-for palabra_es, palabra_na in pares_eval:
-    gold[palabra_es].append(palabra_na)
-gold = dict(gold)
+
+gold = utils.gold_dict(esp,nah)
 
 
 """
