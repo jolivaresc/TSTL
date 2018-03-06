@@ -6,6 +6,7 @@ from numpy.linalg import norm
 from numpy import sort as numpy_sort
 from pandas import set_option, read_csv, DataFrame
 from sys import exit
+from collections import defaultdict
 
 __author__ = "Olivares Castillo José Luis"
 
@@ -363,7 +364,7 @@ def next_batch(x, step, batch_size):
 def gold_dict(list_src,list_trg):
     """Función para crear un diccionario de palabras y su correspondiente 
     traducción (gold standard)
-    
+
     Arguments:
         list_src {list} -- lista de palabras en idiota fuente.
         list_src {list} -- lista de palabras en idioma objetivo:
