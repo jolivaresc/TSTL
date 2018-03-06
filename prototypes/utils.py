@@ -3,6 +3,7 @@
 
 from numpy import dot, float64, array, sqrt, matmul, einsum,mean
 from numpy.linalg import norm
+from numpy import sort as numpy_sort
 from pandas import set_option, read_csv, DataFrame
 from sys import exit
 
@@ -267,15 +268,18 @@ def get_top10_closest(vector, matrix, distance="cos"):
         {list} -- Regresa una lista de tuplas con el índice y las 10 distancias
                   más cercanas al vector.
     """
-
+    # Use the order keyword to specify a field to use when sorting a structured array:
+    #dtype = [('index',int),('distance',float)]
     # Distancia coseno
     if distance == "cos":
         # Medir distancias
-        tmp_dist = list(enumerate(((matmul(vector, matrix.T)/(norm(vector)*sqrt(einsum('ij,ij->i',matrix, matrix)))))))
+        unsorted = list(enumerate(((matmul(vector, matrix.T)/(norm(vector)*sqrt(einsum('ij,ij->i',matrix, matrix)))))))
         # Se ordena lista según distancias más cercanas.
-        tmp_dist = sorted(tmp_dist, key=lambda dist: dist[1], reverse=True)
-        distances = tmp_dist[:10]
-        del tmp_dist
+        #unsorted = array(unsorted, dtype=dtype)       # create a structured array
+        #distances = list(numpy_sort(unsorted,order='distance'))[::-1] # Ordering by distance
+        distances = sorted(unsorted, key=lambda dist: dist[1], reverse=True)
+        distances = distances[:10]
+        del unsorted
         # Retorna 10 vectores más cercanos.
         return distances
 
@@ -353,3 +357,32 @@ def next_batch(x, step, batch_size):
     """
 
     return x[batch_size * step:batch_size * step + batch_size]
+
+
+
+def gold_dict(list_src,list_trg):
+    """Función para crear un diccionario de palabras y su correspondiente 
+    traducción (gold standard)
+    
+    Arguments:
+        list_src {list} -- lista de palabras en idiota fuente.
+        list_src {list} -- lista de palabras en idioma objetivo:
+    
+    Return:
+        dict -- Diccionario con palabra y su traducción gold standard
+    """
+    # Lista de pares traducción
+    pares_eval = list(zip(list_src,list_trg))
+    
+    # Diccionario con listas en su valor
+    gold = defaultdict(list)
+    
+    # Se genera una lista de traducciones gold standard para cada palabra del idioma fuente
+    for palabra_src, palabra_trg in pares_eval:
+        gold[palabra_src].append(palabra_trg)
+     
+    # Se eliminan variables innecesarias
+    del pares_eval
+        
+    # Se hace cast al defaultdict y se retorna un diccionario de python.    
+    return dict(gold)
