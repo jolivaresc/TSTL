@@ -52,10 +52,10 @@ test_vectors = np.array([np.array(es.iloc[indice][1::]).astype(
 sess = tf.Session()
 saver = tf.train.import_meta_graph('./models/es-na/model1111_gpu/model2250.ckpt.meta')
 saver.restore(sess, tf.train.latest_checkpoint('./models/es-na/model1111_gpu/'))
-#saver = tf.train.import_meta_graph('./models/model_klein/modelklein.ckpt.meta')
-#saver.restore(sess, tf.train.latest_checkpoint('./models/model_klein/'))
-#saver = tf.train.import_meta_graph('./models/model_joyce/modeljoyce.ckpt.meta')
-#saver.restore(sess, tf.train.latest_checkpoint('./models/model_joyce/'))
+#saver = tf.train.import_meta_graph('./models/es-na/model_klein/modelklein.ckpt.meta')
+#saver.restore(sess, tf.train.latest_checkpoint('./models/es-na/model_klein/'))
+#saver = tf.train.import_meta_graph('./models/es-na/model_joyce/modeljoyce.ckpt.meta')
+#saver.restore(sess, tf.train.latest_checkpoint('./models/es-na/model_joyce/'))
 
 """
 - Se obtiene el grafo del modelo restaurado.
@@ -73,8 +73,8 @@ kprob = graph.get_tensor_by_name("dropout_prob:0")
 - Se guarda la salida del modelo en una variable, será la que nos dará el resultado de evualuar el modelo
 - NOTA: La salida varía de acuerdo al número de capas que tenga la red.
 """
-output_NN = graph.get_tensor_by_name("xw_plus_b_1:0")
-#output_NN = graph.get_tensor_by_name("nah_predicted:0")
+output_NN = graph.get_tensor_by_name("xw_plus_b_2:0")
+output_NN = graph.get_tensor_by_name("nah_predicted:0")
 ##output_NN = graph.get_tensor_by_name("dense_2/BiasAdd:0")
 #output_NN = graph.get_tensor_by_name("output_1:0")
 
