@@ -253,7 +253,7 @@ def make_hparam_string(*args):
     return "./logs/NN_" + "".join([str(i) + "_" for i in args])
 
 
-def get_top10_closest(vector, matrix, distance="cos"):
+def get_top10_closest(vector, matrix):
     """Calcular distancias entre vectores. La métrica por defecto es la distancia coseno.
     Se puede calcular la dist euclidiana.
     Se calcula la distancia de un vector a un arreglo de vectores. 
@@ -269,27 +269,21 @@ def get_top10_closest(vector, matrix, distance="cos"):
         {list} -- Regresa una lista de tuplas con el índice y las 10 distancias
                   más cercanas al vector.
     """
-    # Use the order keyword to specify a field to use when sorting a structured array:
-    #dtype = [('index',int),('distance',float)]
-    # Distancia coseno
-    if distance == "cos":
-        # Medir distancias
-        unsorted = list(enumerate(((matmul(vector, matrix.T)/(norm(vector)*sqrt(einsum('ij,ij->i',matrix, matrix)))))))
-        # Se ordena lista según distancias más cercanas.
-        #unsorted = array(unsorted, dtype=dtype)       # create a structured array
-        #distances = list(numpy_sort(unsorted,order='distance'))[::-1] # Ordering by distance
-        distances = sorted(unsorted, key=lambda dist: dist[1], reverse=True)
-        distances = distances[:10]
-        del unsorted
-        # Retorna 10 vectores más cercanos.
-        return distances
+    # Medir distancias
+    unsorted = list(enumerate(((matmul(vector, matrix.T)/(norm(
+        vector)*sqrt(einsum('ij,ij->i',matrix, matrix)))))))
+    
+    # Se ordena lista según distancias más cercanas.
+    distances = sorted(unsorted, key=lambda dist: dist[1], reverse=True)
 
-    # Distancia euclidiana
-    tmp_dist = [(i, norm(vector - matrix[i]))
-                for i in range(matrix.shape[0])]
-    tmp_dist = sorted(tmp_dist, key=lambda dist: dist[1])
-    distances = tmp_dist[:10]
-    del tmp_dist
+    # Se obtienen los 10 vectores más cercanos.
+    distances = distances[:10]
+
+    # Se eliminan variables que ya no se utilizan.
+    del unsorted
+
+    
+    # Retorna 10 vectores más cercanos.
     return distances
 
 
